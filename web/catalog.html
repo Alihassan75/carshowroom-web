@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cars for sale and rent</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Hanken+Grotesk:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F0EA;--panel:#FFFFFF;--ink:#1D2227;--mute:#5F6A72;--line:#D6D4CB;--paint:#E9B817;--wa:#1E7A3C;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181C;--panel:#1F2429;--ink:#ECEEEA;--mute:#9AA3AA;--line:#343B43;--wa:#4CC27A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15181C;--panel:#1F2429;--ink:#ECEEEA;--mute:#9AA3AA;--line:#343B43;--wa:#4CC27A;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'Hanken Grotesk',system-ui,sans-serif}
+h1,h2,h3,.big{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;margin:0}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 50px}
+header{background:var(--ink);color:#fff;padding:20px 0 26px;border-bottom:5px solid var(--paint)}
+header .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;padding-bottom:0}
+header h1{font-size:44px;line-height:.95}header p{margin:6px 0 0;color:#C9CED2}
+a.btn,button{font:inherit;font-weight:600;border-radius:8px;padding:9px 16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+a.wa,button.go{background:var(--wa);border-color:var(--wa);color:#fff}header a.wa{background:var(--paint);border-color:var(--paint);color:#1D2227}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--paint);outline-offset:2px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;align-items:center}
+.bar input,.bar select,.f input,.f select{font:inherit;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+.bar input{flex:1;min-width:180px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}.chips button{padding:5px 12px;font-size:13px;border-color:var(--line)}.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.stage{background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(233,184,23,.35) 46px 48px),color-mix(in srgb,var(--line) 55%,var(--panel));height:150px;display:grid;place-items:center;position:relative}
+.car{width:76px;height:112px;border-radius:26px 26px 16px 16px;background:var(--c);position:relative;box-shadow:0 10px 18px rgba(0,0,0,.25);transition:transform .25s}
+.card:hover .car{transform:translateY(-4px) rotate(-3deg)}
+.car:before{content:"";position:absolute;left:12%;right:12%;top:18%;height:22%;background:rgba(255,255,255,.38);border-radius:8px}
+.car:after{content:"";position:absolute;left:12%;right:12%;bottom:12%;height:14%;background:rgba(0,0,0,.28);border-radius:6px}
+.cp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.noph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));color:#fff;text-align:center;padding:0 10px}.noph b{font:800 38px/1 'Big Shoulders Display','Arial Narrow',sans-serif}.noph span{opacity:.88;margin-top:4px}
+.yr{z-index:1}
+.stage svg{width:84%;max-width:250px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.25));transition:transform .25s}.card:hover .stage svg{transform:translateX(5px)}
+.yr{position:absolute;left:10px;top:8px;font-weight:600;font-size:12px;background:var(--ink);color:var(--bg);padding:1px 9px;border-radius:99px}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:2px;flex:1}.body h3{font-size:26px}
+.price{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-size:28px;font-weight:800}.rent{color:var(--mute);font-size:13px}
+.btns{display:flex;gap:8px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
+.empty{color:var(--mute);padding:30px 0}
+.mask{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:14px;z-index:9}
+.dlg{background:var(--panel);border-radius:14px;max-width:440px;width:100%;max-height:92vh;overflow:auto;padding:18px;border-top:5px solid var(--paint)}
+.dlg h2{font-size:32px}.f label{display:block;margin:10px 0 3px;font-size:13px;color:var(--mute)}.f input,.f select{width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+footer{color:var(--mute);font-size:13px;margin-top:26px}
+html[dir=rtl] body,html[dir=rtl] button,html[dir=rtl] input,html[dir=rtl] select,html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3,html[dir=rtl] .price,html[dir=rtl] .big{font-family:'Noto Naskh Arabic','Hanken Grotesk',system-ui,sans-serif}
+html[dir=rtl] *{letter-spacing:0!important}
+html[dir=rtl] .yr{left:auto;right:10px}
+html[dir=rtl] .body,html[dir=rtl] .f label,html[dir=rtl] .dlg{text-align:right}
+html[dir=rtl] input[type=tel],html[dir=rtl] input[type=date]{direction:ltr;text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style><script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head><body>
+<header><div class="wrap"><div><h1 id="sn"></h1><p id="sa"></p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a class="btn wa" id="hw" target="_blank" rel="noopener">Chat on WhatsApp</a><button id="lang" type="button" style="color:#fff;border-color:#fff;padding:6px 14px;font-size:13px">اردو</button></div></div></header>
+<div class="wrap">
+<div class="bar"><input id="q" placeholder="Search make or model" aria-label="Search cars"><select id="so" aria-label="Sort"><option value="n">Newest</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select></div>
+<div class="chips" id="ch"></div>
+<div class="grid" id="g"></div><div class="empty" id="em" hidden>No cars match. Try another make or clear the search.</div>
+<footer id="ft"></footer></div>
+<div id="m"></div>
+<script>
+const UR={
+"Chat on WhatsApp":"واٹس ایپ پر بات کریں","Search make or model":"کمپنی یا ماڈل تلاش کریں","Search cars":"گاڑیاں تلاش کریں","Sort":"ترتیب",
+"Newest":"تازہ ترین","Price: low to high":"قیمت: کم سے زیادہ","Price: high to low":"قیمت: زیادہ سے کم","All":"سب",
+"No cars match. Try another make or clear the search.":"کوئی گاڑی نہیں ملی۔ دوسری کمپنی آزمائیں یا تلاش صاف کریں۔",
+"Book a test drive":"ٹیسٹ ڈرائیو بُک کریں","Ask on WhatsApp":"واٹس ایپ پر پوچھیں","Your name":"آپ کا نام","Your phone":"آپ کا فون","Date":"تاریخ","Time":"وقت",
+"Send request on WhatsApp":"واٹس ایپ پر درخواست بھیجیں","Close":"بند کریں",
+"Sending opens WhatsApp with your request written for you. The showroom will confirm the time.":"بھیجنے پر واٹس ایپ کھلے گا جس میں آپ کی درخواست لکھی ہوگی۔ شوروم وقت کی تصدیق کرے گا۔",
+"Please enter your name and phone first.":"پہلے اپنا نام اور فون لکھیں۔",
+"This showroom has not added a WhatsApp number yet. Please call them directly.":"اس شوروم نے ابھی واٹس ایپ نمبر شامل نہیں کیا۔ براہِ کرم براہِ راست فون کریں۔",
+"Thank you. The showroom has your request and will call you.":"شکریہ۔ شوروم کو آپ کی درخواست مل گئی ہے، وہ آپ کو فون کریں گے۔",
+"That car has been sold or is no longer listed. Here are the others.":"یہ گاڑی بک چکی ہے یا فہرست میں نہیں رہی۔ باقی گاڑیاں یہ ہیں۔",
+"The catalog could not be loaded. Please try again later.":"کیٹلاگ لوڈ نہیں ہو سکا۔ بعد میں دوبارہ کوشش کریں۔",
+"Jan":"جنوری","Feb":"فروری","Mar":"مارچ","Apr":"اپریل","Jun":"جون","Jul":"جولائی","Aug":"اگست","Sep":"ستمبر","Sept":"ستمبر","Oct":"اکتوبر","Nov":"نومبر","Dec":"دسمبر","January":"جنوری","February":"فروری","March":"مارچ","April":"اپریل","May":"مئی","June":"جون","July":"جولائی","August":"اگست","September":"ستمبر","October":"اکتوبر","November":"نومبر","December":"دسمبر"
+};
+const FR=[
+[/^Also for rent from (PKR [\d,]+) a day$/,'کرائے پر بھی دستیاب: $1 فی دن'],
+[/^Prices and availability as of (.*)\. Please confirm with the showroom before visiting\.$/,'قیمتیں اور دستیابی $1 تک۔ آنے سے پہلے شوروم سے تصدیق کر لیں۔'],
+[/^(\d+:\d\d) am$/,'$1 صبح'],[/^(\d+:\d\d) pm$/,'$1 بعد دوپہر'],
+[/\b(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)\b/g,(m,d,mo)=>d+' '+UR[mo]]
+];
+/* Urdu support: a per-device language switch that translates the screen text and flips the layout. */
+const LANG=(()=>{try{return localStorage.getItem('lot-lang')==='ur'?'ur':'en'}catch(e){return'en'}})();
+function trStr(s){const t=s.trim();if(!t)return s;if(UR[t]!==undefined)return s.replace(t,UR[t]);
+ let o=t;for(const [re,rp] of FR){if(typeof rp==='function'){const n=o.replace(re,rp);if(n!==o)o=n}else{const n=o.replace(re,rp);if(n!==o)o=n}}
+ return o!==t?s.replace(t,o):s}
+function trNode(root){if(LANG!=='ur'||!root)return;
+ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){const p=n.parentNode;return p&&!/^(SCRIPT|STYLE|TEXTAREA)$/.test(p.nodeName)&&!(p.closest&&p.closest('#lang'))?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}}),L=[];let n;while(n=w.nextNode())L.push(n);
+ L.forEach(n=>{const p=n.parentNode;if(p.nodeName==='OPTION'&&!p.hasAttribute('value'))p.setAttribute('value',p.textContent);const v=trStr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v});
+ if(root.querySelectorAll)root.querySelectorAll('[placeholder],[title],[aria-label]').forEach(e=>['placeholder','title','aria-label'].forEach(a=>{const v=e.getAttribute(a);if(v){const t=trStr(v);if(t!==v)e.setAttribute(a,t)}}))}
+(function(){const b=document.getElementById('lang');
+ if(b){b.textContent=LANG==='ur'?'English':'اردو';b.onclick=()=>{try{localStorage.setItem('lot-lang',LANG==='ur'?'en':'ur')}catch(e){}location.reload()}}
+ if(LANG!=='ur')return;document.documentElement.dir='rtl';document.documentElement.lang='ur';
+ let q=false;new MutationObserver(()=>{if(q)return;q=true;(window.requestAnimationFrame||setTimeout)(()=>{q=false;trNode(document.body)})}).observe(document.body,{childList:true,subtree:true,characterData:true});trNode(document.body)})();
+
+const D={shop:{name:'',address:'',phone:''},cars:[],built:''};
+const PAL=['#0E6B6B','#B3261E','#2B3038','#C9A227','#3B5BA5','#7A4FA3','#8A8F94','#DB5A24'];
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=n=>'PKR '+Math.round(n).toLocaleString('en-US');
+function num(){let d=String(D.shop.phone||'').replace(/\D/g,'');if(d[0]==='0')d='92'+d.slice(1);return d}
+const wa=t=>num()?'https://wa.me/'+num()+'?text='+encodeURIComponent(t):'';
+let mk='All',car=null;
+function head(){
+$('#sn').textContent=D.shop.name;$('#sa').textContent=[D.shop.address,D.shop.phone].filter(Boolean).join('  ·  ');
+$('#hw').href=wa('Assalam o Alaikum, I saw your cars online and would like some information.')||'#';
+$('#ft').textContent='Prices and availability as of '+D.built+'. Please confirm with the showroom before visiting.';
+}
+function carArt(c){const m=(c.make+' '+c.model).toLowerCase(),t=/hilux|revo|vigo|ranger|d-max|dmax/.test(m)?'p':/fortuner|sportage|tucson|hr-v|vezel|br-v|stonic|h6|mg hs|jimny|prado|land cruiser|cr-v|santa|sorento|x70|harrier|haval/.test(m)?'s':/alto|cultus|wagon|picanto|swift|vitz|mira|passo|aqua|prius|yaris hatch/.test(m)?'h':'d',col=c.color;
+ const B={d:{b:'M10 58 L10 47 Q10 41 20 39 L52 35 L70 17 Q74 13 82 13 L124 13 Q132 13 138 19 L156 35 L184 39 Q194 41 194 49 L194 58 Z',g:'M62 35 L76 19 L98 19 L98 35 Z M104 35 L104 19 L122 19 Q127 19 130 23 L144 35 Z',w:[48,152],r:14},h:{b:'M12 58 L12 47 Q12 41 22 39 L54 35 L72 16 Q76 12 84 12 L134 12 Q144 12 148 20 L166 36 L186 40 Q194 42 194 50 L194 58 Z',g:'M64 35 L77 18 L98 18 L98 35 Z M104 35 L104 18 L134 18 Q140 18 143 24 L154 35 Z',w:[48,152],r:14},s:{b:'M10 60 L10 45 Q10 38 20 36 L48 33 L64 13 Q68 8 76 8 L152 8 Q160 8 164 14 L174 33 L188 36 Q196 38 196 47 L196 60 Z',g:'M58 33 L70 15 L96 15 L96 33 Z M102 33 L102 15 L152 15 L162 33 Z',w:[48,154],r:16},p:{b:'M8 60 L8 47 Q8 41 18 39 L46 35 L62 15 Q66 11 74 11 L110 11 Q116 11 120 17 L126 35 L196 35 L196 60 Z',g:'M54 35 L67 17 L92 17 L92 35 Z M98 35 L98 17 L110 17 Q113 17 115 20 L121 35 Z',w:[44,156],r:15}}[t];
+ return'<svg viewBox="0 0 204 80" role="img" aria-label="'+esc(c.make+' '+c.model)+'"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient></defs><ellipse cx="102" cy="74" rx="92" ry="4.5" fill="rgba(0,0,0,.2)"/><path d="'+B.b+'" fill="'+col+'"/><path d="'+B.b+'" fill="url(#cg)"/><path d="'+B.g+'" fill="rgba(225,240,255,.78)" stroke="rgba(0,0,0,.28)" stroke-width="1"/><rect x="186" y="45" width="9" height="4" rx="2" fill="#FFE9A8"/><rect x="8" y="45" width="6" height="4" rx="2" fill="#B3261E"/>'+B.w.map(x=>'<circle cx="'+x+'" cy="60" r="'+(B.r+3)+'" fill="rgba(0,0,0,.4)"/><circle cx="'+x+'" cy="60" r="'+B.r+'" fill="#1B1F23"/><circle cx="'+x+'" cy="60" r="'+(B.r*.55)+'" fill="#C9CED3"/><circle cx="'+x+'" cy="60" r="'+(B.r*.18)+'" fill="#6B7480"/>').join('')+'</svg>'}
+function noph(c){return'<div class="noph" style="--c:'+c.color+'"><b>'+esc(c.make)+'</b><span>'+esc(c.model)+'</span></div>'}
+function chips(){const m=['All',...new Set(D.cars.map(c=>c.make))];$('#ch').innerHTML=m.map(x=>'<button class="'+(x===mk?'on':'')+'" data-mk="'+esc(x)+'">'+esc(x)+'</button>').join('')}
+function list(){const q=$('#q').value.trim().toLowerCase(),s=$('#so').value;let L=D.cars.filter(c=>(mk==='All'||c.make===mk)&&(!q||(c.make+' '+c.model).toLowerCase().includes(q)));
+ if(s==='lo')L.sort((a,b)=>a.price-b.price);if(s==='hi')L.sort((a,b)=>b.price-a.price);
+ $('#em').hidden=L.length>0;
+ $('#g').innerHTML=L.map(c=>'<article class="card"><div class="stage"><span class="yr">'+c.year+'</span>'+(c.photos&&c.photos[0]?'<img class="cp" src="'+esc(c.photos[0].url)+'" alt="">':noph(c))+'</div><div class="body"><h3>'+esc(c.make+' '+c.model)+'</h3><div class="price">'+money(c.price)+'</div><div class="rent">Also for rent from '+money(c.rate)+' a day</div><div class="btns"><button data-open="'+c.id+'">Book a test drive</button><a class="btn wa" target="_blank" rel="noopener" href="'+esc(wa('Assalam o Alaikum, I am interested in the '+c.year+' '+c.make+' '+c.model+' listed at '+money(c.price)+'. Is it still available?')||'#')+'">Ask on WhatsApp</a></div></div></article>').join('')}
+function close(){$('#m').innerHTML='';car=null}
+function openDlg(id){car=D.cars.find(c=>c.id==id);const t=new Date(Date.now()+864e5).toISOString().slice(0,10);
+ $('#m').innerHTML='<div class="mask" data-x><div class="dlg" role="dialog" aria-modal="true" aria-label="Book a test drive"><h2>'+esc(car.make+' '+car.model)+'</h2><div class="rent">'+car.year+' · '+money(car.price)+'</div><div class="f"><label for="n">Your name</label><input id="n" autocomplete="name"><label for="p">Your phone</label><input id="p" type="tel" autocomplete="tel"><div class="two"><div><label for="d">Date</label><input id="d" type="date" min="'+t+'" value="'+t+'"></div><div><label for="t">Time</label><select id="t"><option>10:00 am</option><option>11:00 am</option><option>12:00 pm</option><option>2:00 pm</option><option>3:00 pm</option><option>4:00 pm</option><option>5:00 pm</option></select></div></div></div><p class="rent" id="note">Sending opens WhatsApp with your request written for you. The showroom will confirm the time.</p><div class="btns"><button class="go" data-send>Send request on WhatsApp</button><button data-x>Close</button></div></div></div>';$('#n').focus()}
+async function send(){const n=$('#n').value.trim(),p=$('#p').value.trim();if(!n||!p){$('#note').textContent='Please enter your name and phone first.';return}
+ const d=new Date($('#d').value+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}),msg='Assalam o Alaikum, I am '+n+' ('+p+'). I would like to book a test drive for the '+car.year+' '+car.make+' '+car.model+' on '+d+' at '+$('#t').value+'.',u=wa(msg);
+ if(u)window.open(u,'_blank','noopener');
+ try{await sb.from('enquiries').insert({kind:'test_drive',name:n,phone:p,car_id:car.id,car_label:car.year+' '+car.make+' '+car.model,preferred_at:d+' at '+$('#t').value,message:msg.slice(0,480)})}catch(e){}
+ if(u){close()}else{$('#note').textContent='Thank you. The showroom has your request and will call you.'}}
+document.addEventListener('click',e=>{const t=e.target,b=t.closest('button');
+ if(t.classList&&t.classList.contains('mask')){close();return}if(!b)return;
+ if(b.dataset.mk){mk=b.dataset.mk;chips();list()}else if(b.dataset.open)openDlg(b.dataset.open);else if(b.dataset.send!==undefined)send();else if(b.dataset.x!==undefined)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+function hashOpen(){const m=location.hash.match(/^#car-(\d+)$/);if(!m)return;const c=D.cars.find(x=>String(x.id)===m[1]);if(c)openDlg(c.id);else{$('#em').hidden=false;$('#em').textContent='That car has been sold or is no longer listed. Here are the others.'}}
+window.addEventListener('hashchange',hashOpen);
+$('#q').oninput=list;$('#so').onchange=list;
+const sb=window.supabase.createClient(LOT_CONFIG.SUPABASE_URL,LOT_CONFIG.SUPABASE_ANON_KEY);
+(async()=>{
+ const [cs,sh]=await Promise.all([sb.from('public_catalog').select('*').order('price'),sb.from('public_shop').select('shop').maybeSingle()]);
+ D.cars=(cs.data||[]).map((x,i)=>({...x,color:PAL[i%8]}));
+ D.shop=(sh.data&&sh.data.shop)||D.shop;
+ D.built=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+ head();chips();list();hashOpen();
+ if(cs.error){$('#em').hidden=false;$('#em').textContent='The catalog could not be loaded. Please try again later.'}
+})();
+</script></body></html>
