@@ -1,3 +1,4 @@
+/* The Lot: Supabase adapter
  *
  * The dashboard was written against a small runtime (window.claude.use(...)) with five parts:
  * user, db, downloads, assets and sample. This file provides the same five parts on top of
@@ -154,12 +155,35 @@
     });
   }
 
+  // Remove every saved Supabase login from this browser. Supabase keeps it when its own
+  // sign-out request fails (for example on a weak connection), so we always do this ourselves.
+  function clearSession() {
+    try {
+      var keys = [];
+      for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf('sb-') === 0) keys.push(k); }
+      keys.forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) {}
+    try { sessionStorage.clear(); } catch (e) {}
+  }
+
   function addSignOut() {
     var b = document.createElement('button');
-    b.textContent = 'Sign out (' + profile.name + ')';
-    b.style.cssText = 'position:fixed;left:10px;bottom:10px;z-index:15;padding:4px 10px;font:12px system-ui;border:1px solid #98A1A8;border-radius:6px;background:rgba(255,255,255,.85);color:#1D2227;cursor:pointer';
-    b.onclick = function () { sb.auth.signOut().then(function () { location.reload(); }); };
-    document.body.appendChild(b);
+    b.id = 'lot-signout'; b.type = 'button'; b.textContent = 'Sign out (' + profile.name + ')';
+    var host = document.querySelector('.clock');
+    if (host) {
+      b.style.cssText = 'margin:6px 0 0 6px;padding:3px 12px;font-size:13px';
+      host.appendChild(b);
+    } else {
+      b.style.cssText = 'position:fixed;left:10px;bottom:10px;z-index:15;padding:4px 10px;font:12px system-ui;border:1px solid #98A1A8;border-radius:6px;background:rgba(255,255,255,.9);color:#1D2227;cursor:pointer';
+      document.body.appendChild(b);
+    }
+    b.onclick = function () {
+      b.disabled = true;
+      var done = false;
+      function finish() { if (done) return; done = true; clearSession(); location.replace(location.pathname + location.search); }
+      try { sb.auth.signOut({ scope: 'local' }).then(finish, finish); } catch (e) { finish(); }
+      setTimeout(finish, 2500);
+    };
   }
 
   var gate = new Promise(function (resolve) {
@@ -170,7 +194,10 @@
         return sb.from('profiles').select('name,role').eq('id', session.user.id).maybeSingle().then(function (p) {
           if (!p.data) { fatal('Your account has no showroom profile yet. Ask the owner to add you.'); return; }
           profile = { id: session.user.id, email: session.user.email, name: p.data.name || session.user.email, role: p.data.role };
-          addSignOut(); resolve();
+          addSignOut();
+          // if another tab signs out, this one follows
+          sb.auth.onAuthStateChange(function (ev) { if (ev === 'SIGNED_OUT') { clearSession(); location.reload(); } });
+          resolve();
         });
       });
     }
