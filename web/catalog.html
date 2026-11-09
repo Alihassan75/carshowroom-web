@@ -48,6 +48,9 @@ html[dir=rtl] *{letter-spacing:0!important}
 html[dir=rtl] .yr{left:auto;right:10px}
 html[dir=rtl] .body,html[dir=rtl] .f label,html[dir=rtl] .dlg{text-align:right}
 html[dir=rtl] input[type=tel],html[dir=rtl] input[type=date]{direction:ltr;text-align:right}
+/* phones */
+@media (max-width:640px){header{padding:16px 0 20px}header h1{font-size:34px}.wrap{padding:0 12px 40px}.bar input,.bar select,.f input,.f select{font-size:16px}.grid{grid-template-columns:minmax(0,1fr)}.stage{height:190px}.btns button,.btns a.btn{flex:1;text-align:center;min-height:44px}.mask{align-items:end;padding:0}.dlg{max-width:none;border-radius:16px 16px 0 0;max-height:92vh;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}.chips{flex-wrap:nowrap;overflow-x:auto;margin-right:-12px;padding-right:12px;scrollbar-width:none}.chips button{flex:none}header .wrap{align-items:flex-start}}
+[hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style><script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
