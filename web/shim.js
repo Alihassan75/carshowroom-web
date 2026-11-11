@@ -1,4 +1,4 @@
-/* The Lot: Supabase adapter
+* The Lot: Supabase adapter
  *
  * The dashboard was written against a small runtime (window.claude.use(...)) with five parts:
  * user, db, downloads, assets and sample. This file provides the same five parts on top of
