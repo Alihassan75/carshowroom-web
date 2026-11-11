@@ -1,88 +1,478 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cars for sale and rent</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Hanken+Grotesk:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<title>The Lot – Showroom Control</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚘</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Hanken+Grotesk:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F1F0EA;--panel:#FFFFFF;--ink:#1D2227;--mute:#5F6A72;--line:#D6D4CB;--paint:#E9B817;--wa:#1E7A3C;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181C;--panel:#1F2429;--ink:#ECEEEA;--mute:#9AA3AA;--line:#343B43;--wa:#4CC27A;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#15181C;--panel:#1F2429;--ink:#ECEEEA;--mute:#9AA3AA;--line:#343B43;--wa:#4CC27A;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'Hanken Grotesk',system-ui,sans-serif}
-h1,h2,h3,.big{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;margin:0}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px 50px}
-header{background:var(--ink);color:#fff;padding:20px 0 26px;border-bottom:5px solid var(--paint)}
-header .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;padding-bottom:0}
-header h1{font-size:44px;line-height:.95}header p{margin:6px 0 0;color:#C9CED2}
-a.btn,button{font:inherit;font-weight:600;border-radius:8px;padding:9px 16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
-a.wa,button.go{background:var(--wa);border-color:var(--wa);color:#fff}header a.wa{background:var(--paint);border-color:var(--paint);color:#1D2227}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--paint);outline-offset:2px}
-.bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;align-items:center}
-.bar input,.bar select,.f input,.f select{font:inherit;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
-.bar input{flex:1;min-width:180px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}.chips button{padding:5px 12px;font-size:13px;border-color:var(--line)}.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.card{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.stage{background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(233,184,23,.35) 46px 48px),color-mix(in srgb,var(--line) 55%,var(--panel));height:150px;display:grid;place-items:center;position:relative}
-.car{width:76px;height:112px;border-radius:26px 26px 16px 16px;background:var(--c);position:relative;box-shadow:0 10px 18px rgba(0,0,0,.25);transition:transform .25s}
-.card:hover .car{transform:translateY(-4px) rotate(-3deg)}
-.car:before{content:"";position:absolute;left:12%;right:12%;top:18%;height:22%;background:rgba(255,255,255,.38);border-radius:8px}
-.car:after{content:"";position:absolute;left:12%;right:12%;bottom:12%;height:14%;background:rgba(0,0,0,.28);border-radius:6px}
-.cp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.noph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));color:#fff;text-align:center;padding:0 10px}.noph b{font:800 38px/1 'Big Shoulders Display','Arial Narrow',sans-serif}.noph span{opacity:.88;margin-top:4px}
-.yr{z-index:1}
-.stage svg{width:84%;max-width:250px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.25));transition:transform .25s}.card:hover .stage svg{transform:translateX(5px)}
-.yr{position:absolute;left:10px;top:8px;font-weight:600;font-size:12px;background:var(--ink);color:var(--bg);padding:1px 9px;border-radius:99px}
-.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:2px;flex:1}.body h3{font-size:26px}
-.price{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-size:28px;font-weight:800}.rent{color:var(--mute);font-size:13px}
-.btns{display:flex;gap:8px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
-.empty{color:var(--mute);padding:30px 0}
-.mask{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:14px;z-index:9}
-.dlg{background:var(--panel);border-radius:14px;max-width:440px;width:100%;max-height:92vh;overflow:auto;padding:18px;border-top:5px solid var(--paint)}
-.dlg h2{font-size:32px}.f label{display:block;margin:10px 0 3px;font-size:13px;color:var(--mute)}.f input,.f select{width:100%}
+:root{--bg:#E3E5E1;--panel:#F4F5F2;--ink:#1D2227;--mute:#667078;--paint:#E9B817;--line:#C5C9C3;
+--stock:#0E6B6B;--sold:#2B3038;--rent:#DB5A24;--serv:#7A4FA3;--ok:#1E7A3C;--bad:#B3261E;
+color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16191D;--panel:#20252B;--ink:#ECEEEA;--mute:#98A1A8;--line:#343B43;--stock:#2FA3A3;--sold:#6B7480;--rent:#F07A45;--serv:#A47FD0;--ok:#4CC27A;--bad:#F2766F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#16191D;--panel:#20252B;--ink:#ECEEEA;--mute:#98A1A8;--line:#343B43;--stock:#2FA3A3;--sold:#6B7480;--rent:#F07A45;--serv:#A47FD0;--ok:#4CC27A;--bad:#F2766F;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:15px}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,.num{font-family:'Big Shoulders Display','Arial Narrow',sans-serif;margin:0;letter-spacing:.01em}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1.5px solid var(--ink);background:transparent;padding:7px 13px;border-radius:6px;font-weight:600}
+button:hover{background:var(--ink);color:var(--bg)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--paint);outline-offset:1px}
+button.pri{background:var(--ink);color:var(--bg)}
+button.pri:hover{background:var(--paint);color:#1D2227;border-color:var(--paint)}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 60px}
+header{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:end;justify-content:space-between;border-bottom:4px solid var(--ink);padding-bottom:12px}
+header h1{font-size:44px;font-weight:800;line-height:.9}
+.clock{text-align:right}.clock .num{font-size:40px;font-weight:800;line-height:1}
+.clock div:last-child{color:var(--mute)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin:16px 0;border:1.5px solid var(--line);border-radius:8px;background:var(--panel)}
+.kpi{padding:12px 14px;border-right:1.5px solid var(--line)}.kpi:last-child{border-right:0}
+.kpi .num{font-size:32px;font-weight:800;line-height:1}.kpi span{color:var(--mute);font-size:13px}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+nav button{border-color:var(--line)}nav button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.mix{display:flex;height:34px;border-radius:6px;overflow:hidden;margin-bottom:12px;border:1.5px solid var(--ink)}
+.mix button{border:0;border-radius:0;color:#fff;padding:0 8px;text-align:left;white-space:nowrap;overflow:hidden;font-size:13px;opacity:.55}
+.mix button.on,.mix button:hover{opacity:1}
+.mix button:hover{color:#fff}
+.lot{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px;background:repeating-linear-gradient(0deg,transparent 0 0),var(--panel);padding:12px;border-radius:8px;border:1.5px solid var(--line)}
+.bay{border:2px dashed var(--paint);border-top-style:solid;border-radius:4px;padding:10px 8px 8px;background:transparent;text-align:left;display:block;width:100%;color:var(--ink)}
+.bay:hover{background:color-mix(in srgb,var(--paint) 16%,transparent);color:var(--ink)}
+.car{height:62px;border-radius:18px 18px 12px 12px;background:var(--c);position:relative;margin:0 auto 8px;width:60%}
+.car:before{content:"";position:absolute;left:12%;right:12%;top:16%;height:22%;background:rgba(255,255,255,.35);border-radius:6px}
+.car:after{content:"";position:absolute;left:12%;right:12%;bottom:14%;height:14%;background:rgba(0,0,0,.28);border-radius:5px}
+.bay b{display:block;font-size:14px}.bay small{color:var(--mute);display:block}
+.tag{display:inline-block;margin-top:5px;font-size:12px;font-weight:600;color:var(--c)}
+.add{border:2px dashed var(--line);display:grid;place-items:center;min-height:150px;color:var(--mute)}
+table{width:100%;border-collapse:collapse;background:var(--panel);border-radius:8px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--mute);font-weight:600;font-size:13px}
+.scroll{overflow-x:auto;border:1.5px solid var(--line);border-radius:8px}
+.pill{padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;border:1.5px solid currentColor}
+.mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;justify-content:flex-end;z-index:20}
+.drawer{background:var(--panel);width:min(400px,100%);height:100%;overflow:auto;padding:20px 18px;border-left:4px solid var(--paint)}
+.drawer h2{font-size:30px;margin-bottom:2px}
+label{display:block;margin:10px 0 3px;font-size:13px;color:var(--mute)}
+input,select{width:100%;padding:8px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--bg)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-footer{color:var(--mute);font-size:13px;margin-top:26px}
-html[dir=rtl] body,html[dir=rtl] button,html[dir=rtl] input,html[dir=rtl] select,html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3,html[dir=rtl] .price,html[dir=rtl] .big{font-family:'Noto Naskh Arabic','Hanken Grotesk',system-ui,sans-serif}
+.tl{list-style:none;margin:0;padding:0;background:var(--panel);border:1.5px solid var(--line);border-radius:8px}
+.tl li{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.tl li small{color:var(--mute);display:block}
+.tools{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:8px;z-index:30}
+button.kpi{border:0;border-right:1.5px solid var(--line);border-radius:0;text-align:left;background:none;color:var(--ink);font-weight:400}
+button.kpi:hover{background:color-mix(in srgb,var(--paint) 22%,transparent);color:var(--ink)}
+.srch{display:flex;gap:6px}.srch input{width:210px}.srch select{width:auto}
+.alert{display:block;width:100%;text-align:left;border:1.5px solid var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent);padding:10px 14px;border-radius:8px;margin-bottom:12px;font-weight:600}
+button.alert:hover{background:var(--bad);color:var(--bg)}
+.chart{background:var(--panel);border:1.5px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:12px}
+.chart .tools{margin:0 0 4px}.chart svg{width:100%;height:84px;display:block}.day{cursor:pointer}.day:hover rect:first-child{fill:color-mix(in srgb,var(--paint) 35%,transparent)}
+.dock{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.zone{border:2px dashed var(--line);border-radius:8px;padding:16px;text-align:center;color:var(--mute);font-weight:600}
+.zone.hot{border-color:var(--paint);color:var(--ink);background:color-mix(in srgb,var(--paint) 22%,transparent)}
+.sync{margin-left:auto;color:var(--mute);font-size:13px;align-self:center}
+.chip.on{background:var(--ink);color:var(--bg)}.bay[draggable=true]{cursor:grab}
+.ai{display:grid;gap:12px}.card{background:var(--panel);border:1.5px solid var(--line);border-radius:8px;padding:14px 16px}
+.card h2{font-size:26px;margin-bottom:8px}.srch2{display:flex;gap:8px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border-color:var(--line);font-weight:400;padding:4px 10px;font-size:13px}
+.out{white-space:pre-wrap;margin-top:10px;line-height:1.55;max-width:75ch}.out:empty{display:none}
+.al{list-style:none;margin:0;padding:0}.al li{padding:7px 0;border-bottom:1px solid var(--line)}.al li:before{content:"\25CF  "}.al .bad:before{color:var(--bad)}.al .warn:before{color:var(--paint)}
+.fc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.fc>div{border:1.5px solid var(--line);border-radius:8px;padding:10px}.fc .num{font-size:28px;font-weight:800}
+button:disabled{opacity:.5;cursor:default}
+.btnlink{display:inline-block;border:1.5px solid var(--ink);padding:7px 13px;border-radius:6px;font-weight:600;text-decoration:none;color:var(--ink)}.btnlink:hover{background:var(--ink);color:var(--bg)}
+.nop{height:62px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 55%,#000));color:#fff;line-height:1.2}.nop b{font:800 17px 'Big Shoulders Display','Arial Narrow',sans-serif;letter-spacing:.02em}.nop span{font-size:11px;opacity:.85}.nop.big{height:150px}.nop.big b{font-size:36px}.nop.big span{font-size:13px}
+.phg figure .thumb{position:static;padding:0;background:none;border:2px solid transparent;border-radius:6px}.phg figure .thumb.main{border-color:var(--paint)}.phg figure .thumb:hover{background:none}.phg figure .thumb img{width:84px;height:64px;object-fit:cover;display:block;border-radius:4px}
+.carart{position:relative;height:62px;margin-bottom:8px}.carart svg{width:100%;height:62px;display:block;transition:transform .25s}.bay:hover .carart svg{transform:translateX(4px)}
+.hero{background:color-mix(in srgb,var(--line) 45%,var(--panel));border-radius:10px;padding:10px;margin-bottom:10px}.hero svg,.hero img{width:100%;max-height:150px;object-fit:cover;display:block;border-radius:8px}
+.sw{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.swb{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1.5px var(--line)}
+.phg{display:flex;gap:6px;flex-wrap:wrap}.phg figure{margin:0;position:relative}.phg img{width:84px;height:64px;object-fit:cover;border-radius:6px;display:block}.phg figure button{position:absolute;right:2px;top:2px;padding:0 6px;font-size:11px;background:var(--panel);border-color:var(--line)}
+.phwrap{position:relative;height:62px;margin-bottom:8px}.ph{width:100%;height:62px;object-fit:cover;border-radius:8px;display:block}
+.rings{display:flex;flex-wrap:wrap;gap:16px 30px;margin-top:6px}.rings>div{display:flex;flex-direction:column;gap:6px;align-items:flex-start}.rg{display:flex;align-items:center;gap:12px}.rg svg{width:86px;height:86px;flex:none}
+.tg.anim .rgp{animation:rgrow 1.1s ease-out}@keyframes rgrow{from{stroke-dasharray:0 300}}
+.pm{display:flex;gap:8px;margin-top:10px}.pm>div{flex:1;display:flex;flex-direction:column;align-items:center}.pm .up{height:92px;display:flex;align-items:flex-end;width:100%}
+.pm .dn{height:92px;width:100%;display:flex;align-items:flex-start;border-top:1.5px solid var(--ink)}.pm i{display:block;width:100%;border-radius:4px}.pm .up i{background:var(--ok)}.pm .dn i{background:var(--bad)}.pm b{font-size:12px;margin-top:4px}.pm small{color:var(--mute);font-size:11px}
+.att{min-width:max-content}.att th,.att td{padding:3px 2px;text-align:center;border-bottom:1px solid var(--line)}.att td:first-child,.att th:first-child{text-align:left;padding-left:10px;white-space:nowrap;position:sticky;left:0;background:var(--panel)}
+.ac{width:26px;height:26px;padding:0;border:1.5px dashed var(--line);border-radius:6px;font-size:12px;font-weight:700}.ac:hover{filter:brightness(.92);background:var(--line);color:var(--ink)}
+.ac.ok{background:var(--ok);border:1.5px solid var(--ok);color:#fff}.ac.bad{background:var(--bad);border:1.5px solid var(--bad);color:#fff}.ac.warn{background:var(--paint);border:1.5px solid var(--paint);color:#1D2227}.ac.half{background:var(--rent);border:1.5px solid var(--rent);color:#fff}
+.ac:disabled{opacity:.3}.att td.sun{background:color-mix(in srgb,var(--line) 40%,var(--panel))}.ac-h{font-size:11px;color:var(--mute);min-width:28px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0 16px}.lcol{background:var(--panel);border:1.5px solid var(--line);border-radius:8px;padding:10px;min-height:120px}
+.lcol h3{margin:0 0 8px;font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-size:20px}.lead{display:block;width:100%;text-align:left;margin-bottom:8px;border-color:var(--line);background:var(--bg);cursor:grab}
+.lead small{display:block;color:var(--mute);font-weight:400}.lead:hover{background:var(--bg);color:var(--ink);border-color:var(--paint)}
+.dc{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;border:1.5px solid var(--line);color:var(--mute);white-space:nowrap}
+.dc.ok{color:var(--ok);border-color:var(--ok)}.dc.warn{color:var(--ink);border-color:var(--paint);background:color-mix(in srgb,var(--paint) 28%,transparent)}.dc.bad{color:var(--bad);border-color:var(--bad)}.dc.miss{color:var(--bad);border:1.5px dashed var(--bad)}
+.flag{position:absolute;right:-10px;top:-10px;width:22px;height:22px;border-radius:50%;background:var(--bad);color:#fff;font:700 13px/22px sans-serif;text-align:center;font-style:normal}
+.fzgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:14px 0}
+.fzc{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}.fzc.wide{grid-column:1/-1}
+.fzc h3{margin:0 0 4px;font-family:'Big Shoulders Display','Arial Narrow',sans-serif;font-size:22px;font-weight:800}
+.sub{color:var(--mute);font-size:13px;min-height:1.3em}.fzc svg{display:block;width:100%}.fzc svg.cash{height:210px;margin:8px 0}
+.rv{animation:rv 1.3s ease-out}@keyframes rv{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--mute);margin-top:6px}.lg i{display:inline-block;width:16px;height:4px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.wk{display:flex;align-items:flex-end;gap:8px;height:170px;padding-top:6px}.wk>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
+.wk i{display:block;width:100%;background:var(--stock);border-radius:5px 5px 0 0}.wk .p i{background:transparent;border:2px dashed var(--paint);border-bottom:0}
+.wk small{font-size:11px;color:var(--mute);text-align:center;line-height:1.1}.wk b{font-size:13px}
+.mrow{display:grid;grid-template-columns:72px 1fr;gap:2px 8px;margin:10px 0}.mrow>span{grid-row:1/3;align-self:center;font-weight:600}
+.mrow i{display:block;height:7px;border-radius:4px;margin:2px 0}.mrow i.a{background:var(--stock)}.mrow i.b{background:var(--line)}.mrow small{grid-column:2;color:var(--mute);font-size:12px}
+@media (max-width:560px){.srch input{width:100%}header h1{font-size:34px}.clock{text-align:left}.kpi{border-right:0;border-bottom:1.5px solid var(--line)}}
+
+/* ---- looks: the Theme menu in the header ---- */
+html[data-skin="midnight"]:not(.x){--bg:#0B1324;--panel:#131E36;--ink:#EAF0FA;--mute:#93A4C2;--paint:#E8B84A;--line:#26385C;--stock:#3FB6C4;--sold:#7A8AA8;--rent:#F28C4B;--serv:#A58BE0;--ok:#4FD08A;--bad:#FF7A70;color-scheme:dark}
+html[data-skin="midnight"] body{background:radial-gradient(1200px 600px at 8% -10%,#1B2C52,transparent 60%),#0B1324;background-attachment:fixed}
+html[data-skin="midnight"] header{border-bottom:2px solid var(--paint)}html[data-skin="midnight"] header h1{color:var(--paint)}
+html[data-skin="midnight"] .kpis,html[data-skin="midnight"] .fzc,html[data-skin="midnight"] .card,html[data-skin="midnight"] .lot,html[data-skin="midnight"] .lcol,html[data-skin="midnight"] .tl,html[data-skin="midnight"] .scroll,html[data-skin="midnight"] .drawer{border-radius:16px;border-color:#2A3E66;background:linear-gradient(180deg,#16243F,#111B31);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+html[data-skin="midnight"] .drawer{border-radius:0;border-left-color:var(--paint)}
+html[data-skin="midnight"] table{background:transparent}html[data-skin="midnight"] .bay{border-radius:12px;border-color:rgba(232,184,74,.55)}
+html[data-skin="midnight"] button.pri,html[data-skin="midnight"] nav button.on{background:var(--paint);border-color:var(--paint);color:#0B1324}
+html[data-skin="midnight"] button.pri:hover{background:#fff;border-color:#fff}html[data-skin="midnight"] .kpi .num{color:var(--paint)}html[data-skin="midnight"] .mix{border-color:#2A3E66}
+html[data-skin="white"]:not(.x){--bg:#F6F6F3;--panel:#FFFFFF;--ink:#111214;--mute:#6A6D72;--paint:#D7261E;--line:#E4E4E0;--stock:#111214;--sold:#9A9DA2;--rent:#D7261E;--serv:#5B4E9E;--ok:#1B7F3A;--bad:#C21F18;color-scheme:light}
+html[data-skin="white"] h1,html[data-skin="white"] h2,html[data-skin="white"] h3,html[data-skin="white"] .num,html[data-skin="white"] .price{font-family:'Hanken Grotesk',system-ui,sans-serif;font-weight:800;letter-spacing:-.02em}
+html[data-skin="white"] header{border-bottom:1px solid var(--line)}html[data-skin="white"] header h1{font-size:40px}
+html[data-skin="white"] header h1:after{content:"";display:block;width:38px;height:4px;border-radius:2px;background:var(--paint);margin-top:8px}
+html[data-skin="white"] .kpis,html[data-skin="white"] .fzc,html[data-skin="white"] .card,html[data-skin="white"] .lot,html[data-skin="white"] .lcol,html[data-skin="white"] .tl,html[data-skin="white"] .scroll,html[data-skin="white"] .drawer{border:0;border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 30px rgba(0,0,0,.06)}
+html[data-skin="white"] .drawer{border-radius:0}html[data-skin="white"] .kpi .num{font-size:36px}html[data-skin="white"] button{border-radius:999px}
+html[data-skin="white"] button.pri,html[data-skin="white"] nav button.on{background:var(--ink);color:#fff;border-color:var(--ink)}html[data-skin="white"] button.pri:hover{background:var(--paint);border-color:var(--paint);color:#fff}
+html[data-skin="white"] .bay{border:1.5px solid var(--line);border-top:3px solid var(--paint);border-radius:14px;background:#fff}html[data-skin="white"] .mix{border-color:var(--line);border-radius:999px}
+html[data-skin="emerald"]:not(.x){--bg:#EAEFE4;--panel:#FBFAF4;--ink:#0F3B2F;--mute:#5A7167;--paint:#B8743A;--line:#C8D2BF;--stock:#0F6B54;--sold:#4D5E57;--rent:#C2622D;--serv:#6C5B9E;--ok:#1E7A4C;--bad:#B3342B;color-scheme:light}
+html[data-skin="emerald"] body{background:linear-gradient(180deg,#F1F5EB,#E4EADB);background-attachment:fixed}
+html[data-skin="emerald"] h1,html[data-skin="emerald"] h2,html[data-skin="emerald"] h3,html[data-skin="emerald"] .num,html[data-skin="emerald"] .price{font-family:'Playfair Display',Georgia,serif;font-weight:800}
+html[data-skin="emerald"] header{border-bottom:4px double var(--ink)}
+html[data-skin="emerald"] .kpis,html[data-skin="emerald"] .fzc,html[data-skin="emerald"] .card,html[data-skin="emerald"] .lot,html[data-skin="emerald"] .lcol,html[data-skin="emerald"] .tl,html[data-skin="emerald"] .scroll{border-radius:16px;border-color:#BFCBB5;box-shadow:0 6px 18px rgba(15,59,47,.08)}
+html[data-skin="emerald"] button.pri,html[data-skin="emerald"] nav button.on{background:var(--ink);color:#F3EFE2;border-color:var(--ink)}html[data-skin="emerald"] button.pri:hover{background:var(--paint);border-color:var(--paint);color:#fff}
+html[data-skin="emerald"] .bay{border:2px dashed var(--paint);border-radius:14px}html[data-skin="emerald"] .mix{border-color:var(--ink)}
+html[data-skin="midnight"] [data-v="theme"],html[data-skin="white"] [data-v="theme"],html[data-skin="emerald"] [data-v="theme"]{display:none}
+#skin{margin-top:6px;padding:3px 8px;font-size:13px;border-radius:6px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);max-width:100%}
+html[dir=rtl] body,html[dir=rtl] button,html[dir=rtl] input,html[dir=rtl] select,html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3,html[dir=rtl] .num,html[dir=rtl] .price{font-family:'Noto Naskh Arabic','Hanken Grotesk',system-ui,sans-serif}
 html[dir=rtl] *{letter-spacing:0!important}
-html[dir=rtl] .yr{left:auto;right:10px}
-html[dir=rtl] .body,html[dir=rtl] .f label,html[dir=rtl] .dlg{text-align:right}
-html[dir=rtl] input[type=tel],html[dir=rtl] input[type=date]{direction:ltr;text-align:right}
-/* phones */
-@media (max-width:640px){header{padding:16px 0 20px}header h1{font-size:34px}.wrap{padding:0 12px 40px}.bar input,.bar select,.f input,.f select{font-size:16px}.grid{grid-template-columns:minmax(0,1fr)}.stage{height:190px}.btns button,.btns a.btn{flex:1;text-align:center;min-height:44px}.mask{align-items:end;padding:0}.dlg{max-width:none;border-radius:16px 16px 0 0;max-height:92vh;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}.chips{flex-wrap:nowrap;overflow-x:auto;margin-right:-12px;padding-right:12px;scrollbar-width:none}.chips button{flex:none}header .wrap{align-items:flex-start}}
+html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3,html[dir=rtl] .num{font-weight:700;line-height:1.35}
+html[dir=rtl] th,html[dir=rtl] td,html[dir=rtl] .bay,html[dir=rtl] .lead,html[dir=rtl] .alert,html[dir=rtl] button.kpi{text-align:right}
+html[dir=rtl] .clock{text-align:left}
+html[dir=rtl] .kpi{border-right:0;border-left:1.5px solid var(--line)}html[dir=rtl] .kpi:last-child{border-left:0}
+html[dir=rtl] button.kpi{border:0;border-left:1.5px solid var(--line)}html[dir=rtl] button.kpi:last-child{border-left:0}
+html[dir=rtl] .sync{margin-left:0;margin-right:auto}
+html[dir=rtl] .drawer{border-left:0;border-right:4px solid var(--paint)}
+html[dir=rtl] .att td:first-child,html[dir=rtl] .att th:first-child{left:auto;right:0;text-align:right;padding-left:2px;padding-right:10px}
+html[dir=rtl] .pm,html[dir=rtl] .wk,html[dir=rtl] .fzc svg,html[dir=rtl] .rg svg,html[dir=rtl] .mix{direction:ltr}
+html[dir=rtl] .mix button{text-align:center}
+html[dir=rtl] input[type=number],html[dir=rtl] input[type=tel],html[dir=rtl] input[type=date],html[dir=rtl] input[readonly]{direction:ltr;text-align:right}
+html[dir=rtl] .mrow small,html[dir=rtl] .tl li small{direction:rtl}
+html[dir=rtl] .mrow{direction:rtl}
+html[dir=rtl] .flag{right:auto;left:-10px}
+html[dir=rtl] .sub,html[dir=rtl] .out{max-width:none}
+/* ---- phones: sticky scrolling tabs, bottom-sheet panels, big touch targets ---- */
+@media (max-width:760px){
+ .wrap{padding:12px 12px 96px;overflow-x:clip}
+ header{gap:8px 12px;padding-bottom:10px}header h1{font-size:36px}
+ .clock{width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;text-align:left}
+ .clock .num{font-size:30px;margin-right:auto}.clock #day{order:3;flex-basis:100%;font-size:13px}.clock br{display:none}
+ .clock button,.clock select{margin:0!important;min-height:34px}#skin{max-width:150px}
+ nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;margin:0 -12px 12px;padding:8px 12px;background:var(--bg);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+ nav::-webkit-scrollbar{display:none}nav button{flex:none;white-space:nowrap;padding:9px 14px}nav .sync{flex:none;margin:0 0 0 auto;align-self:center;white-space:nowrap}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi,button.kpi{padding:10px 12px;border-right:0;border-bottom:1.5px solid var(--line)}
+ .kpi:nth-child(odd),button.kpi:nth-child(odd){border-right:1.5px solid var(--line)}.kpi .num{font-size:clamp(19px,6vw,26px);overflow-wrap:anywhere;line-height:1.1}.kpi span{display:block}
+ .lot{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px}.bay{padding:8px 6px}.bay b{font-size:13px}
+ .mix{display:grid;grid-template-columns:1fr 1fr;height:auto}.mix button{width:auto!important;padding:10px;font-size:13px}
+ .tools{gap:8px}.srch{width:100%}.srch input{flex:1;width:auto}
+ input,select,textarea{font-size:16px}
+ button,.btnlink{min-height:42px}.chip,.ac,.swb,.thumb,.phg figure button,.lt-eye{min-height:0}.chip{min-height:36px}.ac{width:30px;height:30px}
+ .scroll,.fzc,.card,.tl{max-width:100%}.scroll{margin:0 -12px;border-radius:0;border-left:0;border-right:0}th,td{padding:10px}table{font-size:14px}
+ .scroll table td:first-child,.scroll table th:first-child{position:sticky;left:0;background:var(--panel);z-index:1}
+ .mask{align-items:flex-end;justify-content:center}
+ .drawer{width:100%;height:auto;max-height:92vh;border-left:0;border-top:4px solid var(--paint);border-radius:16px 16px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+ html[dir=rtl] .drawer{border-right:0}html:not(.x)[data-skin] .drawer{border-radius:16px 16px 0 0}
+ .fzgrid{grid-template-columns:minmax(0,1fr)}.rings{gap:12px 20px}
+ .board{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-right:-12px;padding-right:12px}.lcol{flex:0 0 82%;scroll-snap-align:start}
+ .dock{display:none}.toast{bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:92vw;text-align:center}
+ html[data-skin] body{background-attachment:scroll}
+ .hero svg,.hero img{max-height:190px}
+}
+@media (max-width:380px){.two{grid-template-columns:minmax(0,1fr)}header h1{font-size:32px}}
 [hidden]{display:none!important}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style><script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-</head><body>
-<header><div class="wrap"><div><h1 id="sn"></h1><p id="sa"></p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><a class="btn wa" id="hw" target="_blank" rel="noopener">Chat on WhatsApp</a><button id="lang" type="button" style="color:#fff;border-color:#fff;padding:6px 14px;font-size:13px">اردو</button></div></div></header>
+/* ---- motion and polish ---- */
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}@keyframes pop{from{opacity:0;transform:scale(.92) translateY(10px)}}
+@keyframes fade{from{opacity:0}}@keyframes slideIn{from{transform:translateX(44px);opacity:0}}@keyframes slideInR{from{transform:translateX(-44px);opacity:0}}
+@keyframes sheetUp{from{transform:translateY(70px);opacity:0}}@keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}}@keyframes toastOut{to{opacity:0;transform:translate(-50%,10px)}}
+@keyframes ring{50%{box-shadow:0 0 0 6px rgba(179,38,30,.16)}}@keyframes shimmer{to{background-position:-200% 0}}
+@keyframes growY{from{transform:scaleY(0)}}@keyframes growX{from{transform:scaleX(0)}}@keyframes conf{to{transform:translate(var(--dx),105vh) rotate(var(--r))}}
+/* softer, rounder surfaces */
+.fzc,.card,.lot,.scroll,.tl,.lcol,.chart{border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+button,.btnlink{border-radius:9px}.bay{border-radius:10px}.tag,.dc,.pill{letter-spacing:.01em}
+.kpis{gap:10px;border:0;background:transparent;box-shadow:none;border-radius:0}
+.kpis .kpi,.kpis button.kpi{--acc:var(--paint);background:var(--panel);border:1.5px solid var(--line);border-left:5px solid var(--acc);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.05);padding:12px 14px}
+.kpis .kpi:nth-child(4n+2){--acc:var(--stock)}.kpis .kpi:nth-child(4n+3){--acc:var(--rent)}.kpis .kpi:nth-child(4n){--acc:var(--serv)}
+html[data-skin] .kpis{background:none;border:0;box-shadow:none;border-radius:0}
+html[dir=rtl] .kpis .kpi,html[dir=rtl] .kpis button.kpi{border:1.5px solid var(--line);border-right:5px solid var(--acc)}
+.num{font-variant-numeric:tabular-nums}
+/* hover and press feedback */
+button,.btnlink{transition:background-color .18s,color .18s,border-color .18s,transform .12s var(--ease),box-shadow .2s}
+button:active:not(:disabled),.btnlink:active{transform:scale(.97)}
+.bay{transition:transform .2s var(--ease),box-shadow .2s,background-color .2s}.bay:hover{transform:translateY(-4px);box-shadow:0 10px 20px rgba(0,0,0,.16)}.bay:active{transform:scale(.98)}
+.fzc,.card,.kpis .kpi,.lcol{transition:transform .22s var(--ease),box-shadow .22s}
+.fzc:hover,.card:hover,.kpis .kpi:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.10)}
+nav button{transition:background-color .22s,color .22s,border-color .22s,transform .12s var(--ease)}
+table tr{transition:background-color .15s}table tr:hover td{background:color-mix(in srgb,var(--paint) 13%,transparent)}
+.lead{transition:transform .18s var(--ease),border-color .18s,box-shadow .18s}.lead:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.12)}.lead:active{cursor:grabbing;transform:rotate(1.5deg) scale(1.02)}
+.ac{transition:transform .12s var(--ease),background-color .15s}.ac:active:not(:disabled){transform:scale(.82)}
+/* tabs and lists glide in when you open a screen (not on every live refresh) */
+.enter>*{animation:rise .55s var(--ease) both}
+.enter>*:nth-child(1){animation-delay:0.00s}.enter>*:nth-child(2){animation-delay:0.06s}.enter>*:nth-child(3){animation-delay:0.12s}.enter>*:nth-child(4){animation-delay:0.18s}.enter>*:nth-child(5){animation-delay:0.24s}.enter>*:nth-child(6){animation-delay:0.30s}.enter>*:nth-child(7){animation-delay:0.36s}.enter>*:nth-child(8){animation-delay:0.42s}.enter>*:nth-child(9){animation-delay:0.48s}
+.enter .bay,.enter .kpis .kpi,.enter .lead{animation:pop .5s var(--ease) both}
+.enter .lot .bay:nth-child(1){animation-delay:0.08s}.enter .lot .bay:nth-child(2){animation-delay:0.11s}.enter .lot .bay:nth-child(3){animation-delay:0.14s}.enter .lot .bay:nth-child(4){animation-delay:0.17s}.enter .lot .bay:nth-child(5){animation-delay:0.20s}.enter .lot .bay:nth-child(6){animation-delay:0.23s}.enter .lot .bay:nth-child(7){animation-delay:0.26s}.enter .lot .bay:nth-child(8){animation-delay:0.29s}.enter .lot .bay:nth-child(9){animation-delay:0.32s}.enter .lot .bay:nth-child(10){animation-delay:0.35s}.enter .lot .bay:nth-child(11){animation-delay:0.38s}.enter .lot .bay:nth-child(12){animation-delay:0.41s}.enter .lot .bay:nth-child(13){animation-delay:0.44s}.enter .lot .bay:nth-child(14){animation-delay:0.47s}.enter .kpis .kpi:nth-child(1){animation-delay:0.04s}.enter .kpis .kpi:nth-child(2){animation-delay:0.09s}.enter .kpis .kpi:nth-child(3){animation-delay:0.14s}.enter .kpis .kpi:nth-child(4){animation-delay:0.19s}.enter .kpis .kpi:nth-child(5){animation-delay:0.24s}.enter .kpis .kpi:nth-child(6){animation-delay:0.29s}.enter .kpis .kpi:nth-child(7){animation-delay:0.34s}.enter .kpis .kpi:nth-child(8){animation-delay:0.39s}
+.enter .wk i,.enter .pm .up i{transform-origin:bottom;animation:growY .85s var(--ease) .3s both}.enter .pm .dn i{transform-origin:top;animation:growY .85s var(--ease) .3s both}
+.enter .mrow i{transform-origin:left;animation:growX .85s var(--ease) .25s both}html[dir=rtl] .enter .mrow i{transform-origin:right}
+.enter .lcol{animation:rise .5s var(--ease) both}.enter .lcol:nth-child(1){animation-delay:0.05s}.enter .lcol:nth-child(2){animation-delay:0.12s}.enter .lcol:nth-child(3){animation-delay:0.19s}.enter .lcol:nth-child(4){animation-delay:0.26s}.enter .lcol:nth-child(5){animation-delay:0.33s}.enter .lcol:nth-child(6){animation-delay:0.40s}
+/* panels, toasts, alerts, loading */
+.mask{animation:fade .22s ease both}.drawer{animation:slideIn .32s var(--ease) both}html[dir=rtl] .drawer{animation-name:slideInR}
+@media (max-width:760px){.drawer,html[dir=rtl] .drawer{animation-name:sheetUp}.scroll{border-radius:0}.kpis .kpi,.kpis button.kpi{padding:10px 12px}}
+.toast{animation:toastIn .3s var(--ease) both,toastOut .3s ease 1.9s forwards}
+button.alert{animation:ring 2.6s ease-in-out infinite}.flag{animation:ring 2s ease-in-out infinite}
+.skel{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:6px}.skel i{display:block;height:92px;border-radius:14px;background:linear-gradient(90deg,var(--line) 25%,color-mix(in srgb,var(--line) 35%,var(--panel)) 50%,var(--line) 75%);background-size:200% 100%;animation:shimmer 1.3s linear infinite}
+.confetti{position:fixed;top:-14px;width:9px;height:14px;z-index:60;pointer-events:none;border-radius:2px;animation:conf 1.5s cubic-bezier(.3,.55,.4,1) forwards}
+.nop{position:relative;overflow:hidden}.nop .sp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>try{var k=localStorage.getItem('lot-skin');if(k&&k!=='concrete')document.documentElement.dataset.skin=k}catch(e){}</script>
+</head>
+<body>
 <div class="wrap">
-<div class="bar"><input id="q" placeholder="Search make or model" aria-label="Search cars"><select id="so" aria-label="Sort"><option value="n">Newest</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select></div>
-<div class="chips" id="ch"></div>
-<div class="grid" id="g"></div><div class="empty" id="em" hidden>No cars match. Try another make or clear the search.</div>
-<footer id="ft"></footer></div>
-<div id="m"></div>
+<header>
+  <div><h1>The Lot</h1><div style="color:var(--mute)">Showroom control for the owner</div></div>
+  <div class="clock"><div class="num" id="time"></div><div id="day"></div><button id="lang" type="button" style="margin-top:6px;padding:3px 12px;font-size:13px">اردو</button><br><select id="skin" aria-label="Theme"><option value="concrete">Concrete</option><option value="midnight">Midnight gold</option><option value="white">Showroom white</option><option value="emerald">Emerald and copper</option></select></div>
+</header>
+<div class="kpis" id="kpis"></div>
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<div id="layer"></div>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="shim.js"></script>
 <script>
-const UR={
-"Chat on WhatsApp":"واٹس ایپ پر بات کریں","Search make or model":"کمپنی یا ماڈل تلاش کریں","Search cars":"گاڑیاں تلاش کریں","Sort":"ترتیب",
-"Newest":"تازہ ترین","Price: low to high":"قیمت: کم سے زیادہ","Price: high to low":"قیمت: زیادہ سے کم","All":"سب",
-"No cars match. Try another make or clear the search.":"کوئی گاڑی نہیں ملی۔ دوسری کمپنی آزمائیں یا تلاش صاف کریں۔",
-"Book a test drive":"ٹیسٹ ڈرائیو بُک کریں","Ask on WhatsApp":"واٹس ایپ پر پوچھیں","Your name":"آپ کا نام","Your phone":"آپ کا فون","Date":"تاریخ","Time":"وقت",
-"Send request on WhatsApp":"واٹس ایپ پر درخواست بھیجیں","Close":"بند کریں",
-"Sending opens WhatsApp with your request written for you. The showroom will confirm the time.":"بھیجنے پر واٹس ایپ کھلے گا جس میں آپ کی درخواست لکھی ہوگی۔ شوروم وقت کی تصدیق کرے گا۔",
-"Please enter your name and phone first.":"پہلے اپنا نام اور فون لکھیں۔",
-"This showroom has not added a WhatsApp number yet. Please call them directly.":"اس شوروم نے ابھی واٹس ایپ نمبر شامل نہیں کیا۔ براہِ کرم براہِ راست فون کریں۔",
-"Thank you. The showroom has your request and will call you.":"شکریہ۔ شوروم کو آپ کی درخواست مل گئی ہے، وہ آپ کو فون کریں گے۔",
-"That car has been sold or is no longer listed. Here are the others.":"یہ گاڑی بک چکی ہے یا فہرست میں نہیں رہی۔ باقی گاڑیاں یہ ہیں۔",
-"The catalog could not be loaded. Please try again later.":"کیٹلاگ لوڈ نہیں ہو سکا۔ بعد میں دوبارہ کوشش کریں۔",
-"Jan":"جنوری","Feb":"فروری","Mar":"مارچ","Apr":"اپریل","Jun":"جون","Jul":"جولائی","Aug":"اگست","Sep":"ستمبر","Sept":"ستمبر","Oct":"اکتوبر","Nov":"نومبر","Dec":"دسمبر","January":"جنوری","February":"فروری","March":"مارچ","April":"اپریل","May":"مئی","June":"جون","July":"جولائی","August":"اگست","September":"ستمبر","October":"اکتوبر","November":"نومبر","December":"دسمبر"
+const UR={"Concrete":"کنکریٹ","Midnight gold":"نیلی رات اور سنہرا","Showroom white":"شوروم سفید","Emerald and copper":"زمردی اور تانبا","Theme":"تھیم",
+"The Lot":"دی لاٹ","Showroom control for the owner":"مالک کے لیے شوروم کنٹرول",
+"cars ready to sell":"فروخت کے لیے تیار گاڑیاں","out on rent":"کرائے پر گئی ہوئی","sold this month":"اس ماہ فروخت",
+"money in this month":"اس ماہ آمدن","money out this month":"اس ماہ اخراجات","net this month":"اس ماہ خالص",
+"invoices unpaid":"بغیر ادائیگی انوائسز","payroll still to pay":"باقی تنخواہیں",
+"Lot floor":"شوروم فلور","Invoices":"انوائسز","Customers":"گاہک","Leads":"دلچسپی رکھنے والے","Trade-in":"پرانی گاڑی",
+"Documents":"کاغذات","Staff & payroll":"عملہ اور تنخواہیں","Expenses":"اخراجات","Dealers":"ڈیلرز","Profit":"منافع",
+"Activity":"سرگرمی","Records":"ریکارڈ","AI desk":"اے آئی ڈیسک",
+"● Shared live":"● لائیو شیئرڈ","○ This device only":"○ صرف اس ڈیوائس پر",
+"Every signed-in device sees the same data":"ہر لاگ اِن ڈیوائس پر ایک ہی ڈیٹا نظر آتا ہے",
+"Data stays on this device only":"ڈیٹا صرف اسی ڈیوائس پر رہتا ہے","Switch light and dark":"روشن اور تاریک موڈ بدلیں",
+"This month's targets":"اس ماہ کے اہداف","Change targets":"اہداف تبدیل کریں","Set targets":"اہداف مقرر کریں","Cars sold":"فروخت شدہ گاڑیاں",
+"Behind pace":"رفتار سے پیچھے","Ahead of pace":"رفتار سے آگے","On pace":"رفتار کے مطابق","Target reached":"ہدف حاصل",
+"Profit on car sales":"گاڑیوں کی فروخت پر منافع","Rental income":"کرائے کی آمدن",
+"Set a monthly target for cars sold, profit and rentals, and watch it fill as the month goes.":"گاڑیوں کی فروخت، منافع اور کرائے کا ماہانہ ہدف مقرر کریں اور مہینے کے ساتھ اسے بھرتا دیکھیں۔",
+"Real photos sell cars faster and appear in your customer catalog.":"اصل تصاویر سے گاڑیاں جلدی بکتی ہیں اور آپ کے کسٹمر کیٹلاگ میں نظر آتی ہیں۔",
+"Hover or tap a day":"کسی دن پر ٹیپ کریں","Newest":"تازہ ترین","Highest price":"سب سے زیادہ قیمت","Best margin":"سب سے بہتر مارجن",
+"Add photo":"تصویر لگائیں","Sold":"فروخت شدہ","In stock":"اسٹاک میں","Rented out":"کرائے پر","In service":"سروس میں","Rented out –":"کرائے پر –",
+"+ Buy a car":"+ گاڑی خریدیں","Drop here to sell":"فروخت کے لیے یہاں چھوڑیں","Drop here to rent out":"کرائے کے لیے یہاں چھوڑیں",
+"Drop here for service":"سروس کے لیے یہاں چھوڑیں","Drop here to return to stock":"اسٹاک میں واپسی کے لیے یہاں چھوڑیں",
+"Search make, model, plate":"کمپنی، ماڈل یا نمبر پلیٹ تلاش کریں","Search cars":"گاڑیاں تلاش کریں","Sort cars":"گاڑیاں ترتیب دیں",
+"Papers need attention":"کاغذات توجہ طلب ہیں","Show all":"سب دکھائیں",
+"All":"سب","Unpaid":"غیر ادا شدہ","Paid":"ادا شدہ","Showroom details":"شوروم کی تفصیل","No.":"نمبر","Date and time":"تاریخ اور وقت",
+"Type":"قسم","Customer":"گاہک","Car":"گاڑی","Amount":"رقم","Status":"حالت","Rental":"کرایہ","PDF":"پی ڈی ایف",
+"Receive payment":"ادائیگی وصول کریں","Sale":"فروخت",
+"+ Add customer":"+ گاہک شامل کریں","Name":"نام","Phone":"فون","City":"شہر","Bought":"خریدا","Rented":"کرائے پر لیا","Owes":"واجب الادا",
+"Last deal":"آخری سودا","add":"شامل کریں","Search name, phone or city":"نام، فون یا شہر تلاش کریں","Search customers":"گاہک تلاش کریں",
+"No customers yet. They are added when you sell or rent a car.":"ابھی کوئی گاہک نہیں۔ گاڑی بیچنے یا کرائے پر دینے پر خود شامل ہو جاتے ہیں۔",
+"Leads and test drives":"دلچسپی اور ٹیسٹ ڈرائیو","+ Add lead":"+ نیا گاہک شامل کریں","open leads":"کھلے معاملات",
+"follow-ups due":"فالو اپ باقی","won this month":"اس ماہ کامیاب","No car chosen":"کوئی گاڑی منتخب نہیں","Drag leads here":"گاہکوں کو یہاں گھسیٹیں",
+"Customer catalog":"کسٹمر کیٹلاگ",
+"Share this link on WhatsApp or Facebook. Customers browse your cars, see photos and request test drives.":"یہ لنک واٹس ایپ یا فیس بک پر شیئر کریں۔ گاہک گاڑیاں اور تصاویر دیکھ سکتے ہیں اور ٹیسٹ ڈرائیو کی درخواست دے سکتے ہیں۔",
+"Copy link":"لنک کاپی کریں","QR stickers for all cars":"تمام گاڑیوں کے کیو آر اسٹیکرز","Catalog link":"کیٹلاگ لنک",
+"The catalog is live. It always shows the cars you have in stock with their photos, and test-drive requests arrive here as leads.":"کیٹلاگ لائیو ہے۔ یہ ہمیشہ آپ کی اسٹاک والی گاڑیاں تصاویر کے ساتھ دکھاتا ہے، اور ٹیسٹ ڈرائیو کی درخواستیں یہاں نئے معاملات کے طور پر آتی ہیں۔",
+"Up to date with your stock.":"آپ کے اسٹاک کے مطابق تازہ ہے۔",
+"Trade-in valuation":"پرانی گاڑی کی قیمت کا اندازہ",
+"Enter the customer's car. The offer comes from what similar cars cost and sold for in your own records.":"گاہک کی گاڑی درج کریں۔ پیشکش آپ کے اپنے ریکارڈ میں ملتی جلتی گاڑیوں کی خرید اور فروخت کی قیمت سے نکلتی ہے۔",
+"Make":"کمپنی","Model":"ماڈل","Year":"سال","Kilometres driven":"چلے ہوئے کلومیٹر","Condition":"حالت","Excellent":"بہترین","Good":"اچھی","Fair":"درمیانی","Poor":"خراب",
+"Market price you know, optional (PKR)":"آپ کو معلوم مارکیٹ قیمت، اختیاری (روپے)","Get offer":"پیشکش معلوم کریں",
+"Offer to the customer":"گاہک کو پیشکش","Likely resale price":"ممکنہ دوبارہ فروخت قیمت","After condition and kilometres.":"حالت اور کلومیٹر کے بعد۔",
+"Expected profit":"متوقع منافع","Similar car in your records":"آپ کے ریکارڈ میں ملتی جلتی گاڑی","Price used":"استعمال شدہ قیمت",
+"Adjusted to this year":"اس سال کے مطابق","Asking":"مانگی گئی","Save as a lead":"گاہک کے طور پر محفوظ کریں","Second opinion from AI":"اے آئی کی دوسری رائے",
+"Car documents":"گاڑیوں کے کاغذات","Tap a car to manage its papers":"کاغذات سنبھالنے کے لیے گاڑی پر ٹیپ کریں","expired documents":"ختم شدہ کاغذات",
+"cars missing required papers":"ضروری کاغذات سے محروم گاڑیاں","expiring within 30 days or pending":"30 دن میں ختم ہونے والے یا زیر التوا",
+"Registration book":"رجسٹریشن بک","Token tax":"ٹوکن ٹیکس","Insurance":"انشورنس","Transfer papers":"ٹرانسفر کے کاغذات","Fitness certificate":"فٹنس سرٹیفکیٹ",
+"On file":"موجود","Pending":"زیر التوا","Missing":"غائب","None":"کوئی نہیں","Valid":"درست","Reference or number":"حوالہ یا نمبر",
+"Expiry date (leave empty if none)":"ختم ہونے کی تاریخ (نہ ہو تو خالی چھوڑیں)","Save document":"کاغذ محفوظ کریں","Add document":"کاغذ شامل کریں","+ Add document":"+ کاغذ شامل کریں",
+"No papers recorded yet.":"ابھی کوئی کاغذ درج نہیں۔",
+"Ask the Lot":"شوروم سے پوچھیں","Ask":"پوچھیں",
+"Which cars have been unsold the longest?":"کون سی گاڑیاں سب سے زیادہ عرصے سے نہیں بکیں؟","Who is late returning a car?":"گاڑی واپس کرنے میں کون لیٹ ہے؟",
+"Which leads should I follow up first?":"مجھے پہلے کن گاہکوں سے رابطہ کرنا چاہیے؟","How much did we earn from rentals this month?":"اس ماہ کرائے سے کتنی آمدن ہوئی؟",
+"Which make gives us the best profit?":"کون سی کمپنی سب سے زیادہ منافع دیتی ہے؟",
+"Ask in English or Urdu, for example: which cars are slow to sell?":"انگریزی یا اردو میں پوچھیں، مثلاً: کون سی گاڑیاں دیر سے بک رہی ہیں؟","Ask a question":"سوال پوچھیں",
+"Daily briefing":"روزانہ خلاصہ","Write today's briefing":"آج کا خلاصہ لکھیں",
+"No backup downloaded on this device yet. Use Records, then Download full backup.":"اس ڈیوائس پر ابھی تک بیک اپ ڈاؤن لوڈ نہیں ہوا۔ ریکارڈ میں جا کر مکمل بیک اپ ڈاؤن لوڈ کریں۔",
+"Attendance is not marked for today yet":"آج کی حاضری ابھی نہیں لگی","Nothing needs attention right now.":"اس وقت کسی چیز پر توجہ کی ضرورت نہیں۔",
+"Forecast":"پیش گوئی","until stock runs out at this pace":"اس رفتار سے اسٹاک ختم ہونے تک","average profit per sale":"فی فروخت اوسط منافع",
+"best-selling make":"سب سے زیادہ بکنے والی کمپنی","rental income, 30 days":"کرائے کی آمدن، 30 دن","net cash, 30 days":"خالص نقد، 30 دن","cars sold in 30 days":"30 دن میں فروخت شدہ گاڑیاں",
+"so far":"اب تک","forecast":"پیش گوئی","Shaded area: likely range":"سایہ دار حصہ: ممکنہ حد","Sales per week":"ہفتہ وار فروخت","Stock runway":"اسٹاک کتنے دن چلے گا",
+"days of stock left":"دن کا اسٹاک باقی","Days of stock left":"باقی اسٹاک کے دن","Demand by make":"کمپنی کے لحاظ سے طلب","sold":"فروخت","in stock":"اسٹاک میں",
+"Hover or tap any chart for the exact figures.":"درست اعداد کے لیے کسی بھی چارٹ پر ٹیپ کریں۔","Explain and suggest next steps":"وضاحت کریں اور اگلے اقدامات بتائیں",
+"Cash trend and forecast":"نقد رقم کا رجحان اور پیش گوئی","next 7d":"اگلے 7 دن","last 7d":"پچھلے 7 دن",
+"Customer messages":"گاہکوں کے پیغامات","Language":"زبان","English":"انگریزی","Urdu":"اردو","Roman Urdu":"رومن اردو","Write message":"پیغام لکھیں","Copy":"کاپی",
+"No customers to message yet.":"ابھی پیغام بھیجنے کے لیے کوئی گاہک نہیں۔","Customer":"گاہک",
+"Payroll":"تنخواہیں","Attendance":"حاضری","Leaderboard":"کارکردگی کی فہرست","+ Add worker":"+ ملازم شامل کریں","Base pay":"بنیادی تنخواہ",
+"Absent":"غیر حاضر","Leave":"چھٹی","Deduction":"کٹوتی","Commission":"کمیشن","Net pay":"خالص تنخواہ","Pay":"ادا کریں",
+"Sales manager":"سیلز مینیجر","Accountant":"اکاؤنٹنٹ","Sales executive":"سیلز ایگزیکٹو","Mechanic":"مکینک","Detailer":"ڈیٹیلر","Guard":"گارڈ","Receptionist":"ریسیپشنسٹ",
+"Each absent day takes off one day of base pay (a half day takes off half). Leave is paid. Commission is a percentage of the profit on cars the person sold this month. Days left unmarked count as present.":"ہر غیر حاضر دن بنیادی تنخواہ کا ایک دن کاٹتا ہے (آدھا دن آدھا کاٹتا ہے)۔ چھٹی کی تنخواہ ملتی ہے۔ کمیشن اس ماہ فروخت کی گئی گاڑیوں کے منافع کا فیصد ہے۔ نشان نہ لگائے گئے دن حاضر شمار ہوتے ہیں۔",
+"Mark everyone present today":"آج سب کو حاضر لگائیں","P present":"P حاضر","A absent":"A غیر حاضر","L paid leave":"L تنخواہ والی چھٹی","H half day":"H آدھا دن",
+"Tap a day to change it. Sundays are shaded.":"تبدیل کرنے کے لیے دن پر ٹیپ کریں۔ اتوار سایہ دار ہیں۔",
+"Salesman leaderboard: profit this month":"سیلزمین کی فہرست: اس ماہ کا منافع","Cars sold, profit earned for the showroom and commission earned":"فروخت شدہ گاڑیاں، شوروم کو ہونے والا منافع اور کمیشن",
+"+ Add expense":"+ خرچہ شامل کریں","Rent":"کرایہ","Electricity and utilities":"بجلی اور یوٹیلیٹیز","Fuel":"ایندھن","Advertising":"اشتہارات",
+"Repairs and parts":"مرمت اور پرزے","Taxes and fees":"ٹیکس اور فیس","Other":"دیگر","Costs on cars":"گاڑیوں پر اخراجات",
+"Repairs and parts linked to a car":"گاڑی سے منسلک مرمت اور پرزے","Category":"زمرہ","Note":"نوٹ","Remove":"ہٹائیں",
+"No repair costs linked to a car yet.":"ابھی کوئی مرمتی خرچ کسی گاڑی سے منسلک نہیں۔","Nothing recorded last month":"پچھلے مہینے کچھ درج نہیں",
+"No expenses yet. Add rent, electricity, fuel or repairs to see your real profit.":"ابھی کوئی خرچہ نہیں۔ اصل منافع دیکھنے کے لیے کرایہ، بجلی، ایندھن یا مرمت شامل کریں۔",
+"Expenses":"اخراجات",
+"Dealers and suppliers":"ڈیلرز اور سپلائرز","+ Add dealer":"+ ڈیلر شامل کریں","you owe dealers":"آپ پر ڈیلرز کا قرض","dealers owe you":"ڈیلرز پر آپ کا قرض",
+"net position":"خالص پوزیشن","Dealer":"ڈیلر","Balance":"بیلنس","Last entry":"آخری اندراج","Settled":"حساب برابر",
+"No dealers yet. Add one to keep a running account.":"ابھی کوئی ڈیلر نہیں۔ حساب رکھنے کے لیے ایک شامل کریں۔",
+"This month":"اس ماہ","Last 90 days":"آخری 90 دن","All time":"تمام وقت","net profit this month":"اس ماہ خالص منافع","expenses and salaries paid":"ادا شدہ اخراجات اور تنخواہیں",
+"Net profit by month":"ماہانہ خالص منافع","Car profit plus rentals, minus expenses and salaries paid":"گاڑیوں کا منافع اور کرایہ، منفی ادا شدہ اخراجات اور تنخواہیں",
+"Hover or tap a month for the breakdown.":"تفصیل کے لیے کسی مہینے پر ٹیپ کریں۔","Break-even":"نفع نقصان برابر","Sale price":"فروخت کی قیمت","Bought for":"خرید قیمت",
+"Repairs":"مرمت","Running costs":"جاری اخراجات","True profit":"اصل منافع","Margin":"مارجن","No cars sold in this period.":"اس مدت میں کوئی گاڑی فروخت نہیں ہوئی۔",
+"Total":"کل","rental income":"کرائے کی آمدن","Sell a few cars to see how many you need each month.":"ہر ماہ کتنی گاڑیاں چاہئیں، یہ دیکھنے کے لیے چند گاڑیاں بیچیں۔",
+"True profit is the sale price minus the buying price, repairs linked to that car, the salesman's commission, and an equal share of that month's running costs (non-car expenses and base salaries) across the cars sold that month.":"اصل منافع = فروخت کی قیمت منفی خرید قیمت، اس گاڑی کی مرمت، سیلزمین کا کمیشن، اور اس ماہ فروخت ہونے والی گاڑیوں میں جاری اخراجات (گاڑی کے علاوہ اخراجات اور بنیادی تنخواہیں) کا برابر حصہ۔",
+"Jan":"جنوری","Feb":"فروری","Mar":"مارچ","Apr":"اپریل","May":"مئی","Jun":"جون","Jul":"جولائی","Aug":"اگست","Sep":"ستمبر","Sept":"ستمبر","Oct":"اکتوبر","Nov":"نومبر","Dec":"دسمبر",
+"January":"جنوری","February":"فروری","March":"مارچ","April":"اپریل","June":"جون","July":"جولائی","August":"اگست","September":"ستمبر","October":"اکتوبر","November":"نومبر","December":"دسمبر",
+"Activity trail":"سرگرمی کا ریکارڈ","Who changed what, newest first. Undo restores the record only. Money entries in Records are not reversed.":"کس نے کیا بدلا، تازہ ترین پہلے۔ واپس کریں صرف ریکارڈ بحال کرتا ہے۔ ریکارڈ میں رقم کے اندراج الٹے نہیں ہوتے۔",
+"Nothing recorded yet. Changes made from now on appear here.":"ابھی کچھ ریکارڈ نہیں ہوا۔ اب سے ہونے والی تبدیلیاں یہاں نظر آئیں گی۔","Undo":"واپس کریں",
+"added":"شامل","edited":"ترمیم","removed":"حذف","bulk":"کئی تبدیلیاں",
+"Every record, newest first":"تمام ریکارڈ، تازہ ترین پہلے","Download records (CSV)":"ریکارڈ ڈاؤن لوڈ کریں (سی ایس وی)","Reset to sample data":"نمونے کے ڈیٹا پر واپس",
+"Download full backup":"مکمل بیک اپ ڈاؤن لوڈ کریں","Restore from backup":"بیک اپ سے بحال کریں","Restore backup":"بیک اپ بحال کریں",
+"Replace everything with this backup":"سب کچھ اس بیک اپ سے بدل دیں","This replaces everything now in the showroom.":"یہ شوروم میں موجود ہر چیز کو بدل دے گا۔",
+"No papers recorded yet":"ابھی کوئی کاغذ درج نہیں",
+"No photo yet. Add one below.":"ابھی کوئی تصویر نہیں۔ نیچے سے لگائیں۔","Margin at asking price:":"مانگی قیمت پر مارجن:",
+"Sell this car":"یہ گاڑی فروخت کریں","Buyer name":"خریدار کا نام","Buyer phone (optional)":"خریدار کا فون (اختیاری)","Final price (PKR)":"حتمی قیمت (روپے)",
+"Paid now (PKR). Leave blank for the full price. A smaller amount makes it an installment sale.":"ابھی ادا شدہ (روپے)۔ پوری قیمت کے لیے خالی چھوڑیں۔ کم رقم ہو تو قسطوں پر فروخت بنتی ہے۔",
+"Days until the balance is due":"بقایا کی ادائیگی میں دن","Sold by (for commission)":"کس نے بیچی (کمیشن کے لیے)","Nobody":"کوئی نہیں",
+"Sell and create invoice":"فروخت کریں اور انوائس بنائیں","Rent this car":"یہ گاڑی کرائے پر دیں","Customer name":"گاہک کا نام","Customer phone (optional)":"گاہک کا فون (اختیاری)",
+"Days":"دن","Rate per day":"فی دن کرایہ","Rent out and create invoice":"کرائے پر دیں اور انوائس بنائیں","Send to service":"سروس کے لیے بھیجیں",
+"Photos":"تصاویر","Take or choose photos of this car. The first photo is shown everywhere.":"اس گاڑی کی تصاویر لیں یا منتخب کریں۔ پہلی تصویر ہر جگہ دکھائی جاتی ہے۔",
+"Tap a photo to make it the main one.":"مرکزی بنانے کے لیے تصویر پر ٹیپ کریں۔","Take photo":"تصویر لیں","Choose photos":"تصاویر منتخب کریں","QR sticker (PDF)":"کیو آر اسٹیکر (پی ڈی ایف)",
+"Colour of the card shown while there is no photo":"تصویر نہ ہونے پر دکھائے جانے والے کارڈ کا رنگ","Suggest price with AI":"اے آئی سے قیمت تجویز کروائیں",
+"Use these prices":"یہ قیمتیں استعمال کریں","Remove car":"گاڑی ہٹائیں","Close":"بند کریں","Renter:":"کرایہ دار:","Mark as returned":"واپس آ گئی","Sold to":"فروخت بنام",
+"Sold by":"فروخت کنندہ","Save":"محفوظ کریں","Buying price":"خرید قیمت","Salesman commission":"سیلزمین کمیشن","Share of running costs":"جاری اخراجات کا حصہ","Back to stock":"اسٹاک میں واپس",
+"Buy a car":"گاڑی خریدیں","Photo of the car or its papers (optional)":"گاڑی یا اس کے کاغذات کی تصویر (اختیاری)","Fill the form from the photo":"تصویر سے فارم بھریں",
+"Plate":"نمبر پلیٹ","Buying price (PKR)":"خرید قیمت (روپے)","Asking price (PKR)":"مانگی قیمت (روپے)","Rent per day (PKR)":"فی دن کرایہ (روپے)","Add to lot":"شوروم میں شامل کریں",
+"New lead":"نیا گاہک","Interested in":"دلچسپی کی گاڑی","Not decided":"طے نہیں","Source":"ذریعہ","WhatsApp":"واٹس ایپ","Walk-in":"خود آیا","Phone call":"فون کال",
+"Facebook":"فیس بک","OLX":"او ایل ایکس","Catalog link":"کیٹلاگ لنک","Stage":"مرحلہ","New":"نیا","Test drive":"ٹیسٹ ڈرائیو","Negotiating":"بات چیت","Won":"کامیاب","Lost":"ناکام",
+"Follow-up date":"فالو اپ کی تاریخ","Notes":"نوٹس","Save lead":"محفوظ کریں","Open WhatsApp":"واٹس ایپ کھولیں","WhatsApp":"واٹس ایپ","New customer":"نیا گاہک",
+"Amount received now (PKR)":"ابھی وصول رقم (روپے)","Days until the rest is due, if any is left":"باقی رقم کی ادائیگی میں دن (اگر کچھ باقی ہو)","Record payment":"ادائیگی درج کریں",
+"These appear at the top of every invoice PDF.":"یہ ہر انوائس پی ڈی ایف کے اوپر آتے ہیں۔","Showroom name":"شوروم کا نام","Address":"پتہ","Save details":"تفصیل محفوظ کریں",
+"Add worker":"ملازم شامل کریں","Full name":"پورا نام","Role":"عہدہ","Monthly salary (PKR)":"ماہانہ تنخواہ (روپے)",
+"Commission (% of profit on cars they sell)":"کمیشن (ان کی فروخت کی گاڑیوں کے منافع کا %)","Remove worker":"ملازم ہٹائیں",
+"Add expense":"خرچہ شامل کریں","What was it for":"کس لیے تھا","Amount (PKR)":"رقم (روپے)","Car, for repairs (optional)":"گاڑی، مرمت کے لیے (اختیاری)","No car":"کوئی گاڑی نہیں","Save expense":"خرچہ محفوظ کریں",
+"We bought":"ہم نے خریدا","We paid":"ہم نے ادا کیا","We sold":"ہم نے بیچا","They paid us":"انہوں نے ادا کیا","Statement PDF":"اسٹیٹمنٹ پی ڈی ایف","Edit details":"تفصیل میں ترمیم",
+"Account statement":"اکاؤنٹ اسٹیٹمنٹ","Date (leave empty for now)":"تاریخ (ابھی کے لیے خالی چھوڑیں)","Save entry":"اندراج محفوظ کریں","Add dealer":"ڈیلر شامل کریں","What was it for":"کس لیے تھا",
+"Cars or parts you took on credit. You owe this until you pay.":"ادھار لی گئی گاڑیاں یا پرزے۔ ادائیگی تک آپ پر واجب ہے۔","Cash you paid to the dealer. Recorded as money out.":"ڈیلر کو ادا کی گئی رقم۔ اخراجات میں درج ہوگی۔",
+"Cars or parts you gave on credit. They owe this until they pay.":"ادھار دی گئی گاڑیاں یا پرزے۔ ادائیگی تک ان پر واجب ہے۔","Cash the dealer paid you. Recorded as money in.":"ڈیلر کی طرف سے ملنے والی رقم۔ آمدن میں درج ہوگی۔",
+"No entries yet.":"ابھی کوئی اندراج نہیں۔","Add dealer":"ڈیلر شامل کریں","Edit dealer":"ڈیلر میں ترمیم",
+"Monthly targets":"ماہانہ اہداف","These apply to this month and carry forward to later months until you change them.":"یہ اس ماہ پر لاگو ہوتے ہیں اور بدلنے تک اگلے مہینوں میں چلتے رہتے ہیں۔",
+"Cars to sell":"بیچنے والی گاڑیاں","Profit on car sales (PKR)":"گاڑیوں کی فروخت پر منافع (روپے)","Rental income (PKR)":"کرائے کی آمدن (روپے)","Save targets":"اہداف محفوظ کریں",
+"Receive payment":"ادائیگی وصول کریں","Add document":"کاغذ شامل کریں","Type":"قسم","Status":"حالت","Account statement":"اکاؤنٹ اسٹیٹمنٹ",
+"AI is not available on this page":"اس صفحے پر اے آئی دستیاب نہیں","All salaries paid":"تمام تنخواہیں ادا ہو گئیں","Already gone":"پہلے ہی ہٹ چکا ہے","Already restored":"پہلے ہی بحال ہو چکا ہے",
+"Back in stock":"اسٹاک میں واپس","Backup restored":"بیک اپ بحال ہو گیا","Backup saved":"بیک اپ محفوظ ہو گیا","Cannot undo: the record is missing":"واپس نہیں ہو سکتا: ریکارڈ موجود نہیں",
+"Choose a photo first":"پہلے تصویر منتخب کریں","Copied":"کاپی ہو گیا","Customer saved":"گاہک محفوظ ہو گیا","Dealer saved":"ڈیلر محفوظ ہو گیا","Details saved":"تفصیل محفوظ ہو گئی",
+"Document saved":"کاغذ محفوظ ہو گیا","Download cancelled":"ڈاؤن لوڈ منسوخ","Downloads are not available here":"یہاں ڈاؤن لوڈ دستیاب نہیں","Enter a name":"نام لکھیں","Enter an amount":"رقم لکھیں",
+"Enter customer name and days":"گاہک کا نام اور دن لکھیں","Enter the amount":"رقم لکھیں","Enter the buyer’s name":"خریدار کا نام لکھیں","Enter the make":"کمپنی لکھیں","Enter the name":"نام لکھیں",
+"Enter the showroom name":"شوروم کا نام لکھیں","Enter the worker’s name":"ملازم کا نام لکھیں","Entry saved":"اندراج محفوظ ہو گیا","Expense removed":"خرچہ ہٹا دیا گیا","Expense saved":"خرچہ محفوظ ہو گیا",
+"Invoice marked paid":"انوائس ادا شدہ نشان زد","Lead added. Open Leads to add the customer name.":"گاہک شامل ہو گیا۔ نام لکھنے کے لیے گاہکوں میں جائیں۔","Lead removed":"گاہک ہٹا دیا گیا","Lead saved":"گاہک محفوظ ہو گیا",
+"Link copied":"لنک کاپی ہو گیا","Marked present":"حاضر لگ گئی","No cars to print":"چھاپنے کے لیے کوئی گاڑی نہیں","Only cars in stock can go to service":"صرف اسٹاک والی گاڑیاں سروس میں جا سکتی ہیں",
+"Photo upload is not available for your account":"آپ کے اکاؤنٹ کے لیے تصویر اپ لوڈ دستیاب نہیں","Pick a customer first":"پہلے گاہک منتخب کریں","Prices updated":"قیمتیں اپ ڈیٹ ہو گئیں","Salary paid":"تنخواہ ادا ہو گئی",
+"Sample data loaded":"نمونے کا ڈیٹا لوڈ ہو گیا","Sample data restored":"نمونے کا ڈیٹا بحال ہو گیا","Saved":"محفوظ ہو گیا","Select the link and copy it":"لنک منتخب کر کے کاپی کریں","Select the text and copy it":"متن منتخب کر کے کاپی کریں",
+"Sent to service":"سروس کے لیے بھیج دی گئی","Stickers saved":"اسٹیکرز محفوظ ہو گئے","Tap again":"دوبارہ ٹیپ کریں","Tap again to erase everything and load samples":"سب مٹانے اور نمونہ ڈیٹا لوڈ کرنے کے لیے دوبارہ ٹیپ کریں",
+"Tap again to remove":"ہٹانے کے لیے دوبارہ ٹیپ کریں","Tap again to undo":"واپس کرنے کے لیے دوبارہ ٹیپ کریں","Targets saved":"اہداف محفوظ ہو گئے","That car is already in stock or sold":"وہ گاڑی پہلے ہی اسٹاک میں ہے یا بک چکی ہے",
+"That file is not a valid backup":"یہ فائل درست بیک اپ نہیں","The PDF tool did not load. Check your connection and reload.":"پی ڈی ایف ٹول لوڈ نہیں ہوا۔ انٹرنیٹ چیک کر کے دوبارہ لوڈ کریں۔",
+"The QR tool did not load. Check your connection and reload.":"کیو آر ٹول لوڈ نہیں ہوا۔ انٹرنیٹ چیک کر کے دوبارہ لوڈ کریں۔","Type a question first":"پہلے سوال لکھیں","Undone":"واپس ہو گیا",
+"Won! Added to customers":"کامیاب! گاہکوں میں شامل ہو گیا","Worker removed":"ملازم ہٹا دیا گیا","Thinking…":"سوچ رہا ہوں…","Opening your showroom…":"آپ کا شوروم کھل رہا ہے…",
+"Enter make and buying price":"کمپنی اور خرید قیمت لکھیں","Enter the buyer's name":"خریدار کا نام لکھیں","Enter the worker's name":"ملازم کا نام لکھیں",
+"Nothing on the lot yet. Buy your first car, or":"ابھی شوروم میں کچھ نہیں۔ اپنی پہلی گاڑی خریدیں، یا","load sample data":"نمونے کا ڈیٹا لوڈ کریں","to try the dashboard.":"تاکہ ڈیش بورڈ آزما سکیں۔",
+"Sign out":"لاگ آؤٹ","Choose photos":"تصاویر منتخب کریں","Showroom name":"شوروم کا نام"
 };
 const FR=[
-[/^Also for rent from (PKR [\d,]+) a day$/,'کرائے پر بھی دستیاب: $1 فی دن'],
-[/^Prices and availability as of (.*)\. Please confirm with the showroom before visiting\.$/,'قیمتیں اور دستیابی $1 تک۔ آنے سے پہلے شوروم سے تصدیق کر لیں۔'],
-[/^(\d+:\d\d) am$/,'$1 صبح'],[/^(\d+:\d\d) pm$/,'$1 بعد دوپہر'],
-[/\b(\d{1,2}) (January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)\b/g,(m,d,mo)=>d+' '+UR[mo]]
-];
+[/^Sign out \((.*)\)$/,'لاگ آؤٹ ($1)'],
+[/^AI desk \((\d+)\)$/,'اے آئی ڈیسک ($1)'],[/^Customers \((\d+)\)$/,'گاہک ($1)'],[/^Needs attention \((\d+)\)$/,'توجہ طلب ($1)'],
+[/^(New|Test drive|Negotiating|Won|Lost) \((\d+)\)$/,(m,a,b)=>UR[a]+' ('+b+')'],
+[/^(\d+) invoices?$/,'$1 انوائسز'],[/^Pay all \((\d+)\) · (.*)$/,'سب کو ادا کریں ($1) · $2'],
+[/^Payroll – (\w+) (\d+)$/,(m,a,b)=>'تنخواہیں – '+(UR[a]||a)+' '+b],[/^Attendance – (\w+) (\d+)$/,(m,a,b)=>'حاضری – '+(UR[a]||a)+' '+b],
+[/^This month: (.*)$/,'اس ماہ: $1'],[/^(Up|Down) (\d+)% from last month \((.*)\)$/,(m,a,b,c)=>(a==='Up'?'پچھلے مہینے سے ':'پچھلے مہینے سے ')+b+'% '+(a==='Up'?'زیادہ':'کم')+' ('+c+')'],
+[/^(\d+) of (\d+) cars have photos$/,'$2 میں سے $1 گاڑیوں کی تصاویر ہیں'],[/^Add photos: (.*)$/,'تصاویر لگائیں: $1'],
+[/^(\d+) days? overdue$/,'$1 دن تاخیر'],[/^Follow up (\d+ \w+)$/,'فالو اپ $1'],[/^Expired (\d+) days? ago$/,'$1 دن پہلے ختم'],[/^(\d+) days? left$/,'$1 دن باقی'],
+[/^back in (\d+) days?$/,'واپسی $1 دن میں'],[/^due today$/,'آج واپسی'],[/^Sold (\d+)$/,'فروخت $1'],
+[/^Paid (PKR [\d,]+), owes (PKR [\d,]+)(, due (.*))?$/,(m,a,b,c,d)=>'ادا '+a+'، باقی '+b+(d?'، آخری تاریخ '+d:'')],
+[/^All (\d+) cars – tap a bay, or drag it onto a dock below$/,'تمام $1 گاڑیاں – گاڑی پر ٹیپ کریں یا نیچے ڈاک پر گھسیٹیں'],
+[/^(In stock|Rented out|Sold|In service) only – tap a bay, or drag it onto a dock below$/,(m,a)=>UR[a]+' صرف – گاڑی پر ٹیپ کریں یا نیچے ڈاک پر گھسیٹیں'],
+[/^(\d+) cars? (are|is) missing required papers$/,'$1 گاڑیوں کے ضروری کاغذات غائب ہیں'],
+[/^Only (\d+) cars in stock\. Time to buy more\.$/,'اسٹاک میں صرف $1 گاڑیاں ہیں۔ مزید خریدنے کا وقت ہے۔'],
+[/^(\d+) salar(y|ies) still unpaid this month \((.*)\)$/,'اس ماہ $1 تنخواہیں ابھی ادا نہیں ہوئیں ($3)'],
+[/^Behind on the car target: (\d+) of (\d+) sold with (\d+) days left$/,'گاڑیوں کے ہدف سے پیچھے: $2 میں سے $1 بکیں، $3 دن باقی'],
+[/^Follow up with (.+?) about (.+?) today$/,'$1 سے $2 کے بارے میں آج رابطہ کریں'],[/^Follow up with (.+?) today$/,'$1 سے آج رابطہ کریں'],
+[/^Follow up with (.+?) about (.+?) \(overdue since (.*)\)$/,'$1 سے $2 کے بارے میں رابطہ کریں (تاخیر، $3 سے)'],[/^Follow up with (.+?) \(overdue since (.*)\)$/,'$1 سے رابطہ کریں (تاخیر، $2 سے)'],
+[/^(.+) is (\d+) day\(s\) late with (.+)$/,'$1، $3 کے ساتھ $2 دن لیٹ ہے'],
+[/^Last backup on this device was (\d+) days ago$/,'اس ڈیوائس پر آخری بیک اپ $1 دن پہلے تھا'],
+[/^You owe (.+?) (PKR [\d,]+)\. Oldest bill is (\d+) days old\.$/,'آپ پر $1 کے $2 واجب ہیں۔ سب سے پرانا بل $3 دن پرانا ہے۔'],
+[/^(.+?) owes you (PKR [\d,]+)\. Oldest bill is (\d+) days old\.$/,'$1 پر آپ کے $2 واجب ہیں۔ سب سے پرانا بل $3 دن پرانا ہے۔'],
+[/^You owe (PKR [\d,]+)$/,'آپ پر $1 واجب ہیں'],[/^Owes you (PKR [\d,]+)$/,'اس پر آپ کے $1 واجب ہیں'],
+[/^You need (\d+) more cars?/,'آپ کو مزید $1 گاڑیاں چاہئیں'],[/ in the next (\d+) days?\./,' اگلے $1 دنوں میں۔'],
+[/ At this pace you finish with about (\d+)\./,' اس رفتار سے آپ تقریباً $1 پر ختم کریں گے۔'],[/\. Today is the last day\./,'۔ آج آخری دن ہے۔'],
+[/ Last month: (\d+) of (\d+) cars\./,' پچھلا مہینہ: $2 میں سے $1 گاڑیاں۔'],[/You have reached this month's car target\./,'آپ اس ماہ کے گاڑیوں کے ہدف تک پہنچ گئے ہیں۔'],
+[/^Next 14 days at the current pace: (.*)$/,'موجودہ رفتار سے اگلے 14 دن: $1'],[/ net, likely between (PKR [\d,]+) and (PKR [\d,]+)\./,' خالص، ممکنہ طور پر $1 اور $2 کے درمیان۔'],
+[/^Last 14 days: money in \(green\) and out \(orange\)$/,'آخری 14 دن: آمدن (سبز) اور اخراجات (نارنجی)'],
+[/^Papers need attention: (.*)$/,'کاغذات توجہ طلب: $1'],[/^Check the papers before selling: (.*)\.$/,'بیچنے سے پہلے کاغذات دیکھیں: $1۔'],
+[/^Overdue rental: (.*)$/,'تاخیر شدہ کرایہ: $1'],[/^Thank-you: (.*)$/,'شکریہ کا پیغام: $1'],[/^Unpaid (INV-\d+): (.*)$/,'غیر ادا $1: $2'],
+[/^(INV-\d+) from (.+?): (PKR [\d,]+) (was due (\d+) days ago|unpaid for (\d+) days)$/,(m,a,b,c,d,e,f)=>a+' از '+b+': '+c+(e?' کی آخری تاریخ '+e+' دن پہلے تھی':' '+f+' دن سے ادا نہیں')],
+[/^Salary paid – (.*)$/,'تنخواہ ادا – $1'],[/^Rental income – (.*)$/,'کرائے کی آمدن – $1'],[/^Paid dealer – (.*)$/,'ڈیلر کو ادائیگی – $1'],
+[/^Received from dealer – (.*)$/,'ڈیلر سے وصولی – $1'],[/^Payment received – (.*)$/,'ادائیگی موصول – $1'],
+[/^Expense – ([^:]+)(: (.*))?$/,(m,a,b,c)=>'خرچہ – '+(UR[a]||a)+(c?': '+(UR[c]||c):'')],
+[/^Sold (.+) to (.+?)( \(part payment\))?$/,(m,a,b,c)=>a+' فروخت بنام '+b+(c?' (جزوی ادائیگی)':'')],[/^Bought (.+)$/,'خریدی: $1'],
+[/^New worker – (.*)$/,'نیا ملازم – $1'],[/^Document saved – (.*)$/,'کاغذ محفوظ – $1'],[/^Document added – (.*)$/,'کاغذ شامل – $1'],[/^Prices updated – (.*)$/,'قیمتیں اپ ڈیٹ – $1'],
+[/^Removed (.+) from records$/,'$1 ریکارڈ سے ہٹا دی گئی'],[/^(.+) sent to service$/,'$1 سروس کے لیے بھیجی گئی'],[/^(.+) is back on the lot$/,'$1 شوروم میں واپس آ گئی'],
+[/^Backup restored from a file made (.*)$/,'بیک اپ بحال ($1 کی فائل)'],
+[/^(car|invoice|expense|worker|customer|lead|dealer): (.*)$/,(m,a,b)=>({car:'گاڑی',invoice:'انوائس',expense:'خرچہ',worker:'ملازم',customer:'گاہک',lead:'گاہک',dealer:'ڈیلر'})[a]+': '+b],
+[/^(\d+) (car|invoice|expense|worker|customer|lead|dealer) records changed at once$/,'$1 ریکارڈ ایک ساتھ تبدیل ہوئے'],
+[/^Suggested opening offer (PKR [\d,]+)\. Do not go above (PKR [\d,]+)\.$/,'ابتدائی پیشکش $1۔ $2 سے اوپر نہ جائیں۔'],
+[/^At your usual ([\d.]+)% margin, after about (PKR [\d,]+) of repairs\.$/,'آپ کے معمول کے $1% مارجن پر، تقریباً $2 مرمت کے بعد۔'],
+[/^Based on the market price you entered\./,'آپ کی دی ہوئی مارکیٹ قیمت پر مبنی۔'],
+[/^Based on (\d+) cars? with the (.*)\. Each year of age difference moves the price by 4%\. Kilometre and condition factors: ([\d.]+) and ([\d.]+)\. Always inspect the car before agreeing\.$/,'آپ کے ریکارڈ کی $1 ملتی جلتی گاڑیوں پر مبنی۔ عمر میں ہر سال کے فرق سے قیمت 4% بدلتی ہے۔ کلومیٹر اور حالت کے عوامل: $3 اور $4۔ فیصلے سے پہلے گاڑی ضرور دیکھیں۔'],
+[/^No (.+) cars in your records yet, so there is nothing to compare with\. Type a market price you know in the last box and try again\.$/,'آپ کے ریکارڈ میں ابھی کوئی $1 گاڑی نہیں، اس لیے موازنہ ممکن نہیں۔ آخری خانے میں معلوم مارکیٹ قیمت لکھ کر دوبارہ کوشش کریں۔'],
+[/^Suggested: asking (PKR [\d,]+), rent (PKR [\d,]+) a day\.$/,'تجویز: مانگی قیمت $1، کرایہ $2 فی دن۔'],
+[/^(\d+) photo\(s\) added$/,'$1 تصاویر شامل ہو گئیں'],[/^Uploading (\d+) photo\(s\)$/,'$1 تصاویر اپ لوڈ ہو رہی ہیں'],
+[/^Moved to (.*)$/,(m,a)=>'منتقل: '+(UR[a]||a)],[/^Reading the photo…$/,'تصویر پڑھی جا رہی ہے…'],
+[/^Customer: (.*)$/,'گاہک: $1'],
+[/^(Cars sold|Profit on car sales|Rental income): (.+) of (.+)$/,(m,a,b,c)=>UR[a]+': '+b+' / '+c],
+[/^Colour (#\w+)$/,'رنگ $1'],[/^(\d+) days$/,'$1 دن'],[/^profit on (\d+) car sales?$/,'گاڑیوں کی فروخت پر منافع ($1)'],
+[/^In (PKR [\d,]+) · Out (PKR [\d,]+)$/,'آمد $1 · اخراج $2'],[/^History\. Owes (.*)$/,'تاریخچہ۔ واجب: $1'],
+[/^Total (PKR [\d,]+)\. Paid (PKR [\d,]+)\. Balance (PKR [\d,]+)\.$/,'کل $1۔ ادا $2۔ بقایا $3۔'],
+[/^(.*?)\. Owes (PKR [\d,]+)$/,'$1۔ واجب: $2'],
+[/ · balance: you owe (PKR [\d,]+)$/,' · بیلنس: آپ پر $1 واجب'],[/ · balance: owes you (PKR [\d,]+)$/,' · بیلنس: اس پر آپ کے $1 واجب'],[/ · balance: settled$/,' · بیلنس: برابر'],
+[/^back in (\d+) days? \((.*)\)$/,'واپسی $1 دن میں ($2)'],[/^(\d+) day\(s\) late$/,'$1 دن لیٹ'],
+[/^Your fixed running costs are about (PKR [\d,]+) a month \(non-car expenses and base salaries\)\. At your recent average of (PKR [\d,]+) profit per car, you need about (\d+) cars? a month to break even\. This month: (\d+)\.$/,'آپ کے مقررہ جاری اخراجات تقریباً $1 ماہانہ ہیں (گاڑی کے علاوہ اخراجات اور بنیادی تنخواہیں)۔ حالیہ اوسط منافع $2 فی گاڑی پر، برابری کے لیے ماہانہ تقریباً $3 گاڑیاں چاہئیں۔ اس ماہ: $4۔'],
+[/\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/g,(m)=>({Monday:'پیر',Tuesday:'منگل',Wednesday:'بدھ',Thursday:'جمعرات',Friday:'جمعہ',Saturday:'ہفتہ',Sunday:'اتوار'})[m]],
+[/\b(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)\b/g,(m,d,mo)=>d+' '+UR[mo]]
+];(function(){var s=document.getElementById('skin');if(!s)return;var k='concrete';try{k=localStorage.getItem('lot-skin')||'concrete'}catch(e){}
+ if(['concrete','midnight','white','emerald'].indexOf(k)<0)k='concrete';s.value=k;
+ s.onchange=function(){try{localStorage.setItem('lot-skin',s.value)}catch(e){}if(s.value==='concrete')delete document.documentElement.dataset.skin;else document.documentElement.dataset.skin=s.value}})();
+
+/* motion helpers */
+const REDUCE=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches),KPREV={};let enteredOnce=false;
+function enterAnim(){const m=document.getElementById('main');if(!m||REDUCE())return;m.classList.remove('enter');void m.offsetWidth;m.classList.add('enter');clearTimeout(enterAnim.t);enterAnim.t=setTimeout(()=>m.classList.remove('enter'),1400)}
+function kpiAnim(){document.querySelectorAll('#kpis .kpi').forEach(k=>{const n=k.querySelector('.num'),l=k.querySelector('span');if(!n||!l)return;const m=n.textContent.trim().match(/^(PKR )?([\d,]+)$/);if(!m)return;
+ const to=+m[2].replace(/,/g,''),key=l.textContent.trim(),from=KPREV[key]===undefined?0:KPREV[key];KPREV[key]=to;if(from===to||REDUCE())return;
+ const pre=m[1]||'',t0=performance.now(),D=Math.min(1000,350+Math.abs(to-from)/Math.max(to,1)*650);
+ (function f(t){const p=Math.min(1,(t-t0)/D),e=1-Math.pow(1-p,3);n.textContent=pre+Math.round(from+(to-from)*e).toLocaleString('en-US');if(p<1)requestAnimationFrame(f)})(t0)})}
+function celebrate(){if(REDUCE())return;const cols=['#E9B817','#0E6B6B','#DB5A24','#3B5BA5','#B3261E','#7A4FA3'];
+ for(let i=0;i<36;i++){const e=document.createElement('i');e.className='confetti';e.style.left=(Math.random()*100)+'vw';e.style.background=cols[i%cols.length];e.style.setProperty('--dx',(Math.random()*180-90)+'px');e.style.setProperty('--r',(Math.random()*720-360)+'deg');e.style.animationDelay=(Math.random()*.3)+'s';e.style.animationDuration=(1.1+Math.random()*.9)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2500)}}
+
+/* pictures dropped into the website's cars folder (only in the hosted build, where LOT_CONFIG exists) */
+const STOCK_PICS=!!window.LOT_CONFIG;
+const slug=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function stockUrls(c){const m=slug(c.make),a='cars/'+m+'-'+slug(c.model)+'.jpg',b='cars/'+m+'-'+slug(String(c.model||'').split(/\s+/)[0])+'.jpg';return a===b?[a]:[a,b]}
+function stockImg(c){if(!STOCK_PICS)return'';const u=stockUrls(c);return`<img class='sp' src='${u[0]}' ${u[1]?`data-alt='${u[1]}'`:''} alt='' loading='lazy' onerror="var a=this.dataset.alt;if(a){this.dataset.alt='';this.src=a}else this.remove()">`}
 /* Urdu support: a per-device language switch that translates the screen text and flips the layout. */
 const LANG=(()=>{try{return localStorage.getItem('lot-lang')==='ur'?'ur':'en'}catch(e){return'en'}})();
 function trStr(s){const t=s.trim();if(!t)return s;if(UR[t]!==undefined)return s.replace(t,UR[t]);
@@ -97,49 +487,545 @@ function trNode(root){if(LANG!=='ur'||!root)return;
  if(LANG!=='ur')return;document.documentElement.dir='rtl';document.documentElement.lang='ur';
  let q=false;new MutationObserver(()=>{if(q)return;q=true;(window.requestAnimationFrame||setTimeout)(()=>{q=false;trNode(document.body)})}).observe(document.body,{childList:true,subtree:true,characterData:true});trNode(document.body)})();
 
-const D={shop:{name:'',address:'',phone:''},cars:[],built:''};
-const PAL=['#0E6B6B','#B3261E','#2B3038','#C9A227','#3B5BA5','#7A4FA3','#8A8F94','#DB5A24'];
-const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY='showroom-lot-v1';
+const ST={stock:['In stock','--stock'],sold:['Sold','--sold'],rented:['Rented out','--rent'],service:['In service','--serv']};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const money=n=>'PKR '+Math.round(n).toLocaleString('en-US');
-function num(){let d=String(D.shop.phone||'').replace(/\D/g,'');if(d[0]==='0')d='92'+d.slice(1);return d}
-const wa=t=>num()?'https://wa.me/'+num()+'?text='+encodeURIComponent(t):'';
-let mk='All',car=null;
-function head(){
-$('#sn').textContent=D.shop.name;$('#sa').textContent=[D.shop.address,D.shop.phone].filter(Boolean).join('  ·  ');
-$('#hw').href=wa('Assalam o Alaikum, I saw your cars online and would like some information.')||'#';
-$('#ft').textContent='Prices and availability as of '+D.built+'. Please confirm with the showroom before visiting.';
+const ago=d=>new Date(Date.now()-d*864e5).toISOString();
+const stamp=iso=>new Date(iso).toLocaleString('en-GB',{weekday:'long',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const mk=iso=>iso.slice(0,7);
+let uid=100,view='lot',filter='all',modal=null,S;
+
+function seed(){
+  const c=(id,make,model,year,plate,cost,price,rate,status,x={})=>({id,make,model,year,plate,cost,price,rate,status,...x});
+  return{
+    cars:[c(1,'Toyota','Corolla Altis',2022,'LEA-4521',4800000,5400000,9000,'stock'),
+      c(2,'Honda','Civic RS',2021,'LEB-1187',5900000,6500000,11000,'rented',{renter:'Imran Traders',due:new Date(Date.now()+2*864e5).toISOString()}),
+      c(3,'Suzuki','Alto VXL',2023,'LEC-9034',2300000,2650000,6000,'stock'),
+      c(4,'Kia','Sportage Alpha',2022,'LED-7712',7600000,8400000,15000,'stock'),
+      c(5,'Toyota','Fortuner',2020,'LEE-3350',11500000,12700000,22000,'sold',{buyer:'Dr. Hassan',soldAt:ago(3),soldFor:12700000}),
+      c(6,'Hyundai','Tucson',2022,'LEF-2208',7900000,8600000,15000,'service'),
+      c(7,'Honda','City Aspire',2023,'LEG-5561',4600000,5100000,9000,'rented',{renter:'M. Bilal',due:new Date(Date.now()-864e5).toISOString()}),
+      c(8,'Suzuki','Cultus AGS',2022,'LEH-6143',3000000,3350000,7000,'stock')],
+    staff:[{id:1,name:'Ahmed Raza',role:'Sales manager',salary:140000,paid:{}},{id:2,name:'Sana Malik',role:'Accountant',salary:95000,paid:{}},
+      {id:3,name:'Usman Ali',role:'Sales executive',salary:75000,paid:{}},{id:4,name:'Bashir',role:'Mechanic',salary:60000,paid:{}},{id:5,name:'Kamran',role:'Guard',salary:40000,paid:{}}],
+    inv:[{id:1,no:'INV-0001',type:'Sale',party:'Dr. Hassan',amount:12700000,date:ago(3),paid:true,car:'Toyota Fortuner'},
+      {id:2,no:'INV-0002',type:'Rental',party:'Imran Traders',amount:33000,date:ago(1),paid:true,car:'Honda Civic RS'},
+      {id:3,no:'INV-0003',type:'Rental',party:'M. Bilal',amount:27000,date:ago(3),paid:false,car:'Honda City Aspire'}],
+    log:[{t:ago(3),msg:'Sold Toyota Fortuner to Dr. Hassan',amt:12700000},{t:ago(5),msg:'Bought Hyundai Tucson',amt:-7900000},{t:ago(1),msg:'Rental income – Imran Traders',amt:33000}]};
 }
-function carArt(c){const m=(c.make+' '+c.model).toLowerCase(),t=/hilux|revo|vigo|ranger|d-max|dmax/.test(m)?'p':/fortuner|sportage|tucson|hr-v|vezel|br-v|stonic|h6|mg hs|jimny|prado|land cruiser|cr-v|santa|sorento|x70|harrier|haval/.test(m)?'s':/alto|cultus|wagon|picanto|swift|vitz|mira|passo|aqua|prius|yaris hatch/.test(m)?'h':'d',col=c.color;
+S={cars:[],staff:[],inv:[],log:[],exp:[],cust:[],set:[],leads:[],att:[],dealers:[],targets:[]};
+let DB=null,ready=false,localOk=false,canPay=true,query='',sort='new',ifilter='all',dragId=null;
+const PART=['cars','staff','inv','log','exp','cust','set','leads','att','dealers','targets'],last={},got={};
+const SORT={new:(a,b)=>b.id-a.id,price:(a,b)=>b.price-a.price,margin:(a,b)=>(b.price-b.cost)-(a.price-a.cost)};
+const GO={'cars ready to sell':'lot:stock','out on rent':'lot:rented','sold this month':'lot:sold','money in this month':'ledger','money out this month':'ledger','net this month':'ledger','invoices unpaid':'invoices:unpaid','payroll still to pay':'staff'};
+function save(){
+  if(!DB){if(localOk)try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}return}
+  if(!ready)return;
+  PART.forEach(p=>{if((p==='staff'||p==='exp'||p==='set'||p==='att'||p==='dealers'||p==='targets')&&!canPay)return;const j=JSON.stringify(S[p]);if(j===last[p])return;if(!noAct&&last[p]!==undefined)diffAct(p,last[p],S[p]);last[p]=j;
+    DB.doc('showroom/'+p).set({items:S[p]}).catch(()=>toast('Could not save '+p+'. Check your access.'))})}
+const nowIso=()=>new Date().toISOString();
+const log=(msg,amt)=>{S.log.unshift({t:nowIso(),msg,amt});if(S.log.length>400)S.log.length=400};
+const nextNo=()=>'INV-'+String(S.inv.length+1).padStart(4,'0');
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+
+function tick(){const d=new Date();$('#time').textContent=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  $('#day').textContent=d.toLocaleDateString(LANG==='ur'?'ur-PK-u-nu-latn':'en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+setInterval(tick,1000);tick();
+
+function kpis(){
+  const m=mk(nowIso()),cnt=s=>S.cars.filter(c=>c.status===s).length;
+  const inn=S.log.filter(l=>l.amt>0&&mk(l.t)===m).reduce((a,l)=>a+l.amt,0),out=S.log.filter(l=>l.amt<0&&mk(l.t)===m).reduce((a,l)=>a-l.amt,0);
+  const due=S.inv.filter(i=>!i.paid).reduce((a,i)=>a+bal(i),0),pay=S.staff.filter(w=>!w.paid[m]).reduce((a,w)=>a+monthStats(w,m).net,0);
+  const net=inn-out;
+  $('#kpis').innerHTML=[[cnt('stock'),'cars ready to sell'],[cnt('rented'),'out on rent'],[S.cars.filter(c=>c.status==='sold'&&mk(c.soldAt)===m).length,'sold this month'],
+   [money(inn),'money in this month'],[money(out),'money out this month'],[`<span class="${net>=0?'pos':'neg'}">${money(net)}</span>`,'net this month'],[money(due),'invoices unpaid'],[money(pay),'payroll still to pay']]
+   .filter(k=>canPay||!/payroll/.test(k[1])).map(k=>`<button class="kpi" data-go="${GO[k[1]]}"><div class="num">${k[0]}</div><span>${k[1]}</span></button>`).join('');kpiAnim();
+}
+function nav(){const t=[['lot','Lot floor'],['invoices','Invoices'],['cust','Customers'],['leads','Leads'],['trade','Trade-in'],['docs','Documents'],['ai','AI desk'+(alertsList().length?' ('+alertsList().length+')':'')],['staff','Staff & payroll'],['exp','Expenses'],['dealers','Dealers'],['profit','Profit'],['activity','Activity'],['ledger','Records']].filter(x=>canPay||!['staff','exp','profit','dealers','activity'].includes(x[0]));
+  $('#nav').innerHTML=t.map(x=>`<button class="${view===x[0]?'on':''}" data-v="${x[0]}">${x[1]}</button>`).join('')+`<span class="sync" title="${DB?'Every signed-in device sees the same data':'Data stays on this device only'}">${DB?'● Shared live':'○ This device only'}</span><button data-v="theme" aria-label="Switch light and dark">◐</button>`}
+$('#nav').onclick=e=>{const v=e.target.closest('button')?.dataset.v;if(!v)return;
+  if(v==='theme'){const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark';return}
+  view=v;render();enterAnim()};
+
+function dueText(c){const d=Math.ceil((new Date(c.due)-Date.now())/864e5);return d<0?`<b class="neg">${-d} day${d<-1?'s':''} overdue</b>`:d===0?'due today':`back in ${d} day${d>1?'s':''}`}
+function lot(){
+  const n=s=>S.cars.filter(c=>c.status===s).length,tot=S.cars.length||1;
+  const mix=Object.keys(ST).map(k=>`<button class="${filter===k?'on':''}" data-f="${k}" style="background:var(${ST[k][1]});width:${Math.max(n(k)/tot*100,12)}%">${ST[k][0]} ${n(k)}</button>`).join('');
+  const q=query.toLowerCase(),cars=S.cars.filter(c=>(filter==='all'||c.status===filter)&&(!q||(c.make+' '+c.model+' '+c.plate+' '+c.year).toLowerCase().includes(q))).sort(SORT[sort]);
+  return`${alerts()}${targetCard()}${photoNudge()}${chart()}<div class="mix">${mix}</div><div class="tools"><span style="color:var(--mute)">${filter==='all'?'All '+S.cars.length+' cars':ST[filter][0]+' only'} – tap a bay, or drag it onto a dock below</span><span class="srch"><input id="q" placeholder="Search make, model, plate" value="${esc(query)}" aria-label="Search cars"><select id="sort" aria-label="Sort cars"><option value="new">Newest</option><option value="price" ${sort==='price'?'selected':''}>Highest price</option><option value="margin" ${sort==='margin'?'selected':''}>Best margin</option></select></span>${filter!=='all'?'<button data-f="all">Show all</button>':''}</div>
+  <div class="lot">${cars.map(c=>`<button class="bay" draggable="true" data-car="${c.id}" style="--c:var(${ST[c.status][1]})">${c.photos&&c.photos[0]?`<div class='phwrap'><img class='ph' src='${esc(c.photos[0].url)}' alt=''>${docFlag(c)}</div>`:`<div class='carart'>${noPhoto(c)}${docFlag(c)}</div>`}<b>${esc(c.make)} ${esc(c.model)}</b><small>${esc(c.year)} · ${esc(c.plate)}</small>
+   <span class="tag">${ST[c.status][0]}${c.status==='rented'?' – '+dueText(c):''}</span></button>`).join('')}
+   <button class="bay add" data-act="buy">+ Buy a car</button></div>${dock()}${S.cars.length?'':`<div class="alert" style="background:var(--panel);color:var(--ink);border-color:var(--line);margin-top:12px">Nothing on the lot yet. Buy your first car, or <button data-act="sample">load sample data</button> to try the dashboard.</div>`}`}
+function alerts(){const o=S.cars.filter(c=>c.status==='rented'&&new Date(c.due)<Date.now());return o.length?`<button class="alert" data-f="rented">⚠ ${o.length} rental${o.length>1?'s':''} overdue: ${o.map(c=>esc(c.renter)).join(', ')}. Tap to review.</button>`:''}
+function dock(){return`<div class="dock"><div class="zone" data-zone="sell">Drop here to sell</div><div class="zone" data-zone="rent">Drop here to rent out</div><div class="zone" data-zone="serv">Drop here for service</div><div class="zone" data-zone="back">Drop here to return to stock</div></div>`}
+function chart(){const days=[...Array(14)].map((_,i)=>{const d=new Date(Date.now()-(13-i)*864e5),L=S.log.filter(l=>new Date(l.t).toDateString()===d.toDateString());return{d,i:L.filter(l=>l.amt>0).reduce((a,l)=>a+l.amt,0),o:L.filter(l=>l.amt<0).reduce((a,l)=>a-l.amt,0)}});
+  const mx=Math.max(1,...days.map(x=>Math.max(x.i,x.o))),h=v=>Math.sqrt(v/mx)*62;
+  return`<div class="chart"><div class="tools"><b>Last 14 days: money in (green) and out (orange)</b><span id="tip" style="color:var(--mute)">Hover or tap a day</span></div><svg viewBox="0 0 280 70" preserveAspectRatio="none">${days.map((x,k)=>`<g class="day" data-tip="${x.d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'})}: in ${money(x.i)}, out ${money(x.o)}"><rect x="${k*20}" y="0" width="20" height="70" fill="transparent"/><rect x="${k*20+3}" y="${68-h(x.i)}" width="6" height="${h(x.i)}" fill="var(--ok)"/><rect x="${k*20+10}" y="${68-h(x.o)}" width="6" height="${h(x.o)}" fill="var(--rent)"/></g>`).join('')}<line x1="0" x2="280" y1="68.5" y2="68.5" stroke="var(--line)"/></svg></div>`}
+
+function invoices(){const L=S.inv.filter(i=>ifilter==='all'||(ifilter==='unpaid')===!i.paid);return`<div class="tools"><span>${['all','unpaid','paid'].map(f=>`<button class="chip ${ifilter===f?'on':''}" data-if="${f}">${f[0].toUpperCase()+f.slice(1)}</button>`).join(' ')}</span><span style="color:var(--mute)"><button data-act='shop'>Showroom details</button> ${L.length} invoice${L.length===1?'':'s'}</span></div><div class="scroll"><table><tr><th>No.</th><th>Date and time</th><th>Type</th><th>Customer</th><th>Car</th><th>Amount</th><th>Status</th><th></th></tr>
+  ${L.map(i=>`<tr><td>${i.no}</td><td>${stamp(i.date)}</td><td>${i.type}</td><td>${esc(i.party)}</td><td>${esc(i.car)}</td><td>${money(i.amount)}</td>
+  <td>${i.paid?'<span class="pill pos">Paid</span>':`<button data-pay="${i.id}">Receive payment</button>${pd(i)>0?'<small style="display:block;color:var(--mute)">Paid '+money(pd(i))+', owes '+money(bal(i))+(i.due?', due '+new Date(i.due).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'')+'</small>':''}`}</td><td><button data-print='${i.id}'>PDF</button></td></tr>`).join('')}</table></div>`}
+
+function staff(){const m=mk(nowIso()),mon=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  const unpaid=S.staff.filter(w=>!w.paid[m]).length;
+  return`<div class="tools"><h2>Payroll – ${mon}</h2><span><button data-act="worker">+ Add worker</button> <button class="pri" data-payall ${unpaid?'':'disabled'}>Pay all (${unpaid})</button></span></div>
+  <div class="scroll"><table><tr><th>Name</th><th>Role</th><th>Monthly salary</th><th>${mon}</th></tr>
+  ${S.staff.map(w=>`<tr><td>${esc(w.name)}</td><td>${esc(w.role)}</td><td>${money(w.salary)}</td><td>${w.paid[m]?'<span class="pill pos">Paid '+new Date(w.paid[m]).toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</span>':`<button data-sal="${w.id}">Pay salary</button>`}</td></tr>`).join('')}</table></div>`}
+
+function ledger(){const inn=S.log.filter(l=>l.amt>0).reduce((a,l)=>a+l.amt,0),out=S.log.filter(l=>l.amt<0).reduce((a,l)=>a-l.amt,0);
+  return`<div class="tools"><h2>Every record, newest first</h2><span>In ${money(inn)} · Out ${money(out)}</span></div>
+  <ul class="tl">${S.log.map(l=>`<li><div>${esc(l.msg)}<small>${stamp(l.t)}</small></div><b class="${l.amt>=0?'pos':'neg'}">${l.amt>=0?'+':'−'}${money(Math.abs(l.amt))}</b></li>`).join('')}</ul>
+  <div class="row"><button data-act="csv">Download records (CSV)</button><button data-act="reset">Reset to sample data</button>${canPay?`<button data-act='backup'>Download full backup</button><label class='btnlink' for='rf' style='cursor:pointer'>Restore from backup</label><input id='rf' type='file' accept='.json,application/json' hidden>`:''}</div>`}
+
+function draw(){S.exp=S.exp||[];S.cust=S.cust||[];S.set=S.set||[];S.leads=S.leads||[];S.att=S.att||[];S.dealers=S.dealers||[];S.targets=S.targets||[];if((view==='staff'||view==='exp'||view==='profit'||view==='dealers'||view==='activity')&&!canPay)view='lot';kpis();nav();if(view==='ai'&&document.activeElement?.closest('#main'))return;if(view==='trade'&&document.activeElement&&document.activeElement.closest('#main')&&/INPUT|SELECT/.test(document.activeElement.tagName))return;$('#main').innerHTML=(ready||localOk)?{lot,invoices,cust:custView,docs:docsView,leads:leadsView,trade:tradeView,ai:aiView,staff:staffView,exp:expView,dealers:dealersView,activity:activityView,profit:profitView,ledger}[view]():'<div class="skel" role="status" aria-label="Opening your showroom"><i></i><i></i><i></i><i></i><i></i><i></i></div>'}
+function render(){draw();save()}
+async function exportCsv(){let dl=null;try{dl=await claude.use('downloads')}catch(e){}if(!dl){toast('Downloads are not available here');return}
+  const rows=[['Date and time','Record','Amount (PKR)'],...S.log.map(l=>[stamp(l.t),l.msg,l.amt])];
+  try{await dl.save({filename:'showroom-records.csv',data:rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n')})}catch(e){toast('Download cancelled')}}
+let SM=null,aiOut={},aiBusy={},pend=null;
+const SYS='You are the assistant inside a car showroom app in Pakistan. Use only the DATA given. Money is PKR. Be short and concrete. Plain text only, no markdown, no asterisks. If the data cannot answer, say so.';
+const EX=['Which cars have been unsold the longest?','Who is late returning a car?','Which leads should I follow up first?','How much did we earn from rentals this month?','Which make gives us the best profit?'];
+const NL=String.fromCharCode(10),DAY=864e5;
+async function sm(){if(!SM){try{SM=await claude.use('sample')}catch(e){}}return SM}
+const boughtAt=c=>S.log.find(l=>l.msg==='Bought '+c.make+' '+c.model)?.t;
+function ctx(){const m=mk(nowIso());return JSON.stringify({today:nowIso(),
+ cars:S.cars.map(c=>({id:c.id,car:c.make+' '+c.model,year:c.year,status:c.status,cost:c.cost,asking:c.price,rentPerDay:c.rate,boughtAt:boughtAt(c),renter:c.renter,rentalDue:c.due,docs:(c.docs||[]).map(d=>({type:d.type,expiry:d.expiry,status:d.done===false?'pending':'on file'})),soldFor:c.soldFor,soldAt:c.soldAt,trueProfit:c.status==='sold'&&canPay&&c.soldAt?truth(c).net:undefined})),
+ invoices:S.inv.slice(0,50).map(i=>({no:i.no,type:i.type,customer:i.party,car:i.car,amount:i.amount,balance:bal(i),dueDate:i.due,date:i.date,paid:i.paid})),
+ records:S.log.slice(0,80),targets:S.targets,leads:S.leads.slice(0,30),dealers:canPay?S.dealers.map(d=>({name:d.name,weOweThem:Math.max(0,dbal(d)),theyOweUs:Math.max(0,-dbal(d)),oldestUnpaidDays:daged(d)})):'hidden',expenses:canPay?S.exp.slice(0,40):'hidden',
+ staff:canPay?S.staff.map(w=>({name:w.name,role:w.role,salary:w.salary,paidThisMonth:!!w.paid[m],commissionPct:w.comm||0,month:monthStats(w,m)})):'hidden'})}
+function paint(k){const o=$('#out-'+k);if(o)o.textContent=aiOut[k]||'';document.querySelectorAll("[data-ai='"+k+"']").forEach(b=>b.disabled=!!aiBusy[k])}
+function aiErr(e){return e&&e.code==='not_granted'?'Permission to use Claude was declined. Tap the button again to allow it.':e&&e.code==='rate_limited'?'Too many requests. Wait a minute and try again.':'The assistant could not answer. Try again.'}
+async function runAi(k,prompt,useCtx=true){const s=await sm();if(!s){toast('AI is not available on this page');return}
+ aiBusy[k]=true;aiOut[k]='Thinking…';paint(k);
+ try{const r=await s([SYS,prompt,useCtx?'DATA:'+NL+ctx():''].join(NL+NL),{cache:false,onText:u=>{aiOut[k]=u.text;paint(k)}});aiOut[k]=r.text}
+ catch(e){aiOut[k]=aiErr(e)}
+ aiBusy[k]=false;paint(k)}
+function alertsList(){const a=[],now=Date.now();
+ S.cars.filter(c=>c.status==='rented'&&new Date(c.due)<now).forEach(c=>a.push(['bad',c.renter+' is '+Math.ceil((now-new Date(c.due))/DAY)+' day(s) late with '+c.make+' '+c.model]));
+ S.inv.filter(i=>!i.paid&&(i.due?new Date(i.due)<now:now-new Date(i.date)>7*DAY)).forEach(i=>a.push(['bad',i.no+' from '+i.party+': '+money(bal(i))+' '+(i.due?'was due '+Math.floor((now-new Date(i.due))/DAY)+' days ago':'unpaid for '+Math.floor((now-new Date(i.date))/DAY)+' days')]));
+ S.cars.filter(c=>c.status==='stock').forEach(c=>{const b=boughtAt(c),d=b?Math.floor((now-new Date(b))/DAY):0;if(d>45)a.push(['warn',c.make+' '+c.model+' has sat '+d+' days. Consider a lower price.'])});
+ backupAlert(a);targetAlert(a);dealerAlerts(a);attAlert(a);leadAlerts(a);docAlerts(a);const st=S.cars.filter(c=>c.status==='stock').length;if(ready||localOk){if(st<5)a.push(['warn','Only '+st+' cars in stock. Time to buy more.'])}
+ if(canPay){const p=S.staff.filter(w=>!w.paid[mk(nowIso())]);if(p.length)a.push(['warn',p.length+' salaries still unpaid this month ('+money(p.reduce((x,w)=>x+w.salary,0))+')'])}
+ return a}
+function forecast(){const now=Date.now(),sold=S.cars.filter(c=>c.status==='sold'&&now-new Date(c.soldAt)<30*DAY),rate=sold.length/30,stock=S.cars.filter(c=>c.status==='stock').length;
+ const rent=S.inv.filter(i=>i.type==='Rental'&&now-new Date(i.date)<30*DAY).reduce((a,i)=>a+i.amount,0),net=S.log.filter(l=>now-new Date(l.t)<30*DAY).reduce((a,l)=>a+l.amt,0);
+ const avg=sold.length?sold.reduce((a,c)=>a+c.soldFor-c.cost,0)/sold.length:0,mm={};sold.forEach(c=>mm[c.make]=(mm[c.make]||0)+1);const top=Object.entries(mm).sort((a,b)=>b[1]-a[1])[0];
+ return[[sold.length,'cars sold in 30 days'],[rate>0?Math.round(stock/rate)+' days':'–','until stock runs out at this pace'],[money(avg),'average profit per sale'],[money(rent),'rental income, 30 days'],[`<span class='${net>=0?'pos':'neg'}'>${money(net)}</span>`,'net cash, 30 days'],[top?top[0]+' ('+top[1]+')':'–','best-selling make']]}
+function aiView(){const f=forecast(),al=alertsList(),now=Date.now();
+ const o=[...S.cars.filter(c=>c.status==='rented'&&new Date(c.due)<now).map(c=>['r'+c.id,'Overdue rental: '+c.renter+' – '+c.make+' '+c.model]),...S.inv.filter(i=>!i.paid).map(i=>['i'+i.id,'Unpaid '+i.no+': '+i.party+' – '+money(i.amount)]),...S.inv.filter(i=>i.paid).slice(0,8).map(i=>['t'+i.id,'Thank-you: '+i.party+' – '+i.car])];
+ return`<div class='ai'>
+<div class='card'><h2>Ask the Lot</h2><div class='srch2'><input id='ask' placeholder='Ask in English or Urdu, for example: which cars are slow to sell?' aria-label='Ask a question'><button class='pri' data-ai='ask'>Ask</button></div>
+<div class='chips'>${EX.map(x=>`<button class='chip' data-ex='${esc(x)}'>${esc(x)}</button>`).join('')}</div><div class='out' id='out-ask'>${esc(aiOut.ask||'')}</div></div>
+<div class='card'><h2>Daily briefing</h2><button class='pri' data-ai='brief'>Write today's briefing</button><div class='out' id='out-brief'>${esc(aiOut.brief||'')}</div></div>
+<div class='card'><h2>Needs attention (${al.length})</h2>${al.length?`<ul class='al'>${al.map(a=>`<li class='${a[0]}'>${esc(a[1])}</li>`).join('')}</ul>`:`<div style='color:var(--mute)'>Nothing needs attention right now.</div>`}</div>
+<div class='card'><h2>Forecast</h2><div class='fc'>${f.map(k=>`<div><div class='num'>${k[0]}</div><span style='color:var(--mute)'>${k[1]}</span></div>`).join('')}</div>${fzViz()}<div class='row'><button data-ai='fc'>Explain and suggest next steps</button></div><div class='out' id='out-fc'>${esc(aiOut.fc||'')}</div></div>
+<div class='card'><h2>Customer messages</h2>${o.length?`<div class='two'><div><label for='mpick'>Customer</label><select id='mpick'>${o.map(x=>`<option value='${x[0]}'>${esc(x[1])}</option>`).join('')}</select></div><div><label for='mlang'>Language</label><select id='mlang'><option>English</option><option>Urdu</option><option>Roman Urdu</option></select></div></div><div class='row'><button class='pri' data-ai='msg'>Write message</button><button data-copy='1'>Copy</button></div>`:`<div style='color:var(--mute)'>No customers to message yet.</div>`}<div class='out' id='out-msg'>${esc(aiOut.msg||'')}</div></div>
+</div>`}
+let fzSeen=false;
+function fzCash(){const N=30,H=14,st=624/(N-1+H),X=i=>8+i*st,B=190,T=10,days=[];let cum=0;
+ for(let i=N-1;i>=0;i--){const d=new Date(Date.now()-i*DAY),k=d.toDateString(),net=S.log.filter(l=>new Date(l.t).toDateString()===k).reduce((a,l)=>a+l.amt,0);cum+=net;days.push({d,net,cum})}
+ const avg=days.reduce((a,x)=>a+x.net,0)/N,sd=Math.sqrt(days.reduce((a,x)=>a+(x.net-avg)**2,0)/N),last=days[N-1].cum;
+ const pr=[...Array(H)].map((_,h)=>{const c=last+avg*(h+1),b=sd*Math.sqrt(h+1)*.6;return{c,lo:c-b,hi:c+b,d:new Date(Date.now()+(h+1)*DAY)}});
+ const vals=[0,...days.map(x=>x.cum),...pr.flatMap(p=>[p.lo,p.hi])],mn=Math.min(...vals),mx=Math.max(...vals),Y=v=>B-(v-mn)/((mx-mn)||1)*(B-T),f=n=>n.toFixed(1);
+ const hist=days.map((x,i)=>(i?'L':'M')+f(X(i))+' '+f(Y(x.cum))).join(' ');
+ const fl='M'+f(X(N-1))+' '+f(Y(last))+pr.map((p,h)=>' L'+f(X(N+h))+' '+f(Y(p.c))).join('');
+ const band='M'+f(X(N-1))+' '+f(Y(last))+pr.map((p,h)=>' L'+f(X(N+h))+' '+f(Y(p.hi))).join('')+[...pr].reverse().map((p,j)=>' L'+f(X(N+H-1-j))+' '+f(Y(p.lo))).join('')+' Z';
+ const dt=d=>d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+ const hov=days.map((x,i)=>`<rect x='${f(X(i)-st/2)}' y='0' width='${f(st)}' height='200' fill='transparent' data-tip='${dt(x.d)}: net ${money(x.net)}. Running total ${money(x.cum)}'/>`).join('')+pr.map((p,h)=>`<rect x='${f(X(N+h)-st/2)}' y='0' width='${f(st)}' height='200' fill='transparent' data-tip='${dt(p.d)} (forecast): about ${money(p.c)}, likely ${money(p.lo)} to ${money(p.hi)}'/>`).join('');
+ const b14=sd*Math.sqrt(H)*.6,fd=avg*H;
+ return{sum:'Next 14 days at the current pace: '+(fd>=0?'+':'\u2212')+money(Math.abs(fd))+' net, likely between '+money(fd-b14)+' and '+money(fd+b14)+'.',
+ svg:`<svg class='cash ${fzSeen?'':'rv'}' viewBox='0 0 640 200' preserveAspectRatio='none' role='img' aria-label='Cash trend and forecast'><defs><linearGradient id='fzg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='var(--stock)' stop-opacity='.35'/><stop offset='1' stop-color='var(--stock)' stop-opacity='0'/></linearGradient></defs><line x1='0' x2='640' y1='${f(Y(0))}' y2='${f(Y(0))}' stroke='var(--line)' stroke-dasharray='4 4' vector-effect='non-scaling-stroke'/><path d='${hist} L${f(X(N-1))} ${f(Y(0))} L${f(X(0))} ${f(Y(0))} Z' fill='url(#fzg)'/><path d='${band}' fill='var(--paint)' opacity='.25'/><line x1='${f(X(N-1))}' x2='${f(X(N-1))}' y1='0' y2='200' stroke='var(--mute)' stroke-dasharray='2 4' vector-effect='non-scaling-stroke'/><path d='${hist}' fill='none' stroke='var(--stock)' stroke-width='3' stroke-linejoin='round' vector-effect='non-scaling-stroke'/><path d='${fl}' fill='none' stroke='var(--paint)' stroke-width='3' stroke-dasharray='7 6' vector-effect='non-scaling-stroke'/>${hov}</svg>`}}
+function fzWeeks(){const now=Date.now(),w=[0,1,2,3,4].map(i=>{const a=now-(5-i)*7*DAY,b=a+7*DAY;return S.cars.filter(c=>c.status==='sold'&&c.soldAt&&new Date(c.soldAt)>=a&&new Date(c.soldAt)<b).length});
+ const nx=w.slice(2).reduce((a,b)=>a+b,0)/3,mx=Math.max(1,...w,nx),lb=['28\u201335d','21\u201328d','14\u201321d','7\u201314d','last 7d'];
+ const col=(n,l,cls,tip)=>`<div class='${cls}' data-tip='${tip}'><b>${cls==='p'?'~'+n.toFixed(1):n}</b><i style='height:${Math.max(3,Math.round(n/mx*110))}px'></i><small>${l}</small></div>`;
+ return`<div class='wk'>${w.map((n,i)=>col(n,lb[i],'','Sold '+n+' in the '+lb[i]+' window')).join('')}${col(nx,'next 7d','p','Forecast: about '+nx.toFixed(1)+' sales, the average of the last 3 weeks')}</div>`}
+function fzGauge(){const now=Date.now(),sold=S.cars.filter(c=>c.status==='sold'&&c.soldAt&&now-new Date(c.soldAt)<30*DAY).length,stock=S.cars.filter(c=>c.status==='stock').length,rate=sold/30,days=rate>0?stock/rate:null;
+ const fr=days===null?1:Math.min(days/60,1),col=days!==null&&days<14?'var(--bad)':days!==null&&days<30?'var(--paint)':'var(--ok)';
+ return`<svg viewBox='0 0 200 125' role='img' aria-label='Days of stock left' style='max-width:260px;margin:0 auto'><path d='M20 100 A80 80 0 0 1 180 100' fill='none' stroke='var(--line)' stroke-width='16' stroke-linecap='round'/><path d='M20 100 A80 80 0 0 1 180 100' pathLength='100' fill='none' stroke='${col}' stroke-width='16' stroke-linecap='round' stroke-dasharray='${(fr*100).toFixed(1)} 100'/><text x='100' y='88' text-anchor='middle' font-size='40' font-weight='800' fill='currentColor' style='font-family:Big Shoulders Display,sans-serif'>${days===null?'\u2013':Math.round(days)}</text><text x='100' y='108' text-anchor='middle' font-size='11' fill='var(--mute)'>days of stock left</text></svg><div class='sub'>${stock} cars in stock, selling about ${(rate*7).toFixed(1)} a week. ${days!==null&&days<30?'Buy more soon.':'Healthy for now.'}</div>`}
+function fzMakes(){const m={};S.cars.forEach(c=>{const r=m[c.make]=m[c.make]||{s:0,k:0};if(c.status==='sold')r.s++;if(c.status==='stock')r.k++});
+ const rows=Object.entries(m).filter(([,r])=>r.s+r.k>0).sort((a,b)=>b[1].s-a[1].s||b[1].k-a[1].k).slice(0,6),mx=Math.max(1,...rows.map(r=>Math.max(r[1].s,r[1].k)));
+ return rows.length?rows.map(([n,r])=>`<div class='mrow' data-tip='${esc(n)}: ${r.s} sold, ${r.k} in stock'><span>${esc(n)}</span><div><i class='a' style='width:${r.s/mx*100}%'></i><i class='b' style='width:${r.k/mx*100}%'></i></div><small>${r.s} sold \u00b7 ${r.k} left${r.s>0&&r.k===0?' \u2013 restock':''}</small></div>`).join('')+`<div class='lg'><span><i style='background:var(--stock)'></i>sold</span><span><i style='background:var(--line)'></i>in stock</span></div>`:`<div class='sub'>Sell a few cars to see demand by make.</div>`}
+function fzViz(){const c=fzCash();setTimeout(()=>{fzSeen=true},1500);
+ return`<div class='fzgrid'><div class='fzc wide'><h3>Cash: the last 30 days and the next 14</h3><div class='sub'>${c.sum}</div>${c.svg}<div class='lg'><span><i style='background:var(--stock)'></i>so far</span><span><i style='background:var(--paint)'></i>forecast</span><span>Shaded area: likely range</span></div></div><div class='fzc'><h3>Sales per week</h3>${fzWeeks()}</div><div class='fzc'><h3>Stock runway</h3>${fzGauge()}</div><div class='fzc'><h3>Demand by make</h3>${fzMakes()}</div><div class='fzc wide' style='padding:8px 14px'><div class='sub' id='ftip'>Hover or tap any chart for the exact figures.</div></div></div>`}
+function aiGo(k){
+ if(k==='ask'){const q=$('#ask').value.trim();if(!q){toast('Type a question first');return}runAi('ask','Answer this owner question: '+q)}
+ else if(k==='brief')runAi('brief','Write the owner briefing for today in at most 8 short lines: cash in and out this week, cars to sell or push, rentals due or late, unpaid invoices and salaries, and the one most important action today. Use real names and numbers.')
+ else if(k==='fc')runAi('fc','Look at the sales, rentals and cash trends in the data. Give a short forecast for the next 30 days and 3 practical suggestions. Say clearly where the data is too thin to be sure.')
+ else if(k==='msg'){const v=$('#mpick')?.value;if(!v){toast('Pick a customer first');return}let about;
+  if(v[0]==='r'){const c=S.cars.find(x=>x.id==v.slice(1));about='Polite reminder to '+c.renter+' that the rental of '+c.make+' '+c.model+' was due on '+stamp(c.due)+' and the car should be returned today.'}
+  else{const i=S.inv.find(x=>x.id==v.slice(1));about=v[0]==='i'?'Polite payment reminder to '+i.party+' for '+i.no+' with '+money(bal(i))+' still to pay for '+i.car+', issued '+stamp(i.date)+'.':'Warm thank-you message to '+i.party+' for choosing us for '+i.car+'.'}
+  runAi('msg','Write a short WhatsApp message in '+$('#mlang').value+'. '+about+' Sign off as the showroom team. Return only the message text.',false)}}
+async function suggestPrice(id){const c=S.cars.find(x=>x.id==id),s=await sm();if(!s){toast('AI is not available on this page');return}
+ aiBusy.price=true;aiOut.price='Thinking…';paint('price');
+ try{const r=await s.json([SYS,'Suggest an asking price and a rent per day in PKR for the car with id '+id+'. Use its cost, age, days on the lot and similar past sales. Return JSON with the keys asking (number), rent (number) and reason (one or two plain sentences).','DATA:'+NL+ctx()].join(NL+NL),{cache:false});
+  const a=Math.round(r.asking/1000)*1000,n=Math.round(r.rent/500)*500;if(!isFinite(a)||!isFinite(n)||a<=0)throw 0;
+  pend={id,asking:a,rent:n};aiOut.price='Suggested: asking '+money(a)+', rent '+money(n)+' a day.'+NL+(r.reason||'');
+  aiBusy.price=false;paint('price');const out=$('#out-price');if(out&&!$('#apply'))out.insertAdjacentHTML('afterend',`<div class='row' id='apply'><button class='pri' data-apply='${id}'>Use these prices</button></div>`);return
+ }catch(e){aiOut.price=e&&e.code?aiErr(e):'The assistant could not suggest a price. Try again.'}
+ aiBusy.price=false;paint('price')}
+function photoBox(){return`<label for='photo'>Photo of the car or its papers (optional)</label><input id='photo' type='file' accept='image/*'><div class='row' style='margin-top:8px'><button data-photo='1'>Fill the form from the photo</button></div><div class='out' id='out-photo'></div>`}
+async function readPhoto(){const f=$('#photo').files[0];if(!f){toast('Choose a photo first');return}const s=await sm();if(!s){toast('AI is not available on this page');return}
+ aiOut.photo='Reading the photo…';paint('photo');
+ try{const lim=await s.limits();if(!lim.images){aiOut.photo='Photo reading is not available here.';paint('photo');return}
+  const r=await s.json('This is a photo of a car, its registration book or a purchase invoice. Extract what you can read. Return JSON with the keys make, model, year (number or null), plate and price (number or null). Use an empty string when something is unreadable.',{images:[f],cache:false});
+  if(r.make)$('#b1').value=r.make;if(r.model)$('#b2').value=r.model;if(r.year)$('#b3').value=r.year;if(r.plate)$('#b4').value=r.plate;if(r.price)$('#b5').value=r.price;
+  aiOut.photo='Filled what could be read. Check every field before saving.'}
+ catch(e){aiOut.photo=e&&e.code?aiErr(e):'Could not read the photo. Try a clearer, closer picture.'}
+ paint('photo')}
+const pd=i=>i.got??(i.paid?i.amount:0),bal=i=>Math.max(0,i.amount-pd(i));
+const CATS=['Rent','Electricity and utilities','Fuel','Advertising','Repairs and parts','Taxes and fees','Other'];
+function invoice2(type,party,amount,car,paidNow,dueDays){const g=Math.max(0,Math.min(paidNow,amount)),i={id:++uid+Date.now()%1e5,no:nextNo(),type,party,amount,got:g,paid:g>=amount,due:g>=amount?null:new Date(Date.now()+(dueDays||30)*DAY).toISOString(),date:nowIso(),car};S.inv.unshift(i);
+ if(g>0)log((type==='Sale'?'Sold ':'Rental income \u2013 ')+car+(type==='Sale'?' to ':' \u00b7 ')+party+(g<amount?' (part payment)':''),g)}
+function payDrawer(id){const i=S.inv.find(x=>x.id==id);drawer(`<h2>Receive payment</h2><p>${i.no} from ${esc(i.party)}<br>Total ${money(i.amount)}. Paid ${money(pd(i))}. Balance ${money(bal(i))}.</p>${field('p1','Amount received now (PKR)',bal(i),'number')}${field('p2','Days until the rest is due, if any is left',14,'number')}<div class='row'><button class='pri' data-recv='${i.id}'>Record payment</button></div>`)}
+function recvPay(id){const i=S.inv.find(x=>x.id==id),a=Math.min(nv('p1'),bal(i));if(!(a>0)){toast('Enter an amount');return}
+ i.got=pd(i)+a;i.paid=bal(i)<=0;i.due=i.paid?null:new Date(Date.now()+(nv('p2')||14)*DAY).toISOString();
+ log('Payment received \u2013 '+i.no+' '+i.party+(i.paid?'':' (balance '+money(bal(i))+')'),a);close();render();toast(i.paid?'Invoice fully paid':'Part payment recorded')}
+function expDrawer(){drawer(`<h2>Add expense</h2><label for='e1'>Category</label><select id='e1'>${CATS.map(x=>`<option>${x}</option>`).join('')}</select>${field('e2','What was it for')}${field('e3','Amount (PKR)','','number')}<label for='e4'>Car, for repairs (optional)</label><select id='e4'><option value=''>No car</option>${S.cars.map(c=>`<option value='${c.id}'>${esc(c.make+' '+c.model+' '+c.plate)}</option>`).join('')}</select><div class='row'><button class='pri' data-saveexp='1'>Save expense</button></div>`)}
+function saveExp(){const a=nv('e3');if(!(a>0)){toast('Enter the amount');return}const car=$('#e4').value,id=Date.now(),cat=$('#e1').value,note=v('e2');
+ S.exp.unshift({id,cat,note,amount:a,date:nowIso(),car:car?+car:null});S.log.unshift({t:nowIso(),msg:'Expense \u2013 '+cat+(note?': '+note:''),amt:-a,x:id});close();render();toast('Expense saved')}
+function rmExp(id,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}S.exp=S.exp.filter(e=>e.id!=id);S.log=S.log.filter(l=>l.x!=id);render();toast('Expense removed')}
+function expView(){const m=mk(nowIso()),pm=mk(new Date(Date.now()-31*DAY).toISOString()),sum=(mo,c)=>S.exp.filter(e=>mk(e.date)===mo&&(!c||e.cat===c)).reduce((a,e)=>a+e.amount,0);
+ const tot=sum(m),prev=sum(pm),mx=Math.max(1,...CATS.map(c=>sum(m,c)));
+ return`<div class='tools'><h2>Expenses</h2><button class='pri' data-act='exp'>+ Add expense</button></div>
+<div class='fzgrid'><div class='fzc'><h3>This month: ${money(tot)}</h3><div class='sub'>${prev?(tot>prev?'Up ':'Down ')+Math.abs(Math.round((tot-prev)/prev*100))+'% from last month ('+money(prev)+')':'Nothing recorded last month'}</div>${CATS.map(c=>{const x=sum(m,c);return`<div class='mrow' style='grid-template-columns:150px 1fr'><span style='font-weight:400'>${c}</span><div><i class='a' style='width:${x/mx*100}%;background:var(--rent)'></i></div><small>${money(x)}</small></div>`}).join('')}</div>
+<div class='fzc'><h3>Costs on cars</h3><div class='sub'>Repairs and parts linked to a car</div>${S.cars.map(c=>({c,x:S.exp.filter(e=>e.car===c.id).reduce((a,e)=>a+e.amount,0)})).filter(r=>r.x>0).sort((a,b)=>b.x-a.x).slice(0,6).map(r=>`<div class='mrow' style='grid-template-columns:150px 1fr'><span style='font-weight:400'>${esc(r.c.make+' '+r.c.model)}</span><div><i class='a' style='width:100%;background:var(--serv)'></i></div><small>${money(r.x)}</small></div>`).join('')||`<div class='sub'>No repair costs linked to a car yet.</div>`}</div></div>
+<div class='scroll'><table><tr><th>Date and time</th><th>Category</th><th>Note</th><th>Car</th><th>Amount</th><th></th></tr>${S.exp.slice(0,60).map(e=>{const c=S.cars.find(x=>x.id===e.car);return`<tr><td>${stamp(e.date)}</td><td>${esc(e.cat)}</td><td>${esc(e.note)}</td><td>${c?esc(c.make+' '+c.model):''}</td><td>${money(e.amount)}</td><td><button data-rme='${e.id}'>Remove</button></td></tr>`}).join('')||`<tr><td colspan='6' style='color:var(--mute)'>No expenses yet. Add rent, electricity, fuel or repairs to see your real profit.</td></tr>`}</table></div>`}
+let cquery='';
+const same=(a,b)=>String(a||'').trim().toLowerCase()===String(b||'').trim().toLowerCase();
+function ensureCust(name,phone){name=(name||'').trim();if(!name)return;let c=S.cust.find(x=>same(x.name,name));if(!c){c={id:Date.now()+Math.floor(Math.random()*999),name,phone:'',city:'',note:''};S.cust.push(c)}if(phone&&!c.phone)c.phone=phone}
+function waLink(p,text){let d=String(p||'').replace(/\D/g,'');if(!d)return'';if(d[0]==='0')d='92'+d.slice(1);return'https://wa.me/'+d+'?text='+encodeURIComponent(text)}
+function custStats(c){const L=S.inv.filter(i=>same(i.party,c.name));return{L,sales:L.filter(i=>i.type==='Sale').reduce((a,i)=>a+i.amount,0),rent:L.filter(i=>i.type==='Rental').reduce((a,i)=>a+i.amount,0),owes:L.reduce((a,i)=>a+bal(i),0),last:L[0]?L[0].date:''}}
+function custList(){const list=[...S.cust];[...S.inv.map(i=>i.party),...S.cars.map(c=>c.buyer),...S.cars.map(c=>c.renter)].filter(Boolean).forEach(n=>{if(!list.some(c=>same(c.name,n))&&!list.some(c=>c.virtual&&same(c.name,n)))list.push({id:'n:'+n,name:n,phone:'',city:'',note:'',virtual:true})});return list}
+function custView(){const q=cquery.toLowerCase(),rows=custList().map(c=>({c,s:custStats(c)})).filter(r=>!q||(r.c.name+' '+(r.c.phone||'')+' '+(r.c.city||'')).toLowerCase().includes(q)).sort((a,b)=>(b.s.last||'').localeCompare(a.s.last||''));
+ return`<div class='tools'><h2>Customers (${rows.length})</h2><span class='srch'><input id='cq' placeholder='Search name, phone or city' aria-label='Search customers' value='${esc(cquery)}'><button class='pri' data-act='newcust'>+ Add customer</button></span></div>
+<div class='scroll'><table><tr><th>Name</th><th>Phone</th><th>City</th><th>Bought</th><th>Rented</th><th>Owes</th><th>Last deal</th></tr>${rows.map(({c,s})=>`<tr><td><button data-cust='${encodeURIComponent(c.id)}'>${esc(c.name)}</button></td><td>${esc(c.phone)||'<span style="color:var(--mute)">add</span>'}</td><td>${esc(c.city)}</td><td>${money(s.sales)}</td><td>${money(s.rent)}</td><td>${s.owes>0?'<b class="neg">'+money(s.owes)+'</b>':'\u2013'}</td><td>${s.last?stamp(s.last):'\u2013'}</td></tr>`).join('')||`<tr><td colspan='7' style='color:var(--mute)'>No customers yet. They are added when you sell or rent a car.</td></tr>`}</table></div>`}
+function custDrawer(id){let c=id?custList().find(x=>String(x.id)===String(id)):null;if(!c)c={id:'',name:'',phone:'',city:'',note:''};
+ const s=c.name?custStats(c):{L:[],owes:0},wa=waLink(c.phone,s.owes>0?'Assalam o Alaikum '+c.name+', a gentle reminder that PKR '+Math.round(s.owes).toLocaleString('en-US')+' is still pending with us. Thank you.':'Assalam o Alaikum '+c.name+', thank you for your trust in us.');
+ drawer(`<h2>${c.name?esc(c.name):'New customer'}</h2>${field('c1','Name',c.name)}${field('c2','Phone',c.phone,'tel')}${field('c3','City',c.city)}${field('c4','Notes',c.note)}<div class='row'><button class='pri' data-savecust='${c.virtual?'':esc(String(c.id))}' data-oldname='${encodeURIComponent(c.name)}'>Save</button>${wa?`<a class='btnlink' href='${wa}' target='_blank' rel='noopener'>Open WhatsApp</a>`:''}</div>${s.L.length?`<h2 style='font-size:22px;margin-top:20px'>History. Owes ${money(s.owes)}</h2><ul class='tl'>${s.L.map(i=>`<li><div>${i.no}, ${i.type}, ${esc(i.car)}<small>${stamp(i.date)}${bal(i)>0?'. Owes '+money(bal(i)):''}</small></div><span><b>${money(i.amount)}</b> <button data-print='${i.id}'>PDF</button></span></li>`).join('')}</ul>`:''}`)}
+function saveCust(id,old){const name=v('c1');if(!name){toast('Enter a name');return}let c=id?S.cust.find(x=>String(x.id)===String(id)):S.cust.find(x=>same(x.name,name));
+ if(!c){c={id:Date.now()};S.cust.push(c)}
+ if(old&&!same(old,name)){S.inv.forEach(i=>{if(same(i.party,old))i.party=name});S.cars.forEach(x=>{if(x.buyer&&same(x.buyer,old))x.buyer=name;if(x.renter&&same(x.renter,old))x.renter=name})}
+ Object.assign(c,{name,phone:v('c2'),city:v('c3'),note:v('c4')});close();render();toast('Customer saved')}
+function shopDrawer(){const s=S.set[0]||{};drawer(`<h2>Showroom details</h2><p style='color:var(--mute)'>These appear at the top of every invoice PDF.</p>${field('s1','Showroom name',s.name||'')}${field('s2','Address',s.address||'')}${field('s3','Phone',s.phone||'','tel')}<div class='row'><button class='pri' data-saveshop='1'>Save details</button></div>`)}
+function saveShop(){if(!v('s1')){toast('Enter the showroom name');return}S.set=[{name:v('s1'),address:v('s2'),phone:v('s3')}];close();render();toast('Details saved')}
+async function invPdf(id){const i=S.inv.find(x=>x.id==id),J=window.jspdf&&window.jspdf.jsPDF;if(!J){toast('The PDF tool did not load. Check your connection and reload.');return}
+ let dl=null;try{dl=await claude.use('downloads')}catch(e){}if(!dl){toast('Downloads are not available here');return}
+ const sh=S.set[0]||{name:'Your Showroom',address:'',phone:''},c=S.cust.find(x=>same(x.name,i.party))||{name:i.party,phone:''},d=new J({unit:'mm',format:'a4'}),T=(t,x,y,o)=>d.text(String(t),x,y,o),n=x=>Math.round(x).toLocaleString('en-US');
+ d.setFillColor(29,34,39);d.rect(0,0,210,34,'F');d.setTextColor(255,255,255);d.setFontSize(22);d.setFont('helvetica','bold');T(sh.name,15,16);d.setFontSize(10);d.setFont('helvetica','normal');T([sh.address,sh.phone].filter(Boolean).join('   '),15,25);
+ d.setFillColor(233,184,23);d.rect(0,34,210,2.5,'F');d.setTextColor(29,34,39);d.setFontSize(26);d.setFont('helvetica','bold');T('INVOICE',15,56);d.setFontSize(11);d.setFont('helvetica','normal');
+ T('No: '+i.no,195,50,{align:'right'});T('Date: '+stamp(i.date),195,57,{align:'right'});T('Billed to',15,72);d.setFont('helvetica','bold');d.setFontSize(14);T(c.name,15,80);d.setFont('helvetica','normal');d.setFontSize(11);if(c.phone)T(c.phone,15,87);
+ d.setDrawColor(200);d.line(15,98,195,98);T('Description',15,106);T('Amount (PKR)',195,106,{align:'right'});d.line(15,110,195,110);T(i.type+': '+i.car,15,119);T(n(i.amount),195,119,{align:'right'});d.line(15,126,195,126);
+ let y=138;const row=(a,b,bold)=>{d.setFont('helvetica',bold?'bold':'normal');T(a,120,y);T(b,195,y,{align:'right'});y+=9};
+ row('Total',n(i.amount),true);row('Paid',n(pd(i)));row('Balance due',n(bal(i)),true);
+ if(bal(i)>0&&i.due){d.setFont('helvetica','normal');T('Balance due by '+new Date(i.due).toLocaleDateString('en-GB'),195,y,{align:'right'})}
+ d.setFontSize(10);d.setTextColor(110);d.setFont('helvetica','normal');T(bal(i)>0?'Thank you. Please clear the balance by the due date.':'Paid in full. Thank you for your business.',15,270);
+ try{await dl.save({filename:i.no+'.pdf',data:d.output('arraybuffer')})}catch(e){toast('Download cancelled')}}
+document.addEventListener('input',e=>{if(e.target.id==='cq'){cquery=e.target.value;const p=e.target.selectionStart;draw();const q=$('#cq');q.focus();q.setSelectionRange(p,p)}});
+const DOCT=['Registration book','Token tax','Insurance','Transfer papers','Fitness certificate','Other'],REQ=['Registration book','Token tax','Transfer papers'];
+function docState(d){if(d.expiry){const days=Math.ceil((new Date(d.expiry+'T23:59:59')-Date.now())/DAY);return days<0?['bad','Expired '+(-days)+' day'+(days<-1?'s':'')+' ago']:days<=30?['warn',days+' day'+(days===1?'':'s')+' left']:['ok','Valid']}return d.done===false?['warn','Pending']:['ok','On file']}
+function docIssues(c){const L=c.docs||[],r={bad:0,warn:0,miss:[],bads:[]};L.forEach(d=>{const s=docState(d);if(s[0]==='bad'){r.bad++;r.bads.push(d.type)}else if(s[0]==='warn')r.warn++});REQ.forEach(t=>{if(!L.some(d=>d.type===t))r.miss.push(t)});return r}
+function docFlag(c){if(c.status==='sold')return'';const r=docIssues(c);return r.bad||r.warn||r.miss.length?`<em class='flag' title='Papers need attention'>!</em>`:''}
+function docAlerts(a){let miss=0;S.cars.filter(c=>c.status!=='sold').forEach(c=>{const nm=c.make+' '+c.model;(c.docs||[]).forEach(d=>{const s=docState(d);if(s[0]==='bad')a.push(['bad',nm+': '+d.type+' '+s[1].toLowerCase()]);else if(s[0]==='warn'&&d.expiry)a.push(['warn',nm+': '+d.type+', '+s[1]])});if(docIssues(c).miss.length)miss++});if(miss)a.push(['warn',miss+(miss>1?' cars are':' car is')+' missing required papers'])}
+function sellWarn(c){const r=docIssues(c),p=[...r.bads.map(t=>t+' expired'),...r.miss.map(t=>t+' missing'),...(c.docs||[]).filter(d=>!d.expiry&&docState(d)[0]==='warn').map(d=>d.type+' pending')];return p.length?`<div class='alert' style='cursor:default;margin-top:14px'>Check the papers before selling: ${p.join(', ')}.</div>`:''}
+function docBlock(c){const L=c.docs||[];return`<h2 style='font-size:22px;margin-top:20px'>Documents</h2>${L.length?`<ul class='tl'>${L.map(d=>{const s=docState(d);return`<li><div>${esc(d.type)}<small>${esc(d.ref||'')}${d.expiry?' \u00b7 expires '+new Date(d.expiry).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):''}</small></div><span><span class='dc ${s[0]}'>${esc(s[1])}</span> <button data-rmdoc='${d.id}' data-car2='${c.id}'>Remove</button></span></li>`}).join('')}</ul>`:`<div class='sub'>No papers recorded yet.</div>`}<div class='row'><button data-adddoc='${c.id}'>+ Add document</button></div>`}
+function docDrawer(cid){drawer(`<h2>Add document</h2><label for='d1'>Type</label><select id='d1'>${DOCT.map(t=>`<option>${t}</option>`).join('')}</select>${field('d2','Reference or number')}${field('d3','Expiry date (leave empty if none)','','date')}<label for='d4'>Status</label><select id='d4'><option value='1'>On file</option><option value='0'>Pending</option></select><div class='row'><button class='pri' data-savedoc='${cid}'>Save document</button></div>`)}
+function saveDoc(cid){const c=S.cars.find(x=>x.id==cid);if(!c)return;const type=$('#d1').value;c.docs=(c.docs||[]).filter(d=>d.type!==type||type==='Other');c.docs.push({id:Date.now(),type,ref:v('d2'),expiry:$('#d3').value,done:$('#d4').value==='1'});log('Document saved \u2013 '+c.make+' '+c.model+': '+type,0);render();openCar(c.id);toast('Document saved')}
+function rmDoc(did,cid,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}const c=S.cars.find(x=>x.id==cid);if(!c)return;c.docs=(c.docs||[]).filter(d=>d.id!=did);render();openCar(c.id)}
+function docsView(){const cars=S.cars.filter(c=>c.status!=='sold'),sc=c=>{const r=docIssues(c);return r.bad*3+r.warn+r.miss.length};let exp=0,soon=0,miss=0;cars.forEach(c=>{const r=docIssues(c);exp+=r.bad;soon+=r.warn;if(r.miss.length)miss++});
+ const cols=['Registration book','Token tax','Insurance','Transfer papers'],cell=(c,t)=>{const d=(c.docs||[]).find(x=>x.type===t);if(!d)return REQ.includes(t)?`<span class='dc miss'>Missing</span>`:`<span class='dc'>None</span>`;const s=docState(d);return`<span class='dc ${s[0]}'>${esc(s[1])}</span>`};
+ return`<div class='tools'><h2>Car documents</h2><span style='color:var(--mute)'>Tap a car to manage its papers</span></div><div class='kpis' style='margin-top:0'><div class='kpi'><div class='num ${exp?'neg':''}'>${exp}</div><span>expired documents</span></div><div class='kpi'><div class='num'>${soon}</div><span>expiring within 30 days or pending</span></div><div class='kpi'><div class='num ${miss?'neg':''}'>${miss}</div><span>cars missing required papers</span></div></div><div class='scroll'><table><tr><th>Car</th>${cols.map(t=>`<th>${t}</th>`).join('')}</tr>${[...cars].sort((a,b)=>sc(b)-sc(a)).map(c=>`<tr><td><button data-car='${c.id}'>${esc(c.make+' '+c.model)}</button><small style='display:block;color:var(--mute)'>${esc(c.plate)}</small></td>${cols.map(t=>`<td>${cell(c,t)}</td>`).join('')}</tr>`).join('')}</table></div>`}
+const LST=['New','Test drive','Negotiating','Won','Lost'],SRC=['WhatsApp','Walk-in','Phone call','Facebook','OLX','Catalog link','Other'];
+const CAT={url:(window.LOT_CONFIG&&LOT_CONFIG.CATALOG_URL)||new URL('catalog.html',location.href).href,ids:[]};
+const todayStr=()=>{const t=new Date();return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0')},fmtD=s=>new Date(s+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+let dragLead=null;
+function leadAlerts(a){const td=todayStr();S.leads.filter(l=>l.status!=='Won'&&l.status!=='Lost'&&l.follow&&l.follow<=td).forEach(l=>a.push([l.follow<td?'bad':'warn','Follow up with '+l.name+(l.car?' about '+l.car:'')+(l.follow<td?' (overdue since '+fmtD(l.follow)+')':' today')]))}
+function catCard(){const cur=S.cars.filter(c=>c.status==='stock').map(c=>c.id),add=cur.filter(i=>!CAT.ids.includes(i)).length,gone=CAT.ids.filter(i=>!cur.includes(i)).length;
+ return`<div class='card'><h2>Customer catalog</h2><p>Share this link on WhatsApp or Facebook. Customers browse your cars, see photos and request test drives.</p><div class='srch2'><input readonly value='${CAT.url}' aria-label='Catalog link'><button data-copycat='1'>Copy link</button><button data-qrall='1'>QR stickers for all cars</button></div><p style='color:var(--ok)'>The catalog is live. It always shows the cars you have in stock with their photos, and test-drive requests arrive here as leads.</p></div>`}
+function leadsView(){const L=S.leads,td=todayStr(),op=l=>l.status!=='Won'&&l.status!=='Lost',open=L.filter(op),due=open.filter(l=>l.follow&&l.follow<=td).length,m=mk(nowIso()),won=L.filter(l=>l.status==='Won'&&l.wonAt&&mk(l.wonAt)===m).length;
+ return`<div class='tools'><h2>Leads and test drives</h2><button class='pri' data-act='newlead'>+ Add lead</button></div><div class='kpis' style='margin-top:0'><div class='kpi'><div class='num'>${open.length}</div><span>open leads</span></div><div class='kpi'><div class='num ${due?'neg':''}'>${due}</div><span>follow-ups due</span></div><div class='kpi'><div class='num pos'>${won}</div><span>won this month</span></div></div>
+<div class='board'>${LST.map(s=>{const it=L.filter(l=>l.status===s);return`<div class='lcol' data-st='${s}'><h3>${s} (${it.length})</h3>${it.map(l=>`<button class='lead' draggable='true' data-lead='${encodeURIComponent(l.id)}'><b>${esc(l.name)}</b><small>${esc(l.car||'No car chosen')}${l.source?' \u00b7 '+esc(l.source):''}</small>${l.follow?`<span class='dc ${op(l)&&l.follow<td?'bad':op(l)&&l.follow===td?'warn':''}'>Follow up ${fmtD(l.follow)}</span>`:''}</button>`).join('')||`<div class='sub'>Drag leads here</div>`}</div>`}).join('')}</div>${catCard()}`}
+function leadDrawer(id){const l=id?S.leads.find(x=>String(x.id)===String(id)):null,x=l||{name:'',phone:'',car:'',source:'WhatsApp',status:'New',follow:'',note:''},sel=(i,A,v0)=>`<select id='${i}'>${A.map(o=>`<option ${o===v0?'selected':''}>${esc(o)}</option>`).join('')}</select>`,cars=['Not decided',...S.cars.filter(c=>c.status==='stock').map(c=>c.make+' '+c.model)];if(x.car&&!cars.includes(x.car))cars.push(x.car);
+ const wa=waLink(x.phone,'Assalam o Alaikum '+(x.name||'')+', thank you for your interest in '+(x.car&&x.car!=='Not decided'?'the '+x.car:'our cars')+'. When would you like to visit us?');
+ drawer(`<h2>${l?esc(l.name):'New lead'}</h2>${field('l1','Name',x.name)}${field('l2','Phone',x.phone,'tel')}<label for='l3'>Interested in</label>${sel('l3',cars,x.car||'Not decided')}<div class='two'><div><label for='l4'>Source</label>${sel('l4',SRC,x.source)}</div><div><label for='l5'>Stage</label>${sel('l5',LST,x.status)}</div></div>${field('l6','Follow-up date',x.follow,'date')}${field('l7','Notes',x.note)}<div class='row'><button class='pri' data-saveld='${l?esc(String(l.id)):''}'>Save lead</button>${wa?`<a class='btnlink' href='${wa}' target='_blank' rel='noopener'>Open WhatsApp</a>`:''}${l?`<button data-rmld='${esc(String(l.id))}'>Remove</button>`:''}</div>`)}
+function saveLead(id){const name=v('l1');if(!name){toast('Enter a name');return}let l=id?S.leads.find(x=>String(x.id)===String(id)):null;if(!l){l={id:Date.now(),created:nowIso()};S.leads.unshift(l)}
+ const st=$('#l5').value;if(st==='Won'&&l.status!=='Won'){l.wonAt=nowIso();ensureCust(name,v('l2'));toast('Won! Added to customers');celebrate()}else toast('Lead saved');
+ Object.assign(l,{name,phone:v('l2'),car:$('#l3').value==='Not decided'?'':$('#l3').value,source:$('#l4').value,status:st,follow:$('#l6').value,note:v('l7')});close();render()}
+function rmLead(id,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}S.leads=S.leads.filter(x=>String(x.id)!==String(id));close();render();toast('Lead removed')}
+document.addEventListener('dragstart',e=>{const b=e.target.closest('[data-lead]');if(b)dragLead=decodeURIComponent(b.dataset.lead)});
+document.addEventListener('dragover',e=>{if(dragLead!==null&&e.target.closest('.lcol'))e.preventDefault()});
+document.addEventListener('drop',e=>{const c=e.target.closest('.lcol');if(!c||dragLead===null)return;e.preventDefault();const l=S.leads.find(x=>String(x.id)===dragLead);dragLead=null;if(l&&l.status!==c.dataset.st){if(c.dataset.st==='Won'){l.wonAt=nowIso();ensureCust(l.name,l.phone)}l.status=c.dataset.st;render();toast('Moved to '+c.dataset.st)}});
+let stab='pay';
+const att0=(sid,d)=>S.att.find(a=>a.s===sid&&a.d===d);
+function setAtt(sid,d,t){S.att=S.att.filter(a=>!(a.s===sid&&a.d===d));if(t)S.att.push({s:sid,d,t})}
+function monthStats(w,mo){const A=S.att.filter(a=>a.s===w.id&&a.d.slice(0,7)===mo),abs=A.filter(a=>a.t==='A').length+0.5*A.filter(a=>a.t==='H').length,leave=A.filter(a=>a.t==='L').length,ded=Math.round((w.salary||0)/30*abs);
+ const sales=S.cars.filter(c=>c.status==='sold'&&c.soldBy===w.id&&c.soldAt&&mk(c.soldAt)===mo),prof=sales.reduce((a,c)=>a+(c.soldFor-c.cost),0),comm=Math.max(0,Math.round(prof*(w.comm||0)/100));
+ return{abs,leave,ded,sales:sales.length,prof,comm,net:(w.salary||0)-ded+comm}}
+function attAlert(a){if(canPay&&S.staff.length&&new Date().getHours()>=10&&!S.att.some(x=>x.d===todayStr()))a.push(['warn','Attendance is not marked for today yet'])}
+function payLog(w,s){log('Salary paid \u2013 '+w.name+(s.comm?' (includes commission '+money(s.comm)+')':''),-s.net)}
+function paySal(id){const w=S.staff.find(x=>x.id==id),m=mk(nowIso()),s=monthStats(w,m);w.paid[m]=nowIso();payLog(w,s);render();toast('Salary paid')}
+function payAll(){const m=mk(nowIso());S.staff.filter(w=>!w.paid[m]).forEach(w=>{const s=monthStats(w,m);w.paid[m]=nowIso();payLog(w,s)});render();toast('All salaries paid')}
+function soldBySel(){return canPay&&S.staff.length?`<label for='f10'>Sold by (for commission)</label><select id='f10'><option value=''>Nobody</option>${S.staff.map(w=>`<option value='${w.id}'>${esc(w.name)}</option>`).join('')}</select>`:''}
+function soldByEdit(c){return`<label for='sb'>Sold by</label><select id='sb'><option value=''>Nobody</option>${S.staff.map(w=>`<option value='${w.id}' ${c.soldBy===w.id?'selected':''}>${esc(w.name)}</option>`).join('')}</select><div class='row'><button data-setsb='${c.id}'>Save</button></div>`}
+function staffView(){const tabs=[['pay','Payroll'],['att','Attendance'],['board','Leaderboard']];
+ return`<div class='tools'><span>${tabs.map(t=>`<button class='chip ${stab===t[0]?'on':''}' data-stab='${t[0]}'>${t[1]}</button>`).join(' ')}</span><button data-act='newworker'>+ Add worker</button></div>${stab==='att'?attView():stab==='board'?boardView():payView()}`}
+function payView(){const m=mk(nowIso()),mon=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'}),un=S.staff.filter(w=>!w.paid[m]),rows=S.staff.map(w=>({w,s:monthStats(w,m)})),tot=rows.filter(r=>!r.w.paid[m]).reduce((a,r)=>a+r.s.net,0);
+ return`<div class='tools'><h2>Payroll \u2013 ${mon}</h2><button class='pri' data-payall='1' ${un.length?'':'disabled'}>Pay all (${un.length}) \u00b7 ${money(tot)}</button></div><div class='scroll'><table><tr><th>Name</th><th>Base pay</th><th>Absent</th><th>Leave</th><th>Deduction</th><th>Commission</th><th>Net pay</th><th></th></tr>${rows.map(({w,s})=>`<tr><td><button data-worker='${w.id}'>${esc(w.name)}</button><small style='display:block;color:var(--mute)'>${esc(w.role)}</small></td><td>${money(w.salary)}</td><td>${s.abs||'\u2013'}</td><td>${s.leave||'\u2013'}</td><td>${s.ded?`<b class='neg'>\u2212${money(s.ded)}</b>`:'\u2013'}</td><td>${s.comm?`<b class='pos'>+${money(s.comm)}</b><small style='display:block;color:var(--mute)'>${s.sales} sold at ${w.comm}%</small>`:'\u2013'}</td><td><b>${money(s.net)}</b></td><td>${w.paid[m]?`<span class='pill pos'>Paid</span>`:`<button data-sal='${w.id}'>Pay</button>`}</td></tr>`).join('')}</table></div><p class='sub'>Each absent day takes off one day of base pay (a half day takes off half). Leave is paid. Commission is a percentage of the profit on cars the person sold this month. Days left unmarked count as present.</p>`}
+function attView(){const t=new Date(),y=t.getFullYear(),mo=t.getMonth(),n=new Date(y,mo+1,0).getDate(),td=todayStr(),pre=y+'-'+String(mo+1).padStart(2,'0')+'-',cl={P:'ok',A:'bad',L:'warn',H:'half'};
+ return`<div class='tools'><h2>Attendance \u2013 ${t.toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</h2><button class='pri' data-allp='1'>Mark everyone present today</button></div><div class='scroll'><table class='att'><tr><th>Name</th>${[...Array(n)].map((_,i)=>`<th class='ac-h'>${i+1}</th>`).join('')}</tr>${S.staff.map(w=>`<tr><td>${esc(w.name)}</td>${[...Array(n)].map((_,i)=>{const d=pre+String(i+1).padStart(2,'0'),a=att0(w.id,d),sun=new Date(y,mo,i+1).getDay()===0;return`<td class='${sun?'sun':''}'><button class='ac ${a?cl[a.t]:''}' ${d>td?'disabled':''} data-att='${w.id}|${d}' aria-label='${esc(w.name)} ${d}'>${a?a.t:''}</button></td>`}).join('')}</tr>`).join('')}</table></div><div class='lg'><span><i style='background:var(--ok)'></i>P present</span><span><i style='background:var(--bad)'></i>A absent</span><span><i style='background:var(--paint)'></i>L paid leave</span><span><i style='background:var(--rent)'></i>H half day</span><span>Tap a day to change it. Sundays are shaded.</span></div>`}
+function boardView(){const m=mk(nowIso()),rows=S.staff.map(w=>({w,s:monthStats(w,m)})).sort((a,b)=>b.s.prof-a.s.prof||b.s.sales-a.s.sales),mx=Math.max(1,...rows.map(r=>r.s.prof));
+ return`<div class='fzgrid'><div class='fzc wide'><h3>Salesman leaderboard: profit this month</h3><div class='sub'>Cars sold, profit earned for the showroom and commission earned</div>${rows.map(({w,s},i)=>`<div class='mrow' style='grid-template-columns:150px 1fr'><span style='font-weight:600'>${i+1}. ${esc(w.name)}</span><div><i class='a' style='width:${s.prof/mx*100}%'></i></div><small>${s.sales} sold \u00b7 ${money(s.prof)} profit \u00b7 commission ${money(s.comm)}</small></div>`).join('')}</div></div>`}
+function workerDrawer(id){const w=id?S.staff.find(x=>x.id==id):null,x=w||{name:'',role:'',salary:'',comm:0};drawer(`<h2>${w?esc(w.name):'Add worker'}</h2>${field('w1','Full name',x.name)}${field('w2','Role',x.role)}${field('w3','Monthly salary (PKR)',x.salary,'number')}${field('w4','Commission (% of profit on cars they sell)',x.comm||0,'number')}<div class='row'><button class='pri' data-savew='${w?w.id:''}'>Save</button>${w?`<button data-rmw='${w.id}'>Remove worker</button>`:''}</div>`)}
+function saveWorker(id){if(!v('w1')){toast('Enter the name');return}let w=id?S.staff.find(x=>x.id==id):null;if(!w){w={id:Date.now(),paid:{}};S.staff.push(w);log('New worker \u2013 '+v('w1'),0)}Object.assign(w,{name:v('w1'),role:v('w2'),salary:nv('w3'),comm:nv('w4')});close();render();toast('Saved')}
+function rmWorker(id,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}S.staff=S.staff.filter(x=>x.id!=id);S.att=S.att.filter(a=>a.s!=id);close();render();toast('Worker removed')}
+let pf='month';
+const poolFor=mo=>S.exp.filter(e=>!e.car&&mk(e.date)===mo).reduce((a,e)=>a+e.amount,0)+S.staff.reduce((a,x)=>a+(x.salary||0),0);
+function truth(c){const w=S.staff.find(x=>x.id===c.soldBy),gross=c.soldFor-c.cost,rep=S.exp.filter(e=>e.car===c.id).reduce((a,e)=>a+e.amount,0),comm=w?Math.max(0,Math.round(gross*(w.comm||0)/100)):0,mo=mk(c.soldAt),cnt=S.cars.filter(x=>x.status==='sold'&&x.soldAt&&mk(x.soldAt)===mo).length||1,over=Math.round(poolFor(mo)/cnt);return{sale:c.soldFor,cost:c.cost,rep,comm,over,gross,net:gross-rep-comm-over}}
+function monthly(){const out=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'),sold=S.cars.filter(c=>c.status==='sold'&&c.soldAt&&mk(c.soldAt)===k),g=sold.reduce((a,c)=>a+c.soldFor-c.cost,0),rent=S.inv.filter(x=>x.type==='Rental'&&mk(x.date)===k).reduce((a,x)=>a+x.amount,0),ex=S.exp.filter(e=>mk(e.date)===k).reduce((a,e)=>a+e.amount,0),sal=S.log.filter(l=>l.msg.indexOf('Salary paid')===0&&mk(l.t)===k).reduce((a,l)=>a-l.amt,0);out.push({k,label:d.toLocaleDateString('en-GB',{month:'short'}),long:d.toLocaleDateString('en-GB',{month:'long',year:'numeric'}),n:sold.length,g,rent,ex,sal,net:g+rent-ex-sal})}return out}
+const short=n=>(n<0?'\u2212':'')+(Math.abs(n)>=1e6?(Math.abs(n)/1e6).toFixed(2)+'M':Math.round(Math.abs(n)/1000)+'k');
+function profitBox(c){if(!c.soldAt)return'';const t=truth(c),r=(a,b,neg)=>`<li><span>${a}</span><b class='${neg?'neg':''}'>${neg&&b?'\u2212':''}${money(b)}</b></li>`;return`<h2 style='font-size:22px;margin-top:20px'>True profit</h2><ul class='tl'>${r('Sale price',t.sale)}${r('Buying price',t.cost,1)}${r('Repairs and parts',t.rep,1)}${r('Salesman commission',t.comm,1)}${r('Share of running costs',t.over,1)}<li><span><b>True profit</b></span><b class='${t.net>=0?'pos':'neg'}'>${t.net<0?'\u2212':''}${money(Math.abs(t.net))}</b></li></ul>`}
+function profitView(){const M=monthly(),cur=M[5],mx=Math.max(1,...M.map(m=>Math.abs(m.net))),now=Date.now(),sold=S.cars.filter(c=>c.status==='sold'&&c.soldAt),
+ L=sold.filter(c=>pf==='all'||(pf==='month'?mk(c.soldAt)===mk(nowIso()):now-new Date(c.soldAt)<90*DAY)).map(c=>({c,t:truth(c)})).sort((a,b)=>b.t.net-a.t.net),sum=k=>L.reduce((a,r)=>a+r.t[k],0),
+ s90=sold.filter(c=>now-new Date(c.soldAt)<90*DAY),avg=s90.length?s90.reduce((a,c)=>a+c.soldFor-c.cost,0)/s90.length:0,pool=poolFor(mk(nowIso())),need=avg>0?Math.ceil(pool/avg):null,
+ sg=n=>`<b class='${n>=0?'pos':'neg'}'>${n<0?'\u2212':''}${money(Math.abs(n))}</b>`;
+ return`<div class='tools'><h2>Profit</h2><span>${[['month','This month'],['90','Last 90 days'],['all','All time']].map(x=>`<button class='chip ${pf===x[0]?'on':''}' data-pf='${x[0]}'>${x[1]}</button>`).join(' ')}</span></div>
+<div class='kpis' style='margin-top:0'><div class='kpi'><div class='num ${cur.net>=0?'pos':'neg'}'>${short(cur.net)}</div><span>net profit this month</span></div><div class='kpi'><div class='num'>${short(cur.g)}</div><span>profit on ${cur.n} car sale${cur.n===1?'':'s'}</span></div><div class='kpi'><div class='num'>${short(cur.rent)}</div><span>rental income</span></div><div class='kpi'><div class='num'>${short(cur.ex+cur.sal)}</div><span>expenses and salaries paid</span></div></div>
+<div class='fzgrid'><div class='fzc wide'><h3>Net profit by month</h3><div class='sub'>Car profit plus rentals, minus expenses and salaries paid</div><div class='pm'>${M.map(m=>`<div data-tip='${m.long}: net ${m.net<0?'minus ':''}${money(Math.abs(m.net))}. Profit on ${m.n} car(s) ${money(m.g)}, rentals ${money(m.rent)}, expenses ${money(m.ex)}, salaries ${money(m.sal)}'><div class='up'>${m.net>0?`<i style='height:${Math.max(3,m.net/mx*90)}px'></i>`:''}</div><div class='dn'>${m.net<0?`<i style='height:${Math.max(3,-m.net/mx*90)}px'></i>`:''}</div><b>${short(m.net)}</b><small>${m.label}</small></div>`).join('')}</div><div class='sub' id='ftip' style='margin-top:8px'>Hover or tap a month for the breakdown.</div></div>
+<div class='fzc wide'><h3>Break-even</h3><div class='sub'>${need===null?'Sell a few cars to see how many you need each month.':'Your fixed running costs are about '+money(pool)+' a month (non-car expenses and base salaries). At your recent average of '+money(avg)+' profit per car, you need about '+need+' car'+(need===1?'':'s')+' a month to break even. This month: '+cur.n+'.'}</div></div></div>
+<div class='scroll'><table><tr><th>Car</th><th>Sold</th><th>Sale price</th><th>Bought for</th><th>Repairs</th><th>Commission</th><th>Running costs</th><th>True profit</th><th>Margin</th></tr>${L.map(({c,t})=>`<tr><td><button data-car='${c.id}'>${esc(c.make+' '+c.model)}</button></td><td>${new Date(c.soldAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</td><td>${money(t.sale)}</td><td>${money(t.cost)}</td><td>${t.rep?money(t.rep):'\u2013'}</td><td>${t.comm?money(t.comm):'\u2013'}</td><td>${money(t.over)}</td><td>${sg(t.net)}</td><td>${(t.net/t.sale*100).toFixed(1)}%</td></tr>`).join('')||`<tr><td colspan='9' style='color:var(--mute)'>No cars sold in this period.</td></tr>`}${L.length?`<tr><td><b>Total</b></td><td></td><td>${money(sum('sale'))}</td><td>${money(sum('cost'))}</td><td>${money(sum('rep'))}</td><td>${money(sum('comm'))}</td><td>${money(sum('over'))}</td><td>${sg(sum('net'))}</td><td>${(sum('net')/sum('sale')*100).toFixed(1)}%</td></tr>`:''}</table></div><p class='sub'>True profit is the sale price minus the buying price, repairs linked to that car, the salesman's commission, and an equal share of that month's running costs (non-car expenses and base salaries) across the cars sold that month.</p>`}
+const TY={bought:'We bought',paid:'We paid',sold:'We sold',received:'They paid us'};
+const dsign=e=>e.type==='bought'||e.type==='received'?e.amount:-e.amount,dbal=d=>(d.entries||[]).reduce((a,e)=>a+dsign(e),0);
+function daged(d){const now=Date.now(),E=[...(d.entries||[])].sort((a,b)=>a.date.localeCompare(b.date)),q={pay:[],rec:[]};E.forEach(e=>{if(e.type==='bought')q.pay.push({t:e.date,a:e.amount});else if(e.type==='sold')q.rec.push({t:e.date,a:e.amount});else{let left=e.amount;const Q=e.type==='paid'?q.pay:q.rec;while(left>0&&Q.length){const f=Q[0],u=Math.min(left,f.a);f.a-=u;left-=u;if(f.a<=0)Q.shift()}}});const age=Q=>Q.length?Math.floor((now-new Date(Q[0].t))/DAY):0;return Math.max(age(q.pay),age(q.rec))}
+function dealerAlerts(a){if(!canPay)return;S.dealers.forEach(d=>{const b=dbal(d),g=daged(d);if(b>0&&g>30)a.push(['warn','You owe '+d.name+' '+money(b)+'. Oldest bill is '+g+' days old.']);if(b<0&&g>30)a.push(['bad',d.name+' owes you '+money(-b)+'. Oldest bill is '+g+' days old.'])})}
+function dealersView(){const D=S.dealers.map(d=>({d,b:dbal(d),last:(d.entries||[]).reduce((a,e)=>e.date>a?e.date:a,'')})).sort((a,b)=>Math.abs(b.b)-Math.abs(a.b)),pay=D.filter(r=>r.b>0).reduce((a,r)=>a+r.b,0),rec=D.filter(r=>r.b<0).reduce((a,r)=>a-r.b,0);
+ return`<div class='tools'><h2>Dealers and suppliers</h2><button class='pri' data-act='newdealer'>+ Add dealer</button></div><div class='kpis' style='margin-top:0'><div class='kpi'><div class='num neg'>${short(pay)}</div><span>you owe dealers</span></div><div class='kpi'><div class='num pos'>${short(rec)}</div><span>dealers owe you</span></div><div class='kpi'><div class='num'>${short(rec-pay)}</div><span>net position</span></div></div><div class='scroll'><table><tr><th>Dealer</th><th>Phone</th><th>City</th><th>Balance</th><th>Last entry</th></tr>${D.map(({d,b,last})=>`<tr><td><button data-dealer='${d.id}'>${esc(d.name)}</button></td><td>${esc(d.phone)}</td><td>${esc(d.city)}</td><td>${b>0?`<b class='neg'>You owe ${money(b)}</b>`:b<0?`<b class='pos'>Owes you ${money(-b)}</b>`:'Settled'}</td><td>${last?stamp(last):'\u2013'}</td></tr>`).join('')||`<tr><td colspan='5' style='color:var(--mute)'>No dealers yet. Add one to keep a running account.</td></tr>`}</table></div>`}
+function dealerDrawer(id){const d=S.dealers.find(x=>String(x.id)===String(id));if(!d)return;const b=dbal(d);let run=0;
+ const E=[...(d.entries||[])].sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{run+=dsign(e);return{e,run}}).reverse(),rs=r=>r>0?'you owe '+money(r):r<0?'owes you '+money(-r):'settled',
+ wa=waLink(d.phone,b<0?'Assalam o Alaikum '+d.name+', a gentle reminder that PKR '+Math.round(-b).toLocaleString('en-US')+' is pending with us. Thank you.':'Assalam o Alaikum '+d.name+', hope you are well.');
+ drawer(`<h2>${esc(d.name)}</h2><div style='color:var(--mute)'>${esc([d.phone,d.city].filter(Boolean).join(' \u00b7 '))}</div><p style='font-size:18px;margin:8px 0'>${b>0?`<b class='neg'>You owe ${money(b)}</b>`:b<0?`<b class='pos'>Owes you ${money(-b)}</b>`:'Account settled'}</p><div class='row'>${Object.keys(TY).map(k=>`<button data-dent='${d.id}|${k}'>${TY[k]}</button>`).join('')}</div><div class='row'><button data-dpdf='${d.id}'>Statement PDF</button><button data-editdealer='${d.id}'>Edit details</button>${wa?`<a class='btnlink' href='${wa}' target='_blank' rel='noopener'>WhatsApp</a>`:''}</div><h2 style='font-size:22px;margin-top:18px'>Account statement</h2><ul class='tl'>${E.map(({e,run})=>`<li><div>${TY[e.type]}${e.note?': '+esc(e.note):''}<small>${stamp(e.date)} \u00b7 balance: ${rs(run)}</small></div><span><b>${money(e.amount)}</b> <button data-rment='${d.id}|${e.id}'>Remove</button></span></li>`).join('')||`<li style='color:var(--mute)'>No entries yet.</li>`}</ul>`)}
+function dealerForm(id){const d=id?S.dealers.find(x=>String(x.id)===String(id)):null,x=d||{name:'',phone:'',city:'',note:''};drawer(`<h2>${d?'Edit dealer':'Add dealer'}</h2>${field('k1','Name',x.name)}${field('k2','Phone',x.phone,'tel')}${field('k3','City',x.city)}${field('k4','Notes',x.note)}<div class='row'><button class='pri' data-savedealer='${d?d.id:''}'>Save</button></div>`)}
+function saveDealer(id){if(!v('k1')){toast('Enter the name');return}let d=id?S.dealers.find(x=>String(x.id)===String(id)):null;if(!d){d={id:Date.now(),entries:[]};S.dealers.push(d)}Object.assign(d,{name:v('k1'),phone:v('k2'),city:v('k3'),note:v('k4')});render();dealerDrawer(d.id);toast('Dealer saved')}
+function entDrawer(key){const[did,type]=key.split('|'),d=S.dealers.find(x=>String(x.id)===did);if(!d)return;const hint={bought:'Cars or parts you took on credit. You owe this until you pay.',paid:'Cash you paid to the dealer. Recorded as money out.',sold:'Cars or parts you gave on credit. They owe this until they pay.',received:'Cash the dealer paid you. Recorded as money in.'}[type];
+ drawer(`<h2>${TY[type]}</h2><p style='color:var(--mute)'>${esc(d.name)}. ${hint}</p>${field('t1','Amount (PKR)','','number')}${field('t2','What was it for')}${field('t3','Date (leave empty for now)','','date')}<div class='row'><button class='pri' data-saveent='${d.id}|${type}'>Save entry</button></div>`)}
+function saveEnt(key){const[did,type]=key.split('|'),d=S.dealers.find(x=>String(x.id)===did),a=nv('t1');if(!d||!(a>0)){toast('Enter the amount');return}const dv=$('#t3').value,date=!dv||dv===todayStr()?nowIso():new Date(dv+'T12:00:00').toISOString(),id=Date.now(),e={id,date,type,amount:a,note:v('t2')};d.entries.push(e);
+ if(type==='paid')S.log.unshift({t:date,msg:'Paid dealer \u2013 '+d.name+(e.note?': '+e.note:''),amt:-a,x:id});if(type==='received')S.log.unshift({t:date,msg:'Received from dealer \u2013 '+d.name+(e.note?': '+e.note:''),amt:a,x:id});
+ render();dealerDrawer(d.id);toast('Entry saved')}
+function rmEnt(key,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}const[did,eid]=key.split('|'),d=S.dealers.find(x=>String(x.id)===did);if(!d)return;d.entries=d.entries.filter(e=>String(e.id)!==eid);S.log=S.log.filter(l=>String(l.x)!==eid);render();dealerDrawer(d.id)}
+async function dealerPdf(id){const d=S.dealers.find(x=>String(x.id)===String(id)),J=window.jspdf&&window.jspdf.jsPDF;if(!d)return;if(!J){toast('The PDF tool did not load. Check your connection and reload.');return}
+ let dl=null;try{dl=await claude.use('downloads')}catch(e){}if(!dl){toast('Downloads are not available here');return}
+ const sh=S.set[0]||{name:'Your Showroom',address:'',phone:''},p=new J({unit:'mm',format:'a4'}),T=(t,x,y,o)=>p.text(String(t),x,y,o),n=x=>Math.round(x).toLocaleString('en-US'),b=dbal(d);
+ p.setFillColor(29,34,39);p.rect(0,0,210,30,'F');p.setTextColor(255,255,255);p.setFontSize(20);p.setFont('helvetica','bold');T(sh.name,15,15);p.setFontSize(10);p.setFont('helvetica','normal');T([sh.address,sh.phone].filter(Boolean).join('   '),15,23);p.setFillColor(233,184,23);p.rect(0,30,210,2,'F');
+ p.setTextColor(29,34,39);p.setFontSize(18);p.setFont('helvetica','bold');T('ACCOUNT STATEMENT',15,46);p.setFontSize(11);p.setFont('helvetica','normal');T(d.name+(d.city?', '+d.city:''),15,54);T('As of '+stamp(nowIso()),195,46,{align:'right'});
+ T(b>0?'You owe: PKR '+n(b):b<0?'Owes you: PKR '+n(-b):'Account settled',195,54,{align:'right'});
+ let y=68,run=0;p.setFont('helvetica','bold');T('Date',15,y);T('Details',50,y);T('Amount',150,y,{align:'right'});T('Balance',195,y,{align:'right'});p.setFont('helvetica','normal');y+=3;p.line(15,y,195,y);y+=7;
+ [...d.entries].sort((a,c)=>a.date.localeCompare(c.date)).forEach(e=>{run+=dsign(e);if(y>275){p.addPage();y=20}T(new Date(e.date).toLocaleDateString('en-GB'),15,y);T((TY[e.type]+(e.note?': '+e.note:'')).slice(0,48),50,y);T(n(e.amount),150,y,{align:'right'});T((run<0?'-':'')+n(Math.abs(run))+(run>0?' owed':run<0?' due':''),195,y,{align:'right'});y+=8});
+ try{await dl.save({filename:'statement-'+d.name.replace(/[^a-z0-9]+/gi,'-')+'.pdf',data:p.output('arraybuffer')})}catch(e){toast('Download cancelled')}}
+let tgSeen=false;
+const getTarget=mo=>{const T=(S.targets||[]).filter(t=>t.month<=mo).sort((a,b)=>b.month.localeCompare(a.month));return T[0]||null};
+function ring(val,target,label,fmt,color){const f=target>0?Math.min(val/target,1):0,r=34,c=2*Math.PI*r;return`<div class='rg'><svg viewBox='0 0 90 90' role='img' aria-label='${esc(label)}: ${fmt(val)} of ${fmt(target)}'><circle cx='45' cy='45' r='${r}' fill='none' stroke='var(--line)' stroke-width='10'/><circle class='rgp' cx='45' cy='45' r='${r}' fill='none' stroke='${color}' stroke-width='10' stroke-linecap='round' stroke-dasharray='${(f*c).toFixed(1)} ${c.toFixed(1)}' transform='rotate(-90 45 45)'/><text x='45' y='51' text-anchor='middle' font-size='19' font-weight='800' fill='currentColor' style='font-family:Big Shoulders Display,sans-serif'>${Math.round(val/target*100)||0}%</text></svg><div><b>${esc(label)}</b><div class='sub'>${fmt(val)} of ${fmt(target)}</div></div></div>`}
+function targetCard(){const m=mk(nowIso()),t=getTarget(m);
+ if(!t)return canPay?`<div class='fzc' style='margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'><span>Set a monthly target for cars sold, profit and rentals, and watch it fill as the month goes.</span><button class='pri' data-act='settarget'>Set targets</button></div>`:'';
+ const M=monthly(),cur=M[5],prev=M[4],now=new Date(),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(),left=dim-now.getDate(),ef=now.getDate()/dim,
+ st=(val,tg)=>{const r=tg>0?val/tg:0;return r>=1?['ok','Target reached']:r>=ef*1.05?['ok','Ahead of pace']:r>=ef*.9?['warn','On pace']:['bad','Behind pace']},
+ items=[['Cars sold',cur.n,t.cars,x=>String(Math.round(x)),'var(--stock)']];
+ if(canPay)items.push(['Profit on car sales',cur.g,t.profit,x=>short(x),'var(--ok)'],['Rental income',cur.rent,t.rent,x=>short(x),'var(--rent)']);
+ const need=Math.max(0,(t.cars||0)-cur.n),proj=Math.round(cur.n/ef),pt=getTarget(prev.k),anim=tgSeen?'':' anim';setTimeout(()=>{tgSeen=true},1500);
+ return`<div class='fzc tg${anim}' style='margin-bottom:12px'><div class='tools' style='margin-bottom:4px'><h3>This month's targets</h3>${canPay?`<button data-act='settarget'>Change targets</button>`:''}</div><div class='rings'>${items.filter(i=>i[2]>0).map(i=>{const s=st(i[1],i[2]);return`<div>${ring(i[1],i[2],i[0],i[3],i[4])}<span class='dc ${s[0]}'>${s[1]}</span></div>`}).join('')}</div><div class='sub' style='margin-top:8px'>${t.cars>0?(need>0?`You need ${need} more car${need===1?'':'s'}${left>0?` in the next ${left} day${left===1?'':'s'}. At this pace you finish with about ${proj}.`:'. Today is the last day.'}`:`You have reached this month's car target.`):''}${pt&&pt.cars>0?` Last month: ${prev.n} of ${pt.cars} cars.`:''}</div></div>`}
+function targetAlert(a){const t=getTarget(mk(nowIso()));if(!t||!(t.cars>0))return;const n=new Date(),dim=new Date(n.getFullYear(),n.getMonth()+1,0).getDate(),done=S.cars.filter(c=>c.status==='sold'&&c.soldAt&&mk(c.soldAt)===mk(nowIso())).length;if(n.getDate()>=15&&done<t.cars&&done/t.cars<(n.getDate()/dim)*0.9)a.push(['warn','Behind on the car target: '+done+' of '+t.cars+' sold with '+(dim-n.getDate())+' days left'])}
+function targetDrawer(){const t=getTarget(mk(nowIso()))||{};drawer(`<h2>Monthly targets</h2><p style='color:var(--mute)'>These apply to this month and carry forward to later months until you change them.</p>${field('g1','Cars to sell',t.cars||'','number')}${field('g2','Profit on car sales (PKR)',t.profit||'','number')}${field('g3','Rental income (PKR)',t.rent||'','number')}<div class='row'><button class='pri' data-savetarget='1'>Save targets</button></div>`)}
+function saveTarget(){const m=mk(nowIso());S.targets=(S.targets||[]).filter(t=>t.month!==m);S.targets.push({month:m,cars:nv('g1'),profit:nv('g2'),rent:nv('g3')});close();render();toast('Targets saved')}
+let ME={name:'Someone',id:null},ACT=[],noAct=false,RESTORE=null;
+const ACTP={cars:['car',c=>c.make+' '+c.model+' '+(c.plate||'')],inv:['invoice',i=>i.no+' '+i.party],exp:['expense',e=>e.cat+(e.note?': '+e.note:'')],staff:['worker',w=>w.name],cust:['customer',c=>c.name],leads:['lead',l=>l.name],dealers:['dealer',d=>d.name]};
+function chg(a,b){const out=[];new Set([...Object.keys(a),...Object.keys(b)]).forEach(k=>{if(JSON.stringify(a[k])===JSON.stringify(b[k]))return;out.push(typeof b[k]==='object'||typeof a[k]==='object'?k+' updated':k+': '+String(a[k]??'none')+' to '+String(b[k]??'none'))});return out.slice(0,4).join(', ')}
+function pushAct(e){if(!DB)return;let o;try{o=JSON.parse(JSON.stringify({...e,t:nowIso(),who:ME.name,uid:ME.id}))}catch(x){return}DB.collection('activity').add(o).catch(()=>{})}
+function diffAct(p,oldJ,arr){const spec=ACTP[p];if(!spec||!oldJ)return;let old;try{old=JSON.parse(oldJ)}catch(e){return}
+ const om=new Map(old.map(x=>[String(x.id),x])),nm=new Map(arr.map(x=>[String(x.id),x])),ev=[];
+ nm.forEach((x,id)=>{if(!om.has(id))ev.push({kind:'added',item:x,before:null});else if(JSON.stringify(om.get(id))!==JSON.stringify(x))ev.push({kind:'edited',item:x,before:om.get(id)})});
+ om.forEach((x,id)=>{if(!nm.has(id))ev.push({kind:'removed',item:x,before:x})});
+ if(!ev.length)return;
+ if(ev.length>12){pushAct({part:p,kind:'bulk',label:ev.length+' '+spec[0]+' records changed at once',detail:'',pid:null,before:null});return}
+ ev.forEach(e=>pushAct({part:p,kind:e.kind,label:spec[0]+': '+spec[1](e.item),detail:e.kind==='edited'?chg(e.before,e.item):'',pid:String(e.item.id),before:e.before}))}
+function activityView(){return`<div class='tools'><h2>Activity trail</h2></div><p class='sub'>Who changed what, newest first. Undo restores the record only. Money entries in Records are not reversed.</p><ul class='tl'>${ACT.map(a=>`<li><div>${esc(a.label)}<small>${esc(a.who||'Someone')} \u00b7 ${stamp(a.t)}${a.detail?' \u00b7 '+esc(a.detail):''}${a.undone?' \u00b7 undone':''}</small></div><span><span class='dc ${a.kind==='removed'?'bad':a.kind==='added'?'ok':''}'>${esc(a.kind)}</span>${a.pid&&!a.undone?` <button data-undo='${esc(a.id)}'>Undo</button>`:''}</span></li>`).join('')||`<li style='color:var(--mute)'>Nothing recorded yet. Changes made from now on appear here.</li>`}</ul>`}
+function undoAct(id,b){const a=ACT.find(x=>x.id===id);if(!a||!a.pid||!S[a.part])return;if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again to undo';return}
+ const arr=S[a.part],i=arr.findIndex(x=>String(x.id)===a.pid);
+ if(a.kind==='added'){if(i<0){toast('Already gone');return}arr.splice(i,1)}
+ else if(a.kind==='edited'){if(i<0||!a.before){toast('Cannot undo: the record is missing');return}arr[i]=a.before}
+ else if(a.kind==='removed'){if(i>=0){toast('Already restored');return}arr.push(a.before)}
+ try{DB.collection('activity').doc(id).update({undone:true})}catch(e){}render();toast('Undone')}
+function backupAlert(a){if(!canPay||!DB)return;let t=null;try{t=localStorage.getItem('lot-lastbackup')}catch(e){}const d=t?Math.floor((Date.now()-new Date(t))/DAY):null;if(d===null||d>7)a.push(['warn',d===null?'No backup downloaded on this device yet. Use Records, then Download full backup.':'Last backup on this device was '+d+' days ago'])}
+async function backup(){let dl=null;try{dl=await claude.use('downloads')}catch(e){}if(!dl){toast('Downloads are not available here');return}const o={app:'the-lot',version:1,created:nowIso(),data:{}};PART.forEach(p=>{o.data[p]=S[p]});
+ try{await dl.save({filename:'showroom-backup-'+nowIso().slice(0,10)+'.json',data:JSON.stringify(o)});try{localStorage.setItem('lot-lastbackup',nowIso())}catch(e){}toast('Backup saved');draw()}catch(e){toast('Download cancelled')}}
+function doRestore(){if(!RESTORE)return;noAct=true;PART.forEach(p=>{if(Array.isArray(RESTORE.data[p]))S[p]=RESTORE.data[p]});log('Backup restored from a file made '+stamp(RESTORE.created),0);pushAct({part:'all',kind:'bulk',label:'Backup restored (file made '+stamp(RESTORE.created)+')',detail:'',pid:null,before:null});RESTORE=null;close();render();noAct=false;toast('Backup restored')}
+document.addEventListener('change',e=>{if(e.target.id!=='rf')return;const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);if(!o||o.app!=='the-lot'||!o.data||!Array.isArray(o.data.cars))throw 0;RESTORE=o;drawer(`<h2>Restore backup</h2><p>File made ${esc(stamp(o.created))}: ${o.data.cars.length} cars, ${(o.data.inv||[]).length} invoices, ${(o.data.staff||[]).length} workers.</p><p class='neg'><b>This replaces everything now in the showroom.</b> Download a fresh backup first if you are not sure.</p><div class='row'><button class='pri' data-dorestore='1'>Replace everything with this backup</button></div>`)}catch(x){toast('That file is not a valid backup')}})});
+function photoBlock(c){const P=c.photos||[];return`<h2 style='font-size:22px;margin-top:20px'>Photos and QR</h2><div class='sw' title='Paint colour for the drawing'>${CPAL.map(x=>`<button class='swb' data-swatch='${c.id}|${x}' style='background:${x}' aria-label='Paint colour ${x}'></button>`).join('')}</div><div class='phg'>${P.map(p=>`<figure><img src='${esc(p.url)}' alt='Photo of the car' loading='lazy'><button data-rmph='${c.id}|${esc(p.id)}' aria-label='Remove photo'>x</button></figure>`).join('')}</div><div class='row'><label class='btnlink' for='pf' style='cursor:pointer'>+ Add photos</label><input id='pf' type='file' accept='image/*' multiple hidden><button data-qr='${c.id}'>QR sticker (PDF)</button></div>`}
+async function shrink(f){const bm=await createImageBitmap(f),k=Math.min(1,1200/Math.max(bm.width,bm.height)),cv=document.createElement('canvas');cv.width=Math.round(bm.width*k);cv.height=Math.round(bm.height*k);cv.getContext('2d').drawImage(bm,0,0,cv.width,cv.height);return new Promise((res,rej)=>cv.toBlob(b=>b?res(b):rej(new Error('blob')),'image/jpeg',.82))}
+async function addPhotos(cid,files){const c=S.cars.find(x=>x.id==cid);if(!c||!files.length)return;let A=null;try{A=await claude.use('assets')}catch(e){}if(!A){toast('Photo upload is not available for your account');return}
+ toast('Uploading '+Math.min(files.length,6)+' photo(s)');c.photos=c.photos||[];let ok=0;for(const f of [...files].slice(0,6)){try{const r=await A.upload(await shrink(f),{type:'image/jpeg'});c.photos.push({id:r.id,url:r.url});ok++}catch(e){}}
+ render();openCar(c.id);toast(ok?ok+' photo(s) added':'Upload failed. Try a smaller photo.')}
+async function rmPhoto(key,b){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again';return}const[cid,pid]=key.split('|'),c=S.cars.find(x=>x.id==cid);if(!c)return;c.photos=(c.photos||[]).filter(p=>p.id!==pid);try{const A=await claude.use('assets');if(A&&A.delete)A.delete(pid)}catch(e){}render();openCar(c.id)}
+function qrData(text){return new Promise(res=>{if(!window.QRCode){res(null);return}const el=document.createElement('div');el.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(el);new QRCode(el,{text,width:256,height:256,correctLevel:QRCode.CorrectLevel.M});setTimeout(()=>{const cv=el.querySelector('canvas'),u=cv?cv.toDataURL('image/png'):null;el.remove();res(u)},80)})}
+async function stickers(list){list=list.filter(Boolean);if(!list.length){toast('No cars to print');return}const J=window.jspdf&&window.jspdf.jsPDF;if(!J||!window.QRCode){toast('The QR tool did not load. Check your connection and reload.');return}
+ let dl=null;try{dl=await claude.use('downloads')}catch(e){}if(!dl){toast('Downloads are not available here');return}
+ const sh=S.set[0]||{name:'Your Showroom',phone:''},p=new J({unit:'mm',format:'a4'});let i=0;
+ for(const c of list){const u=await qrData(CAT.url+'#car-'+c.id);if(i&&i%6===0)p.addPage();const k=i%6,x=10+(k%2)*100,y=10+Math.floor(k/2)*92;
+  p.setDrawColor(170);p.setLineDashPattern([2,2],0);p.rect(x,y,95,88);p.setLineDashPattern([],0);p.setFont('helvetica','bold');p.setFontSize(15);p.setTextColor(29,34,39);p.text(c.make+' '+c.model,x+5,y+11);
+  p.setFont('helvetica','normal');p.setFontSize(11);p.text(c.year+'    PKR '+Math.round(c.price).toLocaleString('en-US'),x+5,y+18);if(u)p.addImage(u,'PNG',x+22,y+22,50,50);
+  p.setFontSize(9);p.setTextColor(90);p.text('Scan to see this car and book a test drive',x+47.5,y+77,{align:'center'});p.text(sh.name+(sh.phone?'   '+sh.phone:''),x+47.5,y+83,{align:'center'});i++}
+ try{await dl.save({filename:list.length===1?'qr-sticker.pdf':'car-qr-stickers.pdf',data:p.output('arraybuffer')});toast('Stickers saved')}catch(e){toast('Download cancelled')}}
+document.addEventListener('change',e=>{if((e.target.id==='pf'||e.target.id==='pfc')&&e.target.files.length)addPhotos(modal,e.target.files)});
+const CPAL=['#0E6B6B','#B3261E','#2B3038','#C9A227','#3B5BA5','#7A4FA3','#8A8F94','#DB5A24','#E4E6E3','#1D3A6B'];
+function carArt(c){const m=(c.make+' '+c.model).toLowerCase(),t=/hilux|revo|vigo|ranger|d-max|dmax/.test(m)?'p':/fortuner|sportage|tucson|hr-v|vezel|br-v|stonic|h6|mg hs|jimny|prado|land cruiser|cr-v|santa|sorento|x70|harrier|haval/.test(m)?'s':/alto|cultus|wagon|picanto|swift|vitz|mira|passo|aqua|prius|yaris hatch/.test(m)?'h':'d',col=c.color||CPAL[Math.abs(+c.id||0)%CPAL.length];
  const B={d:{b:'M10 58 L10 47 Q10 41 20 39 L52 35 L70 17 Q74 13 82 13 L124 13 Q132 13 138 19 L156 35 L184 39 Q194 41 194 49 L194 58 Z',g:'M62 35 L76 19 L98 19 L98 35 Z M104 35 L104 19 L122 19 Q127 19 130 23 L144 35 Z',w:[48,152],r:14},h:{b:'M12 58 L12 47 Q12 41 22 39 L54 35 L72 16 Q76 12 84 12 L134 12 Q144 12 148 20 L166 36 L186 40 Q194 42 194 50 L194 58 Z',g:'M64 35 L77 18 L98 18 L98 35 Z M104 35 L104 18 L134 18 Q140 18 143 24 L154 35 Z',w:[48,152],r:14},s:{b:'M10 60 L10 45 Q10 38 20 36 L48 33 L64 13 Q68 8 76 8 L152 8 Q160 8 164 14 L174 33 L188 36 Q196 38 196 47 L196 60 Z',g:'M58 33 L70 15 L96 15 L96 33 Z M102 33 L102 15 L152 15 L162 33 Z',w:[48,154],r:16},p:{b:'M8 60 L8 47 Q8 41 18 39 L46 35 L62 15 Q66 11 74 11 L110 11 Q116 11 120 17 L126 35 L196 35 L196 60 Z',g:'M54 35 L67 17 L92 17 L92 35 Z M98 35 L98 17 L110 17 Q113 17 115 20 L121 35 Z',w:[44,156],r:15}}[t];
- return'<svg viewBox="0 0 204 80" role="img" aria-label="'+esc(c.make+' '+c.model)+'"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient></defs><ellipse cx="102" cy="74" rx="92" ry="4.5" fill="rgba(0,0,0,.2)"/><path d="'+B.b+'" fill="'+col+'"/><path d="'+B.b+'" fill="url(#cg)"/><path d="'+B.g+'" fill="rgba(225,240,255,.78)" stroke="rgba(0,0,0,.28)" stroke-width="1"/><rect x="186" y="45" width="9" height="4" rx="2" fill="#FFE9A8"/><rect x="8" y="45" width="6" height="4" rx="2" fill="#B3261E"/>'+B.w.map(x=>'<circle cx="'+x+'" cy="60" r="'+(B.r+3)+'" fill="rgba(0,0,0,.4)"/><circle cx="'+x+'" cy="60" r="'+B.r+'" fill="#1B1F23"/><circle cx="'+x+'" cy="60" r="'+(B.r*.55)+'" fill="#C9CED3"/><circle cx="'+x+'" cy="60" r="'+(B.r*.18)+'" fill="#6B7480"/>').join('')+'</svg>'}
-function noph(c){return'<div class="noph" style="--c:'+c.color+'"><b>'+esc(c.make)+'</b><span>'+esc(c.model)+'</span></div>'}
-function chips(){const m=['All',...new Set(D.cars.map(c=>c.make))];$('#ch').innerHTML=m.map(x=>'<button class="'+(x===mk?'on':'')+'" data-mk="'+esc(x)+'">'+esc(x)+'</button>').join('')}
-function list(){const q=$('#q').value.trim().toLowerCase(),s=$('#so').value;let L=D.cars.filter(c=>(mk==='All'||c.make===mk)&&(!q||(c.make+' '+c.model).toLowerCase().includes(q)));
- if(s==='lo')L.sort((a,b)=>a.price-b.price);if(s==='hi')L.sort((a,b)=>b.price-a.price);
- $('#em').hidden=L.length>0;
- $('#g').innerHTML=L.map(c=>'<article class="card"><div class="stage"><span class="yr">'+c.year+'</span>'+(c.photos&&c.photos[0]?'<img class="cp" src="'+esc(c.photos[0].url)+'" alt="">':noph(c))+'</div><div class="body"><h3>'+esc(c.make+' '+c.model)+'</h3><div class="price">'+money(c.price)+'</div><div class="rent">Also for rent from '+money(c.rate)+' a day</div><div class="btns"><button data-open="'+c.id+'">Book a test drive</button><a class="btn wa" target="_blank" rel="noopener" href="'+esc(wa('Assalam o Alaikum, I am interested in the '+c.year+' '+c.make+' '+c.model+' listed at '+money(c.price)+'. Is it still available?')||'#')+'">Ask on WhatsApp</a></div></div></article>').join('')}
-function close(){$('#m').innerHTML='';car=null}
-function openDlg(id){car=D.cars.find(c=>c.id==id);const t=new Date(Date.now()+864e5).toISOString().slice(0,10);
- $('#m').innerHTML='<div class="mask" data-x><div class="dlg" role="dialog" aria-modal="true" aria-label="Book a test drive"><h2>'+esc(car.make+' '+car.model)+'</h2><div class="rent">'+car.year+' · '+money(car.price)+'</div><div class="f"><label for="n">Your name</label><input id="n" autocomplete="name"><label for="p">Your phone</label><input id="p" type="tel" autocomplete="tel"><div class="two"><div><label for="d">Date</label><input id="d" type="date" min="'+t+'" value="'+t+'"></div><div><label for="t">Time</label><select id="t"><option>10:00 am</option><option>11:00 am</option><option>12:00 pm</option><option>2:00 pm</option><option>3:00 pm</option><option>4:00 pm</option><option>5:00 pm</option></select></div></div></div><p class="rent" id="note">Sending opens WhatsApp with your request written for you. The showroom will confirm the time.</p><div class="btns"><button class="go" data-send>Send request on WhatsApp</button><button data-x>Close</button></div></div></div>';$('#n').focus()}
-async function send(){const n=$('#n').value.trim(),p=$('#p').value.trim();if(!n||!p){$('#note').textContent='Please enter your name and phone first.';return}
- const d=new Date($('#d').value+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}),msg='Assalam o Alaikum, I am '+n+' ('+p+'). I would like to book a test drive for the '+car.year+' '+car.make+' '+car.model+' on '+d+' at '+$('#t').value+'.',u=wa(msg);
- if(u)window.open(u,'_blank','noopener');
- try{await sb.from('enquiries').insert({kind:'test_drive',name:n,phone:p,car_id:car.id,car_label:car.year+' '+car.make+' '+car.model,preferred_at:d+' at '+$('#t').value,message:msg.slice(0,480)})}catch(e){}
- if(u){close()}else{$('#note').textContent='Thank you. The showroom has your request and will call you.'}}
-document.addEventListener('click',e=>{const t=e.target,b=t.closest('button');
- if(t.classList&&t.classList.contains('mask')){close();return}if(!b)return;
- if(b.dataset.mk){mk=b.dataset.mk;chips();list()}else if(b.dataset.open)openDlg(b.dataset.open);else if(b.dataset.send!==undefined)send();else if(b.dataset.x!==undefined)close()});
+ return`<svg viewBox='0 0 204 80' role='img' aria-label='${esc(c.make+' '+c.model)}'><defs><linearGradient id='cg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.3'/><stop offset='.55' stop-color='#fff' stop-opacity='0'/><stop offset='1' stop-color='#000' stop-opacity='.25'/></linearGradient></defs><ellipse cx='102' cy='74' rx='92' ry='4.5' fill='rgba(0,0,0,.2)'/><path d='${B.b}' fill='${col}'/><path d='${B.b}' fill='url(#cg)'/><path d='${B.g}' fill='rgba(225,240,255,.78)' stroke='rgba(0,0,0,.28)' stroke-width='1'/><rect x='186' y='45' width='9' height='4' rx='2' fill='#FFE9A8'/><rect x='8' y='45' width='6' height='4' rx='2' fill='#B3261E'/><path d='M${B.w[0]+B.r+4} 40 L${B.w[1]-B.r-4} 40' stroke='rgba(0,0,0,.18)' stroke-width='1'/>${B.w.map(x=>`<circle cx='${x}' cy='${60}' r='${B.r+3}' fill='rgba(0,0,0,.4)'/><circle cx='${x}' cy='60' r='${B.r}' fill='#1B1F23'/><circle cx='${x}' cy='60' r='${B.r*.55}' fill='#C9CED3'/><circle cx='${x}' cy='60' r='${B.r*.18}' fill='#6B7480'/>`).join('')}</svg>`}
+let tin={make:'',model:'',year:'',km:'',cond:'Good',market:''},tinRes=null;
+function tiQuote(){tin={make:v('ti1'),model:v('ti2'),year:v('ti3'),km:v('ti4'),cond:$('#ti5').value,market:v('ti6')};if(!tin.make){toast('Enter the make');return}tinRes=quote(tin);if(document.activeElement)document.activeElement.blur();render()}
+function quote(q){const yr=+q.year||0,km=+q.km||0,mkk=q.make.trim().toLowerCase(),mdd=q.model.trim().toLowerCase(),now=new Date().getFullYear(),pool=S.cars.filter(c=>String(c.make).toLowerCase()===mkk);
+ let comps=pool.filter(c=>mdd&&String(c.model).toLowerCase()===mdd),basis='same make and model';if(comps.length<2){comps=pool;basis='same make'}
+ const manual=+q.market>0;if(!comps.length&&!manual)return{none:true};
+ const pts=comps.map(c=>{const ref=c.status==='sold'&&c.soldFor?c.soldFor:c.price,dy=yr&&c.year?yr-(+c.year):0;return{c,ref,adj:Math.round(ref*(1+0.04*Math.max(-5,Math.min(5,dy))))}}).sort((a,b)=>a.adj-b.adj);
+ const med=pts.length?(pts.length%2?pts[(pts.length-1)/2].adj:(pts[pts.length/2-1].adj+pts[pts.length/2].adj)/2):0,market=manual?+q.market:med,exp=yr?Math.max(0,now-yr)*15000:0,kmF=km&&exp?Math.max(.9,Math.min(1.05,1-0.01*((km-exp)/10000))):1,condF={Excellent:1,Good:.96,Fair:.9,Poor:.82}[q.cond]||.96;
+ const sold=S.cars.filter(c=>c.status==='sold'&&c.soldFor>0),mg=sold.length?Math.max(.04,Math.min(.15,sold.reduce((a,c)=>a+(c.soldFor-c.cost)/c.soldFor,0)/sold.length)):.08;
+ const reps=S.cars.map(c=>S.exp.filter(e=>e.car===c.id).reduce((a,e)=>a+e.amount,0)).filter(x=>x>0),recon=reps.length?reps.reduce((a,b)=>a+b,0)/reps.length:30000,resale=market*kmF*condF,mid=resale*(1-mg)-recon,r5=x=>Math.max(0,Math.round(x/5000)*5000);
+ return{pts:pts.slice(0,5),n:pts.length,basis,manual,market,kmF,condF,mg,recon,resale:r5(resale),low:r5(mid*.96),mid:r5(mid),high:r5(mid*1.03),profit:r5(resale*mg)}}
+function tiResult(r){if(r.none)return`<div class='alert' style='cursor:default'>No ${esc(tin.make)} cars in your records yet, so there is nothing to compare with. Type a market price you know in the last box and try again.</div>`;
+ return`<div class='fzgrid'><div class='fzc'><h3>Offer to the customer</h3><div class='price' style='font-family:Big Shoulders Display,sans-serif;font-size:30px;font-weight:800'>${money(r.low)} to ${money(r.high)}</div><div class='sub'>Suggested opening offer ${money(r.mid)}. Do not go above ${money(r.high)}.</div></div><div class='fzc'><h3>Likely resale price</h3><div style='font-family:Big Shoulders Display,sans-serif;font-size:30px;font-weight:800'>${money(r.resale)}</div><div class='sub'>After condition and kilometres.</div></div><div class='fzc'><h3>Expected profit</h3><div style='font-family:Big Shoulders Display,sans-serif;font-size:30px;font-weight:800' class='pos'>${money(r.profit)}</div><div class='sub'>At your usual ${(r.mg*100).toFixed(1)}% margin, after about ${money(r.recon)} of repairs.</div></div></div>
+ ${r.pts.length?`<div class='scroll'><table><tr><th>Similar car in your records</th><th>Year</th><th>Status</th><th>Price used</th><th>Adjusted to this year</th></tr>${r.pts.map(p=>`<tr><td>${esc(p.c.make+' '+p.c.model)}</td><td>${esc(p.c.year)}</td><td>${p.c.status==='sold'?'Sold':'Asking'}</td><td>${money(p.ref)}</td><td>${money(p.adj)}</td></tr>`).join('')}</table></div>`:''}
+ <p class='sub'>${r.manual?'Based on the market price you entered.':'Based on '+r.n+' car'+(r.n===1?'':'s')+' with the '+r.basis+'. Each year of age difference moves the price by 4%.'} Kilometre and condition factors: ${r.kmF.toFixed(2)} and ${r.condF.toFixed(2)}. Always inspect the car before agreeing.</p>
+ <div class='row'><button class='pri' data-tilead='1'>Save as a lead</button><button data-tiai='1'>Second opinion from AI</button></div><div class='out' id='out-tia'>${esc(aiOut.tia||'')}</div>`}
+function tradeView(){const q=tin;return`<div class='tools'><h2>Trade-in valuation</h2></div><p class='sub'>Enter the customer's car. The offer comes from what similar cars cost and sold for in your own records.</p><div class='fzc' style='margin-bottom:12px'><div class='two'><div>${field('ti1','Make',q.make)}</div><div>${field('ti2','Model',q.model)}</div></div><div class='two'><div>${field('ti3','Year',q.year,'number')}</div><div>${field('ti4','Kilometres driven',q.km,'number')}</div></div><div class='two'><div><label for='ti5'>Condition</label><select id='ti5'>${['Excellent','Good','Fair','Poor'].map(x=>`<option ${q.cond===x?'selected':''}>${x}</option>`).join('')}</select></div><div>${field('ti6','Market price you know, optional (PKR)',q.market,'number')}</div></div><div class='row'><button class='pri' data-tiq='1'>Get offer</button></div></div>${tinRes?tiResult(tinRes):''}`}
+function tiLead(){if(!tinRes||tinRes.none)return;S.leads.unshift({id:Date.now(),name:'Trade-in customer',phone:'',car:'',source:'Walk-in',status:'Negotiating',follow:todayStr(),note:'Trade-in: '+tin.year+' '+tin.make+' '+tin.model+', '+(tin.km||'?')+' km, '+tin.cond+'. Offer range '+money(tinRes.low)+' to '+money(tinRes.high)+'.',created:nowIso()});render();toast('Lead added. Open Leads to add the customer name.')}
+function tiAi(){if(!tinRes||tinRes.none)return;runAi('tia','Give a short second opinion on a trade-in offer. The customer car is a '+tin.year+' '+tin.make+' '+tin.model+', '+(tin.km||'unknown')+' km, condition '+tin.cond+'. Our calculated offer range is '+money(tinRes.low)+' to '+money(tinRes.high)+', with a likely resale of '+money(tinRes.resale)+'. Compare with our own past sales in the data. Say whether the range looks too high or too low and what to check when inspecting the car.')}
+function noPhoto(c,big){const col=c.color||CPAL[Math.abs(+c.id||0)%CPAL.length];return`<div class='nop${big?' big':''}' style='--c:${col}'>${stockImg(c)}<b>${esc(c.make)}</b><span>${big?'No photo yet. Add one below.':'Add photo'}</span></div>`}
+function photoBlock2(c){const P=c.photos||[];return`<h2 style='font-size:22px;margin-top:20px'>Photos</h2><div class='phg'>${P.map((p,i)=>`<figure><button class='thumb ${i?'':'main'}' data-mainph='${c.id}|${esc(p.id)}' aria-label='Make this the main photo'><img src='${esc(p.url)}' alt='' loading='lazy'></button><button data-rmph='${c.id}|${esc(p.id)}' aria-label='Remove photo'>x</button></figure>`).join('')}</div><div class='sub'>${P.length?'Tap a photo to make it the main one.':'Take or choose photos of this car. The first photo is shown everywhere.'}</div><div class='row'><label class='btnlink' for='pfc' style='cursor:pointer'>Take photo</label><input id='pfc' type='file' accept='image/*' capture='environment' hidden><label class='btnlink' for='pf' style='cursor:pointer'>Choose photos</label><input id='pf' type='file' accept='image/*' multiple hidden><button data-qr='${c.id}'>QR sticker (PDF)</button></div><div class='sub' style='margin-top:10px'>Colour of the card shown while there is no photo</div><div class='sw'>${CPAL.map(x=>`<button class='swb' data-swatch='${c.id}|${x}' style='background:${x}' aria-label='Colour ${x}'></button>`).join('')}</div>`}
+function photoNudge(){const L=S.cars.filter(c=>c.status!=='sold'),n=L.filter(c=>c.photos&&c.photos.length).length;if(!L.length||n===L.length)return'';const first=L.find(c=>!(c.photos&&c.photos.length));return`<div class='fzc' style='margin-bottom:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between'><div><b>${n} of ${L.length} cars have photos</b><div class='sub'>Real photos sell cars faster and appear in your customer catalog.</div><div style='height:6px;background:var(--line);border-radius:3px;margin-top:6px;width:220px'><i style='display:block;height:6px;border-radius:3px;background:var(--stock);width:${n/L.length*100}%'></i></div></div><button class='pri' data-car='${first.id}'>Add photos: ${esc(first.make+' '+first.model)}</button></div>`}
+function dropOn(c,z){if(!c)return;const nm=c.make+' '+c.model;
+  if(z==='sell'||z==='rent'){if(c.status!=='stock')return toast('Only cars in stock can be '+(z==='sell'?'sold':'rented out'));openCar(c.id,z)}
+  else if(z==='serv'){if(c.status!=='stock')return toast('Only cars in stock can go to service');c.status='service';log(nm+' sent to service',0);render();toast('Sent to service')}
+  else if(z==='back'){if(c.status==='rented'||c.status==='service'){c.status='stock';delete c.renter;delete c.due;log(nm+' is back on the lot',0);render();toast('Back in stock')}else toast('That car is already in stock or sold')}}
+
+function field(id,label,val='',type='text'){return`<label for="${id}">${label}</label><input id="${id}" type="${type}" value="${esc(val)}">`}
+const v=id=>$('#'+id).value.trim(),nv=id=>parseFloat($('#'+id).value)||0;
+function drawer(html){$('#layer').innerHTML=`<div class="mask" data-close><div class="drawer" role="dialog" aria-modal="true">${html}<div class="row"><button data-close>Close</button></div></div></div>`}
+function close(){$('#layer').innerHTML=''}
+function openCar(id,mode){const c=S.cars.find(x=>x.id===id);modal=id;const nm=`${esc(c.make)} ${esc(c.model)}`;
+  let h=`<div class='hero'>${c.photos&&c.photos[0]?`<img class='ph' src='${esc(c.photos[0].url)}' alt=''>`:noPhoto(c,1)}</div><h2>${nm}</h2><div style="color:var(--mute)">${esc(c.year)} · ${esc(c.plate)} · ${ST[c.status][0]}</div>
+  <p>Bought for ${money(c.cost)}. Asking ${money(c.price)}. Rent ${money(c.rate)} a day.</p><p>Margin at asking price: <b class="${c.price>=c.cost?'pos':'neg'}">${money(c.price-c.cost)}</b></p>`;
+  if(c.status==='stock')h+=`${sellWarn(c)}<h2 style="font-size:22px">Sell this car</h2>${field('f1','Buyer name')}${field('f8','Buyer phone (optional)','','tel')}${field('f2','Final price (PKR)',c.price,'number')}${field('f6','Paid now (PKR). Leave blank for the full price. A smaller amount makes it an installment sale.','','number')}${field('f7','Days until the balance is due',30,'number')}${soldBySel()}
+    <div class="row"><button class="pri" data-do="sell">Sell and create invoice</button></div>
+    <h2 style="font-size:22px;margin-top:22px">Rent this car</h2>${field('f3','Customer name')}${field('f9','Customer phone (optional)','','tel')}<div class="two"><div>${field('f4','Days',3,'number')}</div><div>${field('f5','Rate per day',c.rate,'number')}</div></div>
+    <div class="row"><button class="pri" data-do="rent">Rent out and create invoice</button><button data-do="serv">Send to service</button></div>`;
+  if(c.status==='rented')h+=`<p>Renter: <b>${esc(c.renter)}</b><br>${dueText(c)} (${stamp(c.due)})</p><div class="row"><button class="pri" data-do="ret">Mark as returned</button></div>`;
+  if(c.status==='service')h+=`<div class="row"><button class="pri" data-do="ret">Back to stock</button></div>`;
+  if(c.status==='sold')h+=`<p>Sold to <b>${esc(c.buyer)}</b> for ${money(c.soldFor)}<br>${stamp(c.soldAt)}<br>Profit ${money(c.soldFor-c.cost)}</p>${canPay?soldByEdit(c)+profitBox(c):''}`;
+  h+=photoBlock2(c);h+=docBlock(c);
+  if(c.status==='stock')h+=`<div class='row'><button data-price='${c.id}'>Suggest price with AI</button></div><div class='out' id='out-price'></div>`;
+  h+=`<div class="row"><button data-rm="${c.id}">Remove car</button></div>`;drawer(h);if(mode)setTimeout(()=>$('#'+(mode==='sell'?'f1':'f3'))?.focus(),50)}
+function invoice(type,party,amount,car){const i={id:++uid+Date.now()%1e5,no:nextNo(),type,party,amount,date:nowIso(),paid:true,car};S.inv.unshift(i);log(`${type==='Sale'?'Sold':'Rental income –'} ${car} ${type==='Sale'?'to':'·'} ${party}`,amount)}
+document.addEventListener('click',e=>{
+  const t=e.target;
+  if(t.dataset.close!==undefined&&(t.classList.contains('mask')||t.tagName==='BUTTON')){close();return}
+  const b=t.closest('button');if(!b)return;const d=b.dataset;
+  if(d.mainph){const[cid,pid]=d.mainph.split('|'),c=S.cars.find(x=>x.id==cid);if(c){const i=(c.photos||[]).findIndex(p=>p.id===pid);if(i>0){c.photos.unshift(c.photos.splice(i,1)[0]);render();openCar(c.id)}}}
+  else if(d.tiq)tiQuote();
+  else if(d.tilead)tiLead();
+  else if(d.tiai)tiAi();
+  else if(d.swatch){const[i,col]=d.swatch.split('|'),c=S.cars.find(x=>x.id==i);if(c){c.color=col;render();openCar(c.id)}}
+  else if(d.qr)stickers([S.cars.find(x=>x.id==d.qr)]);
+  else if(d.qrall)stickers(S.cars.filter(c=>c.status==='stock'));
+  else if(d.rmph)rmPhoto(d.rmph,b);
+  else if(d.act==='backup')backup();
+  else if(d.dorestore)doRestore();
+  else if(d.undo)undoAct(d.undo,b);
+  else if(d.act==='settarget')targetDrawer();
+  else if(d.savetarget)saveTarget();
+  else if(d.dealer)dealerDrawer(d.dealer);
+  else if(d.act==='newdealer')dealerForm('');
+  else if(d.editdealer)dealerForm(d.editdealer);
+  else if(d.savedealer!==undefined)saveDealer(d.savedealer);
+  else if(d.dent)entDrawer(d.dent);
+  else if(d.saveent)saveEnt(d.saveent);
+  else if(d.rment)rmEnt(d.rment,b);
+  else if(d.dpdf)dealerPdf(d.dpdf);
+  else if(d.pf){pf=d.pf;render()}
+  else if(d.stab){stab=d.stab;render()}
+  else if(d.att){const[s,dt]=d.att.split('|'),a=att0(+s,dt),o=['','P','A','L','H'];setAtt(+s,dt,o[(o.indexOf(a?a.t:'')+1)%5]);render()}
+  else if(d.allp){const td=todayStr();S.staff.forEach(w=>{if(!att0(w.id,td))setAtt(w.id,td,'P')});render();toast('Marked present')}
+  else if(d.sal)paySal(d.sal);
+  else if(d.payall!==undefined)payAll();
+  else if(d.act==='newworker')workerDrawer('');
+  else if(d.worker)workerDrawer(d.worker);
+  else if(d.savew!==undefined)saveWorker(d.savew);
+  else if(d.rmw)rmWorker(d.rmw,b);
+  else if(d.setsb){const c=S.cars.find(x=>x.id==d.setsb);c.soldBy=+$('#sb').value||null;render();openCar(c.id);toast('Saved')}
+  else if(d.lead)leadDrawer(decodeURIComponent(d.lead));
+  else if(d.act==='newlead')leadDrawer('');
+  else if(d.saveld!==undefined)saveLead(d.saveld);
+  else if(d.rmld)rmLead(d.rmld,b);
+  else if(d.copycat){try{navigator.clipboard.writeText(CAT.url).then(()=>toast('Link copied'),()=>toast('Select the link and copy it'))}catch(e){toast('Select the link and copy it')}}
+  else if(d.adddoc)docDrawer(d.adddoc);
+  else if(d.savedoc)saveDoc(d.savedoc);
+  else if(d.rmdoc)rmDoc(d.rmdoc,d.car2,b);
+  else if(d.print)invPdf(d.print);
+  else if(d.cust)custDrawer(decodeURIComponent(d.cust));
+  else if(d.savecust!==undefined)saveCust(d.savecust,decodeURIComponent(b.dataset.oldname||''));
+  else if(d.act==='newcust')custDrawer('');
+  else if(d.act==='shop')shopDrawer();
+  else if(d.saveshop)saveShop();
+  else if(d.pay)payDrawer(d.pay);
+  else if(d.recv)recvPay(d.recv);
+  else if(d.saveexp)saveExp();
+  else if(d.rme)rmExp(d.rme,b);
+  else if(d.act==='exp')expDrawer();
+  else if(d.go){const[g,f]=d.go.split(':');view=g;if(g==='lot')filter=f||'all';if(g==='invoices')ifilter=f||'all';render()}
+  else if(d.if){ifilter=d.if;render()}
+  else if(d.rm){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again to remove';return}const c=S.cars.find(x=>x.id==d.rm);S.cars=S.cars.filter(x=>x.id!=d.rm);log('Removed '+c.make+' '+c.model+' from records',0);close();render()}
+  else if(d.ex){$('#ask').value=d.ex;aiGo('ask')}
+  else if(d.ai)aiGo(d.ai);
+  else if(d.copy){try{navigator.clipboard.writeText(aiOut.msg||'').then(()=>toast('Copied'),()=>toast('Select the text and copy it'))}catch(e){toast('Select the text and copy it')}}
+  else if(d.price)suggestPrice(d.price);
+  else if(d.photo)readPhoto();
+  else if(d.apply){const c=S.cars.find(x=>x.id==d.apply);if(c&&pend&&pend.id==c.id){c.price=pend.asking;c.rate=pend.rent;log('Prices updated – '+c.make+' '+c.model,0);pend=null;render();openCar(c.id);toast('Prices updated')}}
+  else if(d.act==='csv')exportCsv();
+  else if(d.act==='sample'){S=seed();render();toast('Sample data loaded')}
+  else if(d.f){filter=d.f;render()}
+  else if(d.car)openCar(+d.car);
+  else if(d.act==='buy')drawer(`<h2>Buy a car</h2>${photoBox()}${field('b1','Make')}${field('b2','Model')}<div class="two"><div>${field('b3','Year',2023,'number')}</div><div>${field('b4','Plate')}</div></div>${field('b5','Buying price (PKR)','','number')}${field('b6','Asking price (PKR)','','number')}${field('b7','Rent per day (PKR)','','number')}<div class="row"><button class="pri" data-do="buy">Add to lot</button></div>`);
+  else if(d.act==='worker')drawer(`<h2>Add worker</h2>${field('w1','Full name')}${field('w2','Role')}${field('w3','Monthly salary (PKR)','','number')}<div class="row"><button class="pri" data-do="worker">Save worker</button></div>`);
+  else if(d.act==='reset'){if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Tap again to erase everything and load samples';return}S=seed();render();toast('Sample data restored')}
+  else if(d.pay){const i=S.inv.find(x=>x.id==d.pay);i.paid=true;log(`Payment received – ${i.no} ${i.party}`,i.amount);render();toast('Invoice marked paid')}
+  else if(d.sal){const w=S.staff.find(x=>x.id==d.sal);w.paid[mk(nowIso())]=nowIso();log(`Salary paid – ${w.name}`,-w.salary);render();toast('Salary paid')}
+  else if(d.payall!==undefined){const m=mk(nowIso());S.staff.filter(w=>!w.paid[m]).forEach(w=>{w.paid[m]=nowIso();log(`Salary paid – ${w.name}`,-w.salary)});render();toast('All salaries paid')}
+  else if(d.do){const c=S.cars.find(x=>x.id===modal),nm=c?`${c.make} ${c.model}`:'';
+    if(d.do==='sell'){if(!v('f1')){toast('Enter the buyer’s name');return}ensureCust(v('f1'),v('f8'));c.soldBy=canPay&&$('#f10')?(+$('#f10').value||null):null;c.status='sold';c.buyer=v('f1');c.soldFor=nv('f2');c.soldAt=nowIso();invoice2('Sale',c.buyer,c.soldFor,nm,$('#f6').value.trim()===''?c.soldFor:nv('f6'),nv('f7'));celebrate()}
+    else if(d.do==='rent'){const days=nv('f4');if(!v('f3')||days<1){toast('Enter customer name and days');return}ensureCust(v('f3'),v('f9'));c.status='rented';c.renter=v('f3');c.due=new Date(Date.now()+days*864e5).toISOString();invoice2('Rental',c.renter,days*nv('f5'),nm,days*nv('f5'),0)}
+    else if(d.do==='ret'){c.status='stock';delete c.renter;delete c.due;log(`${nm} is back on the lot`,0)}
+    else if(d.do==='serv'){c.status='service';log(`${nm} sent to service`,0)}
+    else if(d.do==='buy'){if(!v('b1')||!nv('b5')){toast('Enter make and buying price');return}S.cars.push({id:Date.now(),make:v('b1'),model:v('b2'),year:v('b3'),plate:v('b4'),cost:nv('b5'),price:nv('b6'),rate:nv('b7'),status:'stock'});log(`Bought ${v('b1')} ${v('b2')}`,-nv('b5'))}
+    else if(d.do==='worker'){if(!v('w1')){toast('Enter the worker’s name');return}S.staff.push({id:Date.now(),name:v('w1'),role:v('w2'),salary:nv('w3'),paid:{}});log(`New worker – ${v('w1')}`,0)}
+    close();render();toast('Saved')}
+});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-function hashOpen(){const m=location.hash.match(/^#car-(\d+)$/);if(!m)return;const c=D.cars.find(x=>String(x.id)===m[1]);if(c)openDlg(c.id);else{$('#em').hidden=false;$('#em').textContent='That car has been sold or is no longer listed. Here are the others.'}}
-window.addEventListener('hashchange',hashOpen);
-$('#q').oninput=list;$('#so').onchange=list;
-const sb=window.supabase.createClient(LOT_CONFIG.SUPABASE_URL,LOT_CONFIG.SUPABASE_ANON_KEY);
+document.addEventListener('input',e=>{if(e.target.id==='q'){query=e.target.value;const p=e.target.selectionStart;draw();const q=$('#q');q.focus();q.setSelectionRange(p,p)}});
+document.addEventListener('change',e=>{if(e.target.id==='sort'){sort=e.target.value;draw()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ask')aiGo('ask')});
+document.addEventListener('mouseover',e=>{const g=e.target.closest('[data-tip]');if(g){const t=$(g.closest('.fzgrid')?'#ftip':'#tip');if(t)t.textContent=g.dataset.tip}});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-tip]');if(g){const t=$(g.closest('.fzgrid')?'#ftip':'#tip');if(t)t.textContent=g.dataset.tip}});
+document.addEventListener('dragstart',e=>{const b=e.target.closest('[data-car]');if(b){dragId=+b.dataset.car;e.dataTransfer.setData('text/plain',String(dragId))}});
+document.addEventListener('dragover',e=>{const z=e.target.closest('.zone');document.querySelectorAll('.zone.hot').forEach(x=>x!==z&&x.classList.remove('hot'));if(z){e.preventDefault();z.classList.add('hot')}});
+document.addEventListener('drop',e=>{const z=e.target.closest('.zone');if(!z||dragId==null)return;e.preventDefault();z.classList.remove('hot');const c=S.cars.find(x=>x.id===dragId);dragId=null;dropOn(c,z.dataset.zone)});
+document.addEventListener('dragend',()=>document.querySelectorAll('.zone.hot').forEach(x=>x.classList.remove('hot')));
+draw();
 (async()=>{
- const [cs,sh]=await Promise.all([sb.from('public_catalog').select('*').order('price'),sb.from('public_shop').select('shop').maybeSingle()]);
- D.cars=(cs.data||[]).map((x,i)=>({...x,color:PAL[i%8]}));
- D.shop=(sh.data&&sh.data.shop)||D.shop;
- D.built=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
- head();chips();list();hashOpen();
- if(cs.error){$('#em').hidden=false;$('#em').textContent='The catalog could not be loaded. Please try again later.'}
+  try{const u=await claude.use('user');if(u){canPay=!!(await u.canEdit());try{const me=await u.me();ME={name:me.name||'Someone',id:me.id}}catch(e){}}DB=await claude.use('db')}catch(e){}
+  if(!DB){try{const r=localStorage.getItem(KEY);S=r?JSON.parse(r):seed()}catch(e){S=seed()}localOk=true;canPay=true;draw();enterAnim();return}
+  PART.forEach(p=>{
+    if((p==='staff'||p==='exp'||p==='att'||p==='dealers')&&!canPay){got[p]=true;return}
+    const fin=()=>{got[p]=true;ready=PART.every(x=>got[x]);draw();if(ready&&!enteredOnce){enteredOnce=true;enterAnim()}};
+    DB.doc('showroom/'+p).onSnapshot(s=>{if(s.exists){S[p]=JSON.parse(JSON.stringify(s.data().items||[]));last[p]=JSON.stringify(S[p])}fin()},fin)});
+  if(canPay)try{DB.collection('activity').orderBy('t','desc').limit(200).onSnapshot(s=>{ACT=s.docs.map(d=>({...d.data(),id:d.id}));if(view==='activity')draw()},()=>{})}catch(e){}
+  ready=PART.every(x=>got[x]);
 })();
-</script></body></html>
+</script>
+</body>
+</html>
